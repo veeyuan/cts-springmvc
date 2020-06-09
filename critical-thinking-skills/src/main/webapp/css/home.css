@@ -1,0 +1,9 @@
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: #FED136;
+    color: #fff;
+}
+
+/* .navbar-themecolour {
+    background-color: #FED136;
+    color: rgba(0,0,0,.5);
+} */

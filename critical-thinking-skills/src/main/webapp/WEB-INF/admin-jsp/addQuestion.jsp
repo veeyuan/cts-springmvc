@@ -1,3 +1,6 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <html>    
 <head>    
     <style>
@@ -127,59 +130,43 @@ function setMCQ(selected){ //if it is discipline-specific
                   Add Question
                 </h3>
                 </div>
-                <form id="questionForm" >
+                <form:form id="questionForm" action ="addProcess.html"  method="post" modelAttribute="question">
                 <div class="card-tools">
                  <div class="form-row">
 				  <div class="form-group col-md-8">
 				    <label >Question</label>
-				    <textarea class="form-control" id="" rows="2" placeholder="Question"></textarea>
+				    <form:textarea path="questionDscp" class="form-control" id="" rows="2" placeholder="Question"/>
 				 </div>
 				 <div class="form-group col-md-2">
 				 		<label >Attachment (for Question)</label><input type="file" class="form-control-file" id="exampleFormControlFile1">
 				  </div>
 				  </div>
 				  <div class="form-row">
-					  <div class="form-group col-md-2">
-					    <label >Discipline-specific?</label>
-					    <br>
-							<div class="custom-control custom-radio custom-control-inline">
-							  <input onclick="setDiscipline(this);" type="radio" id="radio-dscp1" name="radio-dscp" class="custom-control-input" value="yes">
-							  <label class="custom-control-label" for="radio-dscp1">Yes</label>
-							</div>
-							<div class="custom-control custom-radio custom-control-inline">
-							  <input onclick="setDiscipline(this);" type="radio" id="radio-dscp2" name="radio-dscp" class="custom-control-input" value="no" checked>
-							  <label class="custom-control-label" for="radio-dscp2">No</label>
-							</div>				 
-						</div>
-	  				  <div class="form-group col-md-4">
+					  
+	  				  <div class="form-group col-md-3">
 	  				  <label >Discipline</label>
-	                     <select onchange="changeDiscipline(this)" class="form-control" name="" id="chooseDiscipline" disabled>
-	                       <%--  <c:forEach items="${listDiscipline}" var="course">
-								<option value="${discipline.id}">${discipline.name}</option>
-							</c:forEach> --%>
-								<option id="other-disciplines" >choose</option>
-	                            <option id="other-disciplines" value='others'>Others</option>
-	                            <option id="other-disciplines" value='xx'>XXXX</option>
+	                     <select onchange="changeDiscipline(this)" class="form-control" name="" id="chooseDiscipline" >
+	                       <c:forEach items="${listDiscipline}" var="discipline">
+					      	  <option value ="${discipline.code}">${discipline.name}</option>
+				              </c:forEach>
 	                       </select>
 	                   </div>
-	                   <div  class="form-group col-md-4" >
-	                   <label >Discipline Name</label>
-	                       <input type="text" name="other-discipline" class="form-control" id="other-discipline" placeholder="Only for discipline not in the list" value="" disabled/>
-	                   </div>
-	                </div> 
-	                <div class="form-row">
+	                   
+	               
 	                <div class="form-group col-md-2">
 					      <label >Suitable Category</label>
 					      <select class="form-control" name="">
-					      	<option value="">Primary School</option>
-	                        <option value="general">General</option>
+					      	<c:forEach items="${listCategory}" var="category">
+					      	  <option value ="${category.code}">${category.name}</option>
+				              </c:forEach>
 	                       </select>
 					  </div>
 					 <div class="form-group col-md-2">
 					      <label >Language</label>
 					      <select onchange="changeCourse(this)" class="form-control" name="questionsetlang">
-					      	<option value="ENG">English</option>
-	                        <option value="BM">Bahasa Melayu</option>
+					      <c:forEach items="${listLanguage}" var="language">
+					      	  <option value ="${language.code}">${language.name}</option>
+				              </c:forEach>
 	                       </select>
 					  </div>
 					  <div class="form-group col-md-3">
@@ -205,14 +192,14 @@ function setMCQ(selected){ //if it is discipline-specific
 	                        <option value="4">4</option>
 	                        <option value="5">5</option>
 	                       </select>	                   </div>
-	                   <div  class="form-group col-md-3" >
+	                   <div  class="form-group col-md-2" >
 	                   		<label >Correct Answer</label>
 	                   		<input type="number" min="1" max="5"name="" class="form-control" id="numChoice" placeholder="Option Number" value="" />                			               		
 	                   </div>			 
 					 </div>
 					 <div class="form-group row">
 					    <label class="col-sm-1 col-form-label">Option 1</label>
-					    <div class="col-sm-910">
+					    <div class="col-sm-9">
     					 	<textarea class="form-control" id="opt1" rows="1" placeholder="Option 1"  ></textarea>
 				   		</div>
 				  </div>
@@ -313,7 +300,7 @@ function setMCQ(selected){ //if it is discipline-specific
               <div class="card-footer clearfix">
                 <button id="btn-addquestionset" type="submit" class="btn btn-info float-right"><i class="fas fa-plus"></i> Create</button>
               </div>
-              </form>
+              </form:form>
             </div>
             <!-- /.card -->
             </section>  

@@ -1,2 +1,10 @@
+com\cts\model\Question.class
 com\cts\controller\AddQuestionController.class
+com\cts\dao\UserDao$1.class
+com\cts\ind\DictionaryManager.class
+com\cts\model\User.class
+com\cts\dao\UserDao.class
+com\cts\ind\OracleConn.class
+com\cts\controller\LoginController.class
 com\cts\controller\MenuController.class
+com\cts\model\Login.class

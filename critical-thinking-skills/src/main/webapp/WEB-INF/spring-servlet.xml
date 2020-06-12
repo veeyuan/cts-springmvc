@@ -10,11 +10,41 @@
 <context:annotation-config />  
 <context:component-scan base-package="com.cts.controller" />  
 <bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>  
+
 <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">  
 <property name="definitions">  
 <list>  
 <value>/WEB-INF/tiles.xml</value>  
 </list>  
 </property>  
+</bean>
+
+<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>  
+<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcldb"></property>  
+<property name="username" value="user1"></property>  
+<property name="password" value="sysadmin"></property>  
 </bean>  
+
+<bean id="jt" class="org.springframework.jdbc.core.JdbcTemplate">
+<property name="dataSource" ref="ds"></property>
+</bean>
+<bean id="userDao" class="com.cts.dao.UserDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
+<bean id="questionListDao" class="com.cts.dao.QuestionListDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
+<bean id="disciplineDao" class="com.cts.dao.DisciplineDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
+<bean id="categoryDao" class="com.cts.dao.CategoryDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
+<bean id="languageDao" class="com.cts.dao.LanguageDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
+<bean id="questionDao" class="com.cts.dao.QuestionDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
 </beans>  

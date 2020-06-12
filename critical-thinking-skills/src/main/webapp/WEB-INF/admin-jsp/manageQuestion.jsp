@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>    
 <head>    
 <style>
@@ -79,23 +80,26 @@ function getQuestionDet(){
 			         </div>
 			         <div class="form-group col-md-2">
 					      	<select class="form-control" name="">					      	
-	                        <option value="general">General</option>
-	                        <option value="">Primary School</option>
+	                        <c:forEach items="${listCategory}" var="category">
+					      	  <option value ="${category.code}">${category.name}</option>
+				              </c:forEach>
 	                       	</select>
 					  </div>
 			        
 	                <div class="form-group col-md-2">
 					      <select class="form-control" name="">
-					      	  <option placeholder="">All disciplines</option>
-				              <option>Computer Science</option>
-				              <option>Biology</option>
-				              <option>Mathematics</option>
+					          <c:forEach items="${listDiscipline}" var="discipline">
+					      	  <option value ="${discipline.code}">${discipline.name}</option>
+				              </c:forEach>
+				              
 	                       </select>
 					  </div>
+					  
 					 <div class="form-group col-md-2">
 					      <select  class="form-control" name="questionlang">
-					      	<option value="ENG">English</option>
-	                        <option value="BM">Bahasa Melayu</option>
+					      	<c:forEach items="${listLanguage}" var="language">
+					      	  <option value ="${language.code}">${language.name}</option>
+				              </c:forEach>
 	                       </select>
 					  </div>
 					 <span><button id="" onclick="" type="button" class="btn btn-info float-right"><i class="fas fa-search"></i> Search</button></span>
@@ -129,7 +133,7 @@ function getQuestionDet(){
 				    </tr>
 				  </thead>
 				  <tbody>
-                 <c:forEach items="${listQuestionCreated}" var="questset">
+                 <c:forEach items="${listQuestion}" var="question">
 				<form id="reqQuestionDetForm" method="post" action="modifyQuestion.jsp"><input type="hidden" name="questionid" id="questionid" value="${question.id}"></form>
 					 <tr>
       					<th scope="row">
@@ -145,14 +149,14 @@ function getQuestionDet(){
 		                    </span> 
 		                   
 		                    <!-- todo text -->
-		                    <span onclick="getQuestionDet()" class="text"> ${question.title}</span>
+		                    <span onclick="getQuestionDet()" class="text"> ${question.questionDscp}</span>
 		                    
 		
 		                                   
                   		</th>
-					      <td>${question.category}</td>
-					      <td>${question.discipline}</td>
-					      <td>${question.language}</td>
+					      <td>${question.categoryCd}</td>
+					      <td>${question.disciplineCd}</td>
+					      <td>${question.languageCd}</td>
 					      <td>${question.mcq}</td>
    					 </tr>	
                  

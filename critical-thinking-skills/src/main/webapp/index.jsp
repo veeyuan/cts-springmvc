@@ -56,7 +56,7 @@
 							    <button  onclick="changeLang('ENG')" class="dropdown-item" href="#">English</button>
 							    <button  onclick="changeLang('BM')" class="dropdown-item" href="#">Bahasa Melayu</button>
 							  </div>
-							  <form id="langForm" method="get" action="/FirstForm/CTS"><input type="hidden" name="language" id="language"></form>
+							  <form id="langForm" method="post" action="/critical-thinking-skills/"><input type="hidden" name="language" id="language"></form>
 							</div> 
 						</li>
                     </ul>

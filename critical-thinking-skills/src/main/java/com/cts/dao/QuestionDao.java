@@ -22,9 +22,9 @@ public class QuestionDao {
 	public void addQuestion(Question question) throws SQLException {
 		 Connection connection = jdbcTemplate.getDataSource().getConnection();
          CallableStatement cs = connection.prepareCall("{call SP_CREATE_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-        /*
+        
          cs.setString(1, question.getQuestionDscp());
-     	 cs.setString(2, question.getDisciplineCd());
+         /*cs.setString(2, question.getDisciplineCd());
      	 cs.setString(3, question.getCategoryCd());
      	 cs.setString(4, question.getLanguageCd());
      	 if (question.isMcq()) {
@@ -44,7 +44,7 @@ public class QuestionDao {
      	 cs.setInt(15, question.getProbSolveScore());
      	 cs.setInt(16, question.getCreativeScore());
      	 */
-     	cs.setString(1, "aaa");
+     	 
     	 cs.setString(2, "general");
     	 cs.setString(3, "College");
     	 cs.setString(4, "ENG");

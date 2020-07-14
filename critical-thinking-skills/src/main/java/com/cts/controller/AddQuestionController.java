@@ -51,6 +51,7 @@ public class AddQuestionController {
 	public String addQuestion( @ModelAttribute("question")Question question, 
 		      BindingResult result, ModelMap model) {
 		try {
+			System.out.println("question >>>"+question.getQuestionDscp());
 			questionDao.addQuestion(question);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

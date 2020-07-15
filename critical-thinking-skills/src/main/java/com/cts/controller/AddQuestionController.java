@@ -46,7 +46,9 @@ public class AddQuestionController {
 		List<Language> listLanguage =   languageDao.getLanguageList();
 		model.addObject("listLanguage",listLanguage);
 	    return model;
-    }  
+    } 
+	
+	
 	
 	@RequestMapping(value = "/addProcess", method = RequestMethod.POST)
 	public String addQuestion(@RequestParam("radio-all-mcq") String strMCQ, @ModelAttribute("question")Question question, 
@@ -78,8 +80,12 @@ public class AddQuestionController {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Failed to add >>>");
+			model.addAttribute("success","N");
 			e.printStackTrace();
+			return "addProcess";
 		}
-		return "addQuestion";
+		model.addAttribute("success","Y");
+		
+		return "addProcess";
 	}
 }

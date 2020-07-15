@@ -18,6 +18,10 @@
         <put-attribute name="title" value="addQuestion" />  
         <put-attribute name="body" value="/WEB-INF/admin-jsp/addQuestion.jsp" />  
     </definition>  
+    <definition name="addProcess" extends="base-admin.definition">  
+        <put-attribute name="title" value="addProcess" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/addProcess.jsp" />  
+    </definition>  
     
     <definition name="manageQuestion" extends="base-admin.definition">  
         <put-attribute name="title" value="manageQuestion" />  

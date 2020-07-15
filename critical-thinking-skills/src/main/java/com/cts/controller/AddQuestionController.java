@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cts.dao.CategoryDao;
@@ -48,10 +49,31 @@ public class AddQuestionController {
     }  
 	
 	@RequestMapping(value = "/addProcess", method = RequestMethod.POST)
-	public String addQuestion( @ModelAttribute("question")Question question, 
+	public String addQuestion(@RequestParam("radio-all-mcq") String strMCQ, @ModelAttribute("question")Question question, 
 		      BindingResult result, ModelMap model) {
 		try {
 			System.out.println("question >>>"+question.getQuestionDscp());
+			System.out.println("discipline >>>"+question.getDisciplineCd());
+			System.out.println("category >>>"+question.getCategoryCd());
+			System.out.println("language >>>"+question.getLanguageCd());
+			if ("Yes".equalsIgnoreCase(strMCQ)) {
+				question.setMcq(true);
+			}else {
+				question.setMcq(false);
+			}
+			System.out.println("isMCQ >>>"+question.isMcq());
+			System.out.println("opt1 >>>"+question.getOption1());
+			System.out.println("opt2 >>>"+question.getOption2());
+			System.out.println("opt3 >>>"+question.getOption3());
+			System.out.println("opt4 >>>"+question.getOption4());
+			System.out.println("opt5 >>>"+question.getOption5());
+			System.out.println("mcqAns >>>"+question.getMcqAns());
+			System.out.println("sampleAns >>>"+question.getSampleAns());
+			System.out.println("analysis >>>"+question.getAnalysisScore());
+			System.out.println("logic >>>"+question.getLogicScore());
+			System.out.println("judgement >>>"+question.getJudgementScore());
+			System.out.println("probsolve >>>"+question.getProbSolveScore());
+			System.out.println("creative >>>"+question.getCreativeScore());
 			questionDao.addQuestion(question);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

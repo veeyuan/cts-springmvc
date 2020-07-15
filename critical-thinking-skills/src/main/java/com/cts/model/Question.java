@@ -14,6 +14,7 @@ public class Question {
 	private String option3;
 	private String option4;
 	private String option5;
+	private String mcqAns;
 	private String sampleAns;
 	private int del;
 	private String languageCd;
@@ -161,6 +162,12 @@ public class Question {
 	 */
 	public void setCreativeScore(int creativeScore) {
 		this.creativeScore = creativeScore;
+	}
+	public String getMcqAns() {
+		return mcqAns;
+	}
+	public void setMcqAns(String mcqAns) {
+		this.mcqAns = mcqAns;
 	}
 
 }

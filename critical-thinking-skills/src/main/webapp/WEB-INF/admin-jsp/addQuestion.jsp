@@ -37,7 +37,7 @@
 }
 </style>
 <script>
-function setDiscipline(selected){ //if it is discipline-specific
+/* function setDiscipline(selected){ //if it is discipline-specific
 	var x=selected.value;
 	if (x=="yes"){
 		document.getElementById("chooseDiscipline").disabled  = false;
@@ -57,11 +57,18 @@ function changeDiscipline(selected){ //if discipline not in the list
 		document.getElementById("other-discipline").value="";
 		document.getElementById("other-discipline").disabled = true;
 	}
-}
+} */
 
 function setOption(selected){ //set number of options
 	var x=selected.value;
-	if (x=="3"){
+	if (x=="2"){
+		document.getElementById("opt3").value="";
+		document.getElementById("opt4").value="";
+		document.getElementById("opt5").value="";
+		document.getElementById("opt3").disabled  =true;
+		document.getElementById("opt4").disabled = true;
+		document.getElementById("opt5").disabled = true;
+	}else if (x=="3"){
 		document.getElementById("opt3").disabled  =false;
 		document.getElementById("opt4").value="";
 		document.getElementById("opt5").value="";
@@ -145,29 +152,29 @@ function setMCQ(selected){ //if it is discipline-specific
 					  
 	  				  <div class="form-group col-md-3">
 	  				  <label >Discipline</label>
-	                     <select onchange="changeDiscipline(this)" class="form-control" name="" id="chooseDiscipline" >
+	                     <form:select path="disciplineCd"  class="form-control" >
 	                       <c:forEach items="${listDiscipline}" var="discipline">
-					      	  <option value ="${discipline.code}">${discipline.name}</option>
+					      	  <form:option value ="${discipline.code}" label="${discipline.name}"/>
 				              </c:forEach>
-	                       </select>
+	                       </form:select>
 	                   </div>
 	                   
 	               
 	                <div class="form-group col-md-2">
 					      <label >Suitable Category</label>
-					      <select class="form-control" name="">
+					      <form:select path="categoryCd" class="form-control" >
 					      	<c:forEach items="${listCategory}" var="category">
-					      	  <option value ="${category.code}">${category.name}</option>
+					      	  <form:option value ="${category.code}" label="${category.name}"/>
 				              </c:forEach>
-	                       </select>
+	                       </form:select>
 					  </div>
 					 <div class="form-group col-md-2">
 					      <label >Language</label>
-					      <select onchange="changeCourse(this)" class="form-control" name="questionsetlang">
+					      <form:select path="languageCd"  class="form-control" name="questionsetlang">
 					      <c:forEach items="${listLanguage}" var="language">
-					      	  <option value ="${language.code}">${language.name}</option>
+					      	  <form:option value ="${language.code}" label="${language.name}"/>
 				              </c:forEach>
-	                       </select>
+	                       </form:select>
 					  </div>
 					  <div class="form-group col-md-3">
 					    <label >Multi-choiced Question?</label><br>
@@ -194,37 +201,37 @@ function setMCQ(selected){ //if it is discipline-specific
 	                       </select>	                   </div>
 	                   <div  class="form-group col-md-2" >
 	                   		<label >Correct Answer</label>
-	                   		<input type="number" min="1" max="5"name="" class="form-control" id="numChoice" placeholder="Option Number" value="" />                			               		
+	                   		<form:input path="mcqAns" class="form-control" id="numChoice" placeholder="Option Number (eg. 1)" value="" />                			               		
 	                   </div>			 
 					 </div>
 					 <div class="form-group row">
 					    <label class="col-sm-1 col-form-label">Option 1</label>
 					    <div class="col-sm-9">
-    					 	<textarea class="form-control" id="opt1" rows="1" placeholder="Option 1"  ></textarea>
+    					 	<form:textarea path="option1" class="form-control" id="opt1" rows="1" placeholder="Option 1"  />
 				   		</div>
 				  </div>
 					<div class="form-group row">
 					    <label class="col-sm-1 col-form-label">Option 2</label>
 					    <div class="col-sm-9">
-    					 	<textarea class="form-control" id="opt2" rows="1" placeholder="Option 2"  ></textarea>
+    					 	<form:textarea path="option2"  class="form-control" id="opt2" rows="1" placeholder="Option 2"  />
 				   		</div>
 				  </div>
 					<div class="form-group row">
 					    <label class="col-sm-1 col-form-label">Option 3</label>
 					    <div class="col-sm-9">
-    					 	<textarea class="form-control" id="opt3" rows="1" placeholder="Option 3" disabled ></textarea>
+    					 	<form:textarea path="option3"  class="form-control" id="opt3" rows="1" placeholder="Option 3" disabled="true" />
 				   		</div>
 				  </div>
 				  <div class="form-group row">
 					    <label class="col-sm-1 col-form-label">Option 4</label>
 					    <div class="col-sm-9">
-    					 	<textarea class="form-control" id="opt4" rows="1" placeholder="Option 4" disabled ></textarea>
+    					 	<form:textarea path="option4"  class="form-control" id="opt4" rows="1" placeholder="Option 4" disabled="true" />
 				   		</div>
 				  </div>
 				  <div class="form-group row">
 					    <label class="col-sm-1 col-form-label">Option 5</label>
 					    <div class="col-sm-9">
-    					 	<textarea class="form-control" id="opt5" rows="1" placeholder="Option 5"  disabled></textarea>
+    					 	<form:textarea path="option5"  class="form-control" id="opt5" rows="1" placeholder="Option 5"  disabled="true" />
 				   		</div>
 				  </div>
 				  
@@ -233,7 +240,7 @@ function setMCQ(selected){ //if it is discipline-specific
 				   <div class="form-row">
 					  <div class="form-group col-md-8">
 					    <label >Sample Answer</label>
-					    <textarea class="form-control" id="" rows="1" placeholder="as marking scheme"></textarea>
+					    <form:textarea path="sampleAns" class="form-control" id="" rows="1" placeholder="as marking scheme"/>
 					 </div>
 					  <div class="form-group col-md-2">
 				 		<label >Attachment (for Sample Answer)</label><input type="file" class="form-control-file" id="exampleFormControlFile1">
@@ -248,7 +255,7 @@ function setMCQ(selected){ //if it is discipline-specific
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Analysis &  Evaluation</div>
 				        </div>
-				        <input type="number" class="form-control" id="" placeholder="0" name="">
+				        <form:input path="analysisScore" class="form-control" id="" placeholder="0" name=""/>
 				      </div>
 				    </div>
 				    <div class="col-sm-3 my-1">
@@ -256,7 +263,7 @@ function setMCQ(selected){ //if it is discipline-specific
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Logic & Reasoning</div>
 				        </div>
-				        <input type="number" class="form-control" id="" placeholder="0" name="">
+				        <form:input path="logicScore" class="form-control" id="" placeholder="0" name=""/>
 				      </div>
 				      </div>
 				      <div class="col-sm-3 my-1">
@@ -264,7 +271,7 @@ function setMCQ(selected){ //if it is discipline-specific
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Judgement</div>
 				        </div>
-				        <input type="number" class="form-control" id="" placeholder="0" name="">
+				        <form:input path="judgementScore" class="form-control" id="" placeholder="0" name=""/>
 				      </div>
 				    </div>
 				    </div>
@@ -274,7 +281,7 @@ function setMCQ(selected){ //if it is discipline-specific
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Problem Solving</div>
 				        </div>
-				        <input type="number" class="form-control" id="" placeholder="0" name="">
+				        <form:input path="probSolveScore" class="form-control" id="" placeholder="0" name=""/>
 				      </div>
 				    </div>
 				    <div class="col-sm-3 my-1">
@@ -282,7 +289,7 @@ function setMCQ(selected){ //if it is discipline-specific
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Creative Thinking</div>
 				        </div>
-				        <input type="number" class="form-control" id="" placeholder="0" name="">
+				        <form:input path="creativeScore" class="form-control" id="" placeholder="0" name=""/>
 				      </div>
 				    </div>
 				    </div>

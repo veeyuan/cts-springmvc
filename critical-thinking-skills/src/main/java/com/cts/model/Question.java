@@ -1,5 +1,7 @@
 package com.cts.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Question {
 	
 	public Question() {	}
@@ -23,6 +25,8 @@ public class Question {
 	private int judgementScore;
 	private int probSolveScore;
 	private int creativeScore;
+	private MultipartFile questionAttachment;
+	private MultipartFile sampleAnsAttachment;
 
 	
 	public String getId() {
@@ -168,6 +172,18 @@ public class Question {
 	}
 	public void setMcqAns(String mcqAns) {
 		this.mcqAns = mcqAns;
+	}
+	public MultipartFile getQuestionAttachment() {
+		return questionAttachment;
+	}
+	public void setQuestionAttachment(MultipartFile questionAttachment) {
+		this.questionAttachment = questionAttachment;
+	}
+	public MultipartFile getSampleAnsAttachment() {
+		return sampleAnsAttachment;
+	}
+	public void setSampleAnsAttachment(MultipartFile sampleAnsAttachment) {
+		this.sampleAnsAttachment = sampleAnsAttachment;
 	}
 
 }

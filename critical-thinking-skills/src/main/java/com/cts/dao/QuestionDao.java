@@ -1,6 +1,8 @@
 package com.cts.dao;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,9 +21,9 @@ public class QuestionDao {
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
 
-	public void addQuestion(Question question) throws SQLException {
+	public void addQuestion(Question question) throws SQLException, IOException {
 		 Connection connection = jdbcTemplate.getDataSource().getConnection();
-         CallableStatement cs = connection.prepareCall("{call SP_CREATE_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+         CallableStatement cs = connection.prepareCall("{call SP_CREATE_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         
          cs.setString(1, question.getQuestionDscp());
          cs.setString(2, question.getDisciplineCd());
@@ -51,6 +53,9 @@ public class QuestionDao {
      	 cs.setInt(14, question.getJudgementScore());
      	 cs.setInt(15, question.getProbSolveScore());
      	 cs.setInt(16, question.getCreativeScore());
+     	 
+     	 cs.setBlob(17,new ByteArrayInputStream(question.getQuestionAttachment().getBytes()));
+     	 cs.setBlob(18,new ByteArrayInputStream(question.getSampleAnsAttachment().getBytes()));
      	 
      	 
     	

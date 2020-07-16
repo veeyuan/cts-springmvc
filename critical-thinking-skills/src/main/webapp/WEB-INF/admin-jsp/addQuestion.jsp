@@ -137,7 +137,7 @@ function setMCQ(selected){ //if it is discipline-specific
                   Add Question
                 </h3>
                 </div>
-                <form:form id="questionForm" action ="addProcess.html"  method="post" modelAttribute="question">
+                <form:form id="questionForm" action ="addProcess.html"  method="post" modelAttribute="question" enctype="multipart/form-data">
                 <div class="card-tools">
                  <div class="form-row">
 				  <div class="form-group col-md-8">
@@ -145,7 +145,8 @@ function setMCQ(selected){ //if it is discipline-specific
 				    <form:textarea path="questionDscp" class="form-control" id="" rows="2" placeholder="Question"/>
 				 </div>
 				 <div class="form-group col-md-2">
-				 		<label >Attachment (for Question)</label><input type="file" class="form-control-file" id="exampleFormControlFile1">
+				 		<label >Attachment (for Question)</label>
+				 		<input type="file" class="form-control-file" id="exampleFormControlFile1" name="questionAttachment">
 				  </div>
 				  </div>
 				  <div class="form-row">
@@ -243,7 +244,8 @@ function setMCQ(selected){ //if it is discipline-specific
 					    <form:textarea path="sampleAns" class="form-control" id="" rows="1" placeholder="as marking scheme"/>
 					 </div>
 					  <div class="form-group col-md-2">
-				 		<label >Attachment (for Sample Answer)</label><input type="file" class="form-control-file" id="exampleFormControlFile1">
+				 		<label >Attachment (for Sample Answer)</label>
+				 		<input type="file" class="form-control-file" id="exampleFormControlFile1" name="sampleAnsAttachment">
 				  </div>
 				  </div>
 				  </div>

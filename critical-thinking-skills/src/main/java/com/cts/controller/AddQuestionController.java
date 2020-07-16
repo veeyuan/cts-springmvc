@@ -1,7 +1,9 @@
 package com.cts.controller;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;  
 import org.springframework.ui.Model;
@@ -49,33 +51,26 @@ public class AddQuestionController {
     } 
 	
 	
-	
+    static String saveDirectory = "uploadedFiles"; 
 	@RequestMapping(value = "/addProcess", method = RequestMethod.POST)
-	public String addQuestion(@RequestParam("radio-all-mcq") String strMCQ, @ModelAttribute("question")Question question, 
-		      BindingResult result, ModelMap model) {
+	public String addQuestion(@RequestParam("questionAttachment") CommonsMultipartFile questionAttachment,@RequestParam("sampleAnsAttachment") CommonsMultipartFile sampleAnsAttachment,@RequestParam("radio-all-mcq") String strMCQ, @ModelAttribute("question")Question question, 
+		      BindingResult result, ModelMap model) throws IOException {
 		try {
-			System.out.println("question >>>"+question.getQuestionDscp());
-			System.out.println("discipline >>>"+question.getDisciplineCd());
-			System.out.println("category >>>"+question.getCategoryCd());
-			System.out.println("language >>>"+question.getLanguageCd());
+			
 			if ("Yes".equalsIgnoreCase(strMCQ)) {
 				question.setMcq(true);
 			}else {
 				question.setMcq(false);
 			}
-			System.out.println("isMCQ >>>"+question.isMcq());
-			System.out.println("opt1 >>>"+question.getOption1());
-			System.out.println("opt2 >>>"+question.getOption2());
-			System.out.println("opt3 >>>"+question.getOption3());
-			System.out.println("opt4 >>>"+question.getOption4());
-			System.out.println("opt5 >>>"+question.getOption5());
-			System.out.println("mcqAns >>>"+question.getMcqAns());
-			System.out.println("sampleAns >>>"+question.getSampleAns());
-			System.out.println("analysis >>>"+question.getAnalysisScore());
-			System.out.println("logic >>>"+question.getLogicScore());
-			System.out.println("judgement >>>"+question.getJudgementScore());
-			System.out.println("probsolve >>>"+question.getProbSolveScore());
-			System.out.println("creative >>>"+question.getCreativeScore());
+			
+			
+			if (!questionAttachment.isEmpty()) {
+				question.setQuestionAttachment(questionAttachment);
+			}
+			if (!sampleAnsAttachment.isEmpty()) {
+				question.setQuestionAttachment(sampleAnsAttachment);
+			}
+			
 			questionDao.addQuestion(question);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

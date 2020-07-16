@@ -41,6 +41,9 @@ function getQuestionDet(){
 	document.getElementById('reqQuestionDetForm').submit(); 
    }
    
+function delQuestions(){
+	document.getElementById('delQuestionForm').submit(); 
+}
 
 
 </script>  
@@ -122,6 +125,7 @@ function getQuestionDet(){
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+               <form id="delQuestionForm" method="post" action="deleteProcess.html">
               <table class="table table-hover">
 				  <thead>
 				    <tr>
@@ -133,27 +137,36 @@ function getQuestionDet(){
 				    </tr>
 				  </thead>
 				  <tbody>
+                 
                  <c:forEach items="${listQuestion}" var="question">
-				<form id="reqQuestionDetForm" method="post" action="modifyQuestion.jsp"><input type="hidden" name="questionid" id="questionid" value="${question.id}"></form>
+					<%-- <form id="reqQuestionDetForm" method="post" action="modifyQuestion.jsp">
+					 	<input type="hidden" name="questionid" id="questionid" value="${question.id}">
+					 </form>	
+					  --%>
+					
 					 <tr>
-      					<th scope="row">
-      					<!-- checkbox -->
+					 					 
+      					<td >
+      					
+      					
 		                    <div class="icheck-primary d-inline ml-2">
-		                      <input type="checkbox" value="" name="todo1" id="todoCheck1">
-		                      <label for="todoCheck1"></label>
+		                     
+		                       <input type="checkbox" name="delQuestionList" value="${question.id}" id="${question.id}"> 
+			                       <label  for="${question.id}"> 
+			                       <c:out value="${question.questionDscp}" />
+			                       </label>
+  				               </input>
+		                     
 		                    </div>						                     
-							<!-- General tools such as edit or delete-->
 		                    <span id="editdiv" class="tools">
 		                      <i class="fas fa-edit"></i>
-		                      <i class="fas fa-trash-o"></i>
 		                    </span> 
 		                   
-		                    <!-- todo text -->
-		                    <span onclick="getQuestionDet()" class="text"> ${question.questionDscp}</span>
+		                   
 		                    
 		
 		                                   
-                  		</th>
+                  		</td>
 					      <td>${question.categoryCd}</td>
 					      <td>${question.disciplineCd}</td>
 					      <td>${question.languageCd}</td>
@@ -165,10 +178,12 @@ function getQuestionDet(){
                  </ul>
                  </tbody>
 				</table>
+			 </form>
+				
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <button  id="btn-delete" onclick="" type="button" class="btn btn-info float-right"><i class="fas fa-trash"></i> Delete</button>  
+                <button  id="btn-delete" onclick="delQuestions()" type="button" class="btn btn-info float-right"><i class="fas fa-trash"></i> Delete</button>  
                
               </div>
             </div>

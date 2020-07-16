@@ -1,18 +1,26 @@
 package com.cts.controller;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cts.dao.CategoryDao;
 import com.cts.dao.DisciplineDao;
 import com.cts.dao.LanguageDao;
+import com.cts.dao.QuestionDao;
 import com.cts.dao.QuestionListDao;
 import com.cts.model.Category;
 import com.cts.model.Discipline;
@@ -29,6 +37,8 @@ public class ManageQuestionController {
 	CategoryDao categoryDao;
 	@Autowired  
 	LanguageDao languageDao;
+	@Autowired  
+    QuestionDao questionDao;
 	
 	@RequestMapping("/manageQuestion")  
 	public ModelAndView  directToManageQuestion()  
@@ -44,6 +54,26 @@ public class ManageQuestionController {
 		model.addObject("listLanguage",listLanguage);
 	    return model;  
 	}  
+	
+	@RequestMapping(value = "/deleteProcess", method = RequestMethod.POST)
+	public String deleteQuestion( @RequestParam("delQuestionList") String[] delQuestionList, ModelMap model) throws IOException {
+		int numberQuestions = delQuestionList.length;
+		try {	
+			questionDao.deleteQuestion(delQuestionList);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Failed to add >>>");
+			model.addAttribute("success","N");
+			model.addAttribute("numberQuestions",0);
+			e.printStackTrace();
+			return "deleteProcess";
+		}
+		model.addAttribute("success","Y");
+		model.addAttribute("numberQuestions",Integer.toString(numberQuestions));
+		return "deleteProcess";
+	}
+	
 	
 	
 	

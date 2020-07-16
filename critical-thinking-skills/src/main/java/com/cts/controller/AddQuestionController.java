@@ -51,7 +51,6 @@ public class AddQuestionController {
     } 
 	
 	
-    static String saveDirectory = "uploadedFiles"; 
 	@RequestMapping(value = "/addProcess", method = RequestMethod.POST)
 	public String addQuestion(@RequestParam("questionAttachment") CommonsMultipartFile questionAttachment,@RequestParam("sampleAnsAttachment") CommonsMultipartFile sampleAnsAttachment,@RequestParam("radio-all-mcq") String strMCQ, @ModelAttribute("question")Question question, 
 		      BindingResult result, ModelMap model) throws IOException {

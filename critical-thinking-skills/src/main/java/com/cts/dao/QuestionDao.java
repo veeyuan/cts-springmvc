@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -53,16 +54,24 @@ public class QuestionDao {
      	 cs.setInt(14, question.getJudgementScore());
      	 cs.setInt(15, question.getProbSolveScore());
      	 cs.setInt(16, question.getCreativeScore());
-     	 
      	 cs.setBlob(17,new ByteArrayInputStream(question.getQuestionAttachment().getBytes()));
-     	 cs.setBlob(18,new ByteArrayInputStream(question.getSampleAnsAttachment().getBytes()));
-     	 
-     	 
-    	
+     	 cs.setBlob(18,new ByteArrayInputStream(question.getSampleAnsAttachment().getBytes()));     	 
      	 cs.execute();
-
-
-
-		
+	}
+	
+	public void deleteQuestion(String[] delQuestionList) throws SQLException {
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		Statement stmt = connection.createStatement();
+		String query = "update tbl_question set del=1 where id = ";
+		for (int i=0;i<delQuestionList.length;i++) {
+			if(i==delQuestionList.length-1) {
+				query+="'"+delQuestionList[i].toString()+"'";
+			}else {
+				query+="'"+delQuestionList[i].toString()+"' or id = ";
+			}
+			
+		}
+		System.out.println("Query >>> "+query);
+		stmt.executeQuery(query);
 	}
 }

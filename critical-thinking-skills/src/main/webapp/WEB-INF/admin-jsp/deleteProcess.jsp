@@ -76,6 +76,10 @@
 #btn-icon{
 	margin-right:5px;
 }
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
 </style>
 <script>
 
@@ -137,7 +141,7 @@ function setMCQ(selected){ //if it is discipline-specific
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 id="title" class="m-0 text-dark">Add Question</h1>
+            <h1 id="title" class="m-0 text-dark">Manage Question</h1>
           </div><!-- /.col -->
           
         </div><!-- /.row -->
@@ -150,7 +154,7 @@ function setMCQ(selected){ //if it is discipline-specific
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
-                  Add Question
+                  Delete Question
                 </h3>
                 </div>
                 <div class="card-tools">
@@ -177,7 +181,7 @@ function setMCQ(selected){ //if it is discipline-specific
               	<% if (!"Y".equals(request.getAttribute("success"))){ %>
               	<button onclick="history.back(-1)"  id="btn-addquestionset-back"  class="btn btn-info float-right"><i id="btn-icon" class="fas fa fa-arrow-left"></i>Back</button>
               	<%}else{ %> 
-              	<a href="manageQuestion.html"><button  id="btn-addquestionset-back"  class="btn btn-info float-right"><i id="btn-icon" class="fas fa fa-arrow-left"></i>Back</button></a>             	     
+              	<button  id="btn-addquestionset-back"  class="btn btn-info float-right"><a href="manageQuestion.html"><i id="btn-icon" class="fas fa fa-arrow-left"></i>Back</a></button>            	     
               	<%} %>
               	        </div>
             </div>

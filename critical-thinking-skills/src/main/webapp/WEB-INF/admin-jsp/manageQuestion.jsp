@@ -34,18 +34,27 @@
    background-color: transparent;
     color: #6c757d;
 }
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
+
+#checkboxCol{
+	width: 30px;
+  	overflow: hidden;
+}
 </style>
 <script>
 
-function getQuestionDet(){
-	document.getElementById('reqQuestionDetForm').submit(); 
-   }
-   
 function delQuestions(){
 	document.getElementById('delQuestionForm').submit(); 
 }
 
-
+function getQuestionDet(id){
+	document.getElementById('questionID').value=id;
+	document.getElementById('viewQuestionForm').submit();
+}
 </script>  
 </head>    
 <body>    
@@ -125,10 +134,11 @@ function delQuestions(){
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-               <form id="delQuestionForm" method="post" action="deleteProcess.html">
+              <form id="delQuestionForm" method="post" action="deleteProcess.html">  
               <table class="table table-hover">
 				  <thead>
 				    <tr>
+				      <th scope="col"> </th>
 				      <th scope="col">Question</th>
 				      <th scope="col">Category</th>
 				      <th scope="col">Discipline</th>
@@ -136,50 +146,37 @@ function delQuestions(){
 				      <th scope="col">MCQ</th>
 				    </tr>
 				  </thead>
-				  <tbody>
-                 
-                 <c:forEach items="${listQuestion}" var="question">
-					<%-- <form id="reqQuestionDetForm" method="post" action="modifyQuestion.jsp">
-					 	<input type="hidden" name="questionid" id="questionid" value="${question.id}">
-					 </form>	
-					  --%>
-					
-					 <tr>
-					 					 
-      					<td >
-      					
-      					
-		                    <div class="icheck-primary d-inline ml-2">
-		                     
-		                       <input type="checkbox" name="delQuestionList" value="${question.id}" id="${question.id}"> 
-			                       <label  for="${question.id}"> 
-			                       <c:out value="${question.questionDscp}" />
-			                       </label>
-  				               </input>
-		                     
-		                    </div>						                     
-		                    <span id="editdiv" class="tools">
+				  <tbody>                 
+                 <c:forEach items="${listQuestion}" var="question">				
+					 <tr >
+					 	<td id="checkboxCol">					 	
+					 	<div class="icheck-primary d-inline ml-2">
+					 	<input type="checkbox" name="delQuestionList" value="${question.id}" id="${question.id}">
+					 	<label  for="${question.id}"> </label>
+					 	</div>					 	
+					 	</td>					 					 
+      					<td onclick="getQuestionDet(document.getElementById('id${question.id}').value)" >  
+							<input type="hidden" id="id${question.id}" value="${question.id}"/>					  
+   	
+      					<a href="javascript:document.getElementById('request_form${question.id}').submit();" >				
+  				             <span id="editdiv" class="tools">
 		                      <i class="fas fa-edit"></i>
-		                    </span> 
-		                   
-		                   
-		                    
-		
-		                                   
+		                    </span>  	
+		                     <c:out value="${question.questionDscp}" />		               
+		                </a>                   
                   		</td>
 					      <td>${question.categoryCd}</td>
 					      <td>${question.disciplineCd}</td>
 					      <td>${question.languageCd}</td>
 					      <td>${question.mcq}</td>
-   					 </tr>	
-                 
-               
+   					 </tr>	                 
                 </c:forEach>
-                 </ul>
                  </tbody>
 				</table>
 			 </form>
-				
+			 <form id="viewQuestionForm" method="post" action="viewQuestionDet.html">
+			 <input type="hidden" name="questionID" id="questionID"/>
+			 </form>			 
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">

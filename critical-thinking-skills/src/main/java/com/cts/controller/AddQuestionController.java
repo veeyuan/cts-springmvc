@@ -67,7 +67,7 @@ public class AddQuestionController {
 				question.setQuestionAttachment(questionAttachment);
 			}
 			if (!sampleAnsAttachment.isEmpty()) {
-				question.setQuestionAttachment(sampleAnsAttachment);
+				question.setSampleAnsAttachment(sampleAnsAttachment);
 			}
 			
 			questionDao.addQuestion(question);

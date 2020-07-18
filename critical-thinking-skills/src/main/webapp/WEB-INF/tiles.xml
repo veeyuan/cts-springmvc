@@ -31,6 +31,10 @@
         <put-attribute name="title" value="deleteProcess" />  
         <put-attribute name="body" value="/WEB-INF/admin-jsp/deleteProcess.jsp" />  
     </definition> 
+    <definition name="viewQuestionDet" extends="base-admin.definition">  
+        <put-attribute name="title" value="viewQuestionDet" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/viewQuestionDet.jsp" />  
+    </definition> 
     
     <definition name="gradeRstWaitingList" extends="base-admin.definition">  
         <put-attribute name="title" value="gradeRstWaitingList" />  

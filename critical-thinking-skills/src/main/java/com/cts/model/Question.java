@@ -27,7 +27,8 @@ public class Question {
 	private int creativeScore;
 	private MultipartFile questionAttachment;
 	private MultipartFile sampleAnsAttachment;
-
+	private String base64questionImage;
+	private String base64answerImage;
 	
 	public String getId() {
 		return id;
@@ -184,6 +185,31 @@ public class Question {
 	}
 	public void setSampleAnsAttachment(MultipartFile sampleAnsAttachment) {
 		this.sampleAnsAttachment = sampleAnsAttachment;
+	}
+	
+	/**
+	 * @return the base64questionImage
+	 */
+	public String getBase64questionImage() {
+		return base64questionImage;
+	}
+	/**
+	 * @param base64questionImage the base64questionImage to set
+	 */
+	public void setBase64questionImage(String base64questionImage) {
+		this.base64questionImage = base64questionImage;
+	}
+	/**
+	 * @return the base64answerImage
+	 */
+	public String getBase64answerImage() {
+		return base64answerImage;
+	}
+	/**
+	 * @param base64answerImage the base64answerImage to set
+	 */
+	public void setBase64answerImage(String base64answerImage) {
+		this.base64answerImage = base64answerImage;
 	}
 
 }

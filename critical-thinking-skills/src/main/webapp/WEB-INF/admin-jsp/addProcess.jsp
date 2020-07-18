@@ -75,6 +75,10 @@
 #btn-icon{
 	margin-right:5px;
 }
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
 </style>
 <script>
 
@@ -174,7 +178,7 @@ function setMCQ(selected){ //if it is discipline-specific
               
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-              <a href="addQuestion.html"><button id="btn-addquestionset"  class="btn btn-info float-right"><i id="btn-icon" class="fas fa-plus"></i> Create New</button></a> 
+              <button id="btn-addquestionset"  class="btn btn-info float-right"><a href="addQuestion.html"><i id="btn-icon" class="fas fa-plus"></i> Create New</a></button> 
               	<% if (!"Y".equals(request.getAttribute("success"))){ %>
               	<button onclick="history.back(-1)"  id="btn-addquestionset-back"  class="btn btn-info float-right"><i id="btn-icon" class="fas fa fa-arrow-left"></i>Back</button>
               	<%} %>

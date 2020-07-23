@@ -11,17 +11,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.util.Base64;
 
-import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
+import com.cts.model.AttachmentFile;
 import com.cts.model.Question;
-
 import oracle.jdbc.OracleTypes;
 
 public class QuestionDao {
@@ -32,7 +27,7 @@ public class QuestionDao {
 
 	public void addQuestion(Question question) throws SQLException, IOException {
 		 Connection connection = jdbcTemplate.getDataSource().getConnection();
-         CallableStatement cs = connection.prepareCall("{call SP_CREATE_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+         CallableStatement cs = connection.prepareCall("{call SP_CREATE_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         
          cs.setString(1, question.getQuestionDscp());
          cs.setString(2, question.getDisciplineCd());
@@ -55,15 +50,33 @@ public class QuestionDao {
 	       	 cs.setString(10,null);
          	 cs.setString(11, question.getSampleAns());
      	 }
-     	 
-     	 
+ 
      	 cs.setInt(12, question.getAnalysisScore());
      	 cs.setInt(13, question.getLogicScore());
      	 cs.setInt(14, question.getJudgementScore());
      	 cs.setInt(15, question.getProbSolveScore());
      	 cs.setInt(16, question.getCreativeScore());
-     	 cs.setBlob(17,new ByteArrayInputStream(question.getQuestionAttachment().getBytes()));
-     	 cs.setBlob(18,new ByteArrayInputStream(question.getSampleAnsAttachment().getBytes()));     	 
+
+     	 if (question.getQuestionAttachment()!=null) {
+     		 AttachmentFile questionFile = question.getQuestionAttachment();
+         	 cs.setBlob(17,new ByteArrayInputStream(questionFile.getAttachmentFile().getBytes()));
+         	 cs.setString(19,questionFile.getFileName());
+        	 cs.setString(21,questionFile.getFormat());
+     	 }else {
+     		 cs.setBlob(17,(Blob)null);
+     		 cs.setString(19,null);
+     		 cs.setString(21, null);
+     	 }
+     	 if (question.getSampleAnsAttachment()!=null) {
+     		 AttachmentFile answerFile = question.getSampleAnsAttachment();
+         	 cs.setBlob(18,new ByteArrayInputStream(answerFile.getAttachmentFile().getBytes()));    
+         	 cs.setString(20,answerFile.getFileName());
+         	 cs.setString(22,answerFile.getFormat());
+     	 }else {
+     		 cs.setBlob(18,(Blob)null);
+     		 cs.setString(20,null);
+        	 cs.setString(22,null);
+     	 }
      	 cs.execute();
      	 cs.close();
 	}
@@ -101,8 +114,13 @@ public class QuestionDao {
 		        	question.setCategoryCd(resultSet.getString("CATEGORY_CD"));
 		        	question.setLanguageCd(resultSet.getString("LANGUAGE_CD"));
 		        	question.setQuestionDscp(resultSet.getString("QUESTION_DSCP"));
-		        	if (resultSet.getBlob("QUESTION_ATTACHMENT")!=null) {
-		        		question.setBase64questionImage(getBase64Image(resultSet.getBlob("QUESTION_ATTACHMENT")));		        		
+		        	if (resultSet.getBlob("question_filedata")!=null) {
+		        		AttachmentFile questionFileObj = new AttachmentFile();
+		        		questionFileObj.setFileName(resultSet.getString("question_filename"));
+		        		questionFileObj.setFormat(resultSet.getString("question_fileformat"));
+		        		questionFileObj.setBase64Image(getBase64Image(resultSet.getBlob("question_filedata")));
+		        		questionFileObj.setId(resultSet.getString("question_fileid"));
+		        		question.setQuestionAttachment(questionFileObj);	
 		        	}		        	
 		        	if ("Y".equalsIgnoreCase(resultSet.getString("MCQ"))) {
 		            	question.setMcq(true);
@@ -116,8 +134,13 @@ public class QuestionDao {
 		            	question.setOption4(resultSet.getString("option4"));                	
 		            	question.setOption5(resultSet.getString("option5"));
 		        	}else {
-		        		if(resultSet.getBlob("SAMPLE_ANSWER_ATTACHMENT")!=null) {
-			        		question.setBase64answerImage(getBase64Image(resultSet.getBlob("SAMPLE_ANSWER_ATTACHMENT")));		        		
+		        		if(resultSet.getBlob("answer_filedata")!=null) {
+		        			AttachmentFile answerFileObj = new AttachmentFile();
+		        			answerFileObj.setFileName(resultSet.getString("answer_filename"));
+		        			answerFileObj.setFormat(resultSet.getString("answer_fileformat"));
+		        			answerFileObj.setBase64Image(getBase64Image(resultSet.getBlob("answer_filedata")));
+		        			answerFileObj.setId(resultSet.getString("answer_fileid"));
+			        		question.setSampleAnsAttachment(answerFileObj);		        		
 		        		}		        		
 		        	}
 		        	question.setSampleAns(resultSet.getString("SAMPLE_ANSWER"));
@@ -146,6 +169,87 @@ public class QuestionDao {
         		return question;
 	}
 	
+	public void modifyQuestion( Question question) throws SQLException, IOException {
+		 Connection connection = jdbcTemplate.getDataSource().getConnection();
+         CallableStatement cs = connection.prepareCall("{call SP_MODIFY_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        
+         cs.setString(1, question.getQuestionDscp());
+         cs.setString(2, question.getDisciplineCd());
+     	 cs.setString(3, question.getCategoryCd());
+     	 cs.setString(4, question.getLanguageCd());
+     	 if (question.isMcq()) {
+         	 cs.setString(5,"Y");
+         	 cs.setString(6, question.getOption1());
+        	 cs.setString(7, question.getOption2());
+        	 cs.setString(8, question.getOption3());
+        	 cs.setString(9, question.getOption4());
+        	 cs.setString(10, question.getOption5());
+        	 cs.setString(11, question.getMcqAns());
+     	 }else {
+         	 cs.setString(5,"N");
+         	 cs.setString(6, null);
+	       	 cs.setString(7, null);
+	       	 cs.setString(8, null);
+	       	 cs.setString(9, null);
+	       	 cs.setString(10,null);
+         	 cs.setString(11, question.getSampleAns());
+     	 }
+ 
+     	 cs.setInt(12, question.getAnalysisScore());
+     	 cs.setInt(13, question.getLogicScore());
+     	 cs.setInt(14, question.getJudgementScore());
+     	 cs.setInt(15, question.getProbSolveScore());
+     	 cs.setInt(16, question.getCreativeScore());
+
+     	 if (question.getQuestionAttachment()!=null) { //has either alternative or ori file
+        	 if (question.getQuestionAttachment().getId() == null ) {	//has alternative file
+        		 AttachmentFile questionFile = question.getQuestionAttachment();
+             	 cs.setBlob(17,new ByteArrayInputStream(questionFile.getAttachmentFile().getBytes()));
+             	 cs.setString(19,questionFile.getFileName());
+            	 cs.setString(21,questionFile.getFormat());
+            	 cs.setString(24,null);
+            	  
+
+        	 }else {												//has ori file
+         		 
+            	 cs.setString(24,question.getQuestionAttachment().getId());
+            	 cs.setBlob(17,(Blob)null);
+         		 cs.setString(19,null);
+         		 cs.setString(21, null);
+        	 }
+     	 }else {
+     		 cs.setBlob(17,(Blob)null);
+     		 cs.setString(19,null);
+     		 cs.setString(21,null);
+        	 cs.setString(24,null);
+     	 }
+     	 
+     	 if (question.getSampleAnsAttachment()!=null) {
+     		 
+         	if (question.getSampleAnsAttachment().getId()==null) {
+         		 AttachmentFile answerFile = question.getSampleAnsAttachment();
+	         	 cs.setBlob(18,new ByteArrayInputStream(answerFile.getAttachmentFile().getBytes()));    
+	         	 cs.setString(20,answerFile.getFileName());
+	         	 cs.setString(22,answerFile.getFormat());
+	           	 cs.setString(25,null);          	 
+	       	 }else {
+	       		cs.setString(25,question.getSampleAnsAttachment().getId());
+	           	 cs.setBlob(18,(Blob)null);
+	    		 cs.setString(20,null);
+	    		 cs.setString(22,null);
+	       	 }
+     	 }else {
+     		 cs.setBlob(18,(Blob)null);
+     		 cs.setString(20,null);
+        	 cs.setString(22,null);
+           	 cs.setString(25,null);
+     	 }
+     	 
+     	 cs.setString(23,question.getId());
+     	 cs.execute();
+     	 cs.close();
+	}
+	
 	public String getBase64Image(Blob blob) throws SQLException, IOException {
 		InputStream inputStream = blob.getBinaryStream();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -164,4 +268,6 @@ public class QuestionDao {
         outputStream.close();
 	    return base64Image;
 	}
+	
+	
 }

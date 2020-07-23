@@ -1,7 +1,5 @@
 package com.cts.model;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class Question {
 	
 	public Question() {	}
@@ -25,10 +23,9 @@ public class Question {
 	private int judgementScore;
 	private int probSolveScore;
 	private int creativeScore;
-	private MultipartFile questionAttachment;
-	private MultipartFile sampleAnsAttachment;
-	private String base64questionImage;
-	private String base64answerImage;
+	private AttachmentFile questionAttachment;
+	private AttachmentFile sampleAnsAttachment;
+
 	
 	public String getId() {
 		return id;
@@ -174,42 +171,29 @@ public class Question {
 	public void setMcqAns(String mcqAns) {
 		this.mcqAns = mcqAns;
 	}
-	public MultipartFile getQuestionAttachment() {
+	/**
+	 * @return the questionAttachment
+	 */
+	public AttachmentFile getQuestionAttachment() {
 		return questionAttachment;
 	}
-	public void setQuestionAttachment(MultipartFile questionAttachment) {
+	/**
+	 * @param questionAttachment the questionAttachment to set
+	 */
+	public void setQuestionAttachment(AttachmentFile questionAttachment) {
 		this.questionAttachment = questionAttachment;
 	}
-	public MultipartFile getSampleAnsAttachment() {
+	/**
+	 * @return the sampleAnsAttachment
+	 */
+	public AttachmentFile getSampleAnsAttachment() {
 		return sampleAnsAttachment;
 	}
-	public void setSampleAnsAttachment(MultipartFile sampleAnsAttachment) {
+	/**
+	 * @param sampleAnsAttachment the sampleAnsAttachment to set
+	 */
+	public void setSampleAnsAttachment(AttachmentFile sampleAnsAttachment) {
 		this.sampleAnsAttachment = sampleAnsAttachment;
 	}
 	
-	/**
-	 * @return the base64questionImage
-	 */
-	public String getBase64questionImage() {
-		return base64questionImage;
-	}
-	/**
-	 * @param base64questionImage the base64questionImage to set
-	 */
-	public void setBase64questionImage(String base64questionImage) {
-		this.base64questionImage = base64questionImage;
-	}
-	/**
-	 * @return the base64answerImage
-	 */
-	public String getBase64answerImage() {
-		return base64answerImage;
-	}
-	/**
-	 * @param base64answerImage the base64answerImage to set
-	 */
-	public void setBase64answerImage(String base64answerImage) {
-		this.base64answerImage = base64answerImage;
-	}
-
 }

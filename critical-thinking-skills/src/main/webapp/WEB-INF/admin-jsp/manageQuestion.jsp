@@ -1,4 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <html>    
 <head>    
 <style>
@@ -85,49 +87,51 @@ function getQuestionDet(id){
                 </h3>
 			   
 			    <div class="searchfilter">
-			      <form>			        
+			      <form:form id="filterForm" action ="manageQuestion.html"  method="post" modelAttribute="question" >			        
 			         <div class="form-row">
 			         <div class="form-group col-md-4">
-			         		<input id="search"  class="form-control" type="text" placeholder="Search question..." />			         
+			         		<form:input path="questionDscp" id="search"  class="form-control"  placeholder="Search question..." />			         
 			         </div>
 			         <div class="form-group col-md-2">
-					      	<select class="form-control" name="">					      	
-	                        <c:forEach items="${listCategory}" var="category">
-					      	  <option value ="${category.code}">${category.name}</option>
+	                        <form:select path="categoryCd" class="form-control" >
+	                        <form:option value = "all" label="All"/>
+					      	<c:forEach items="${listCategory}" var="category">
+					      	  <form:option value ="${category.code}" label="${category.name}"/>
 				              </c:forEach>
-	                       	</select>
+	                       </form:select>
 					  </div>
 			        
 	                <div class="form-group col-md-2">
-					      <select class="form-control" name="">
-					          <c:forEach items="${listDiscipline}" var="discipline">
-					      	  <option value ="${discipline.code}">${discipline.name}</option>
+					       <form:select path="disciplineCd"  class="form-control" >
+					       <form:option value = "all" label="All"/>					       
+	                       <c:forEach items="${listDiscipline}" var="discipline">
+					      	  <form:option value ="${discipline.code}" label="${discipline.name}"/>
 				              </c:forEach>
-				              
-	                       </select>
+	                       </form:select>
 					  </div>
 					  
 					 <div class="form-group col-md-2">
-					      <select  class="form-control" name="questionlang">
-					      	<c:forEach items="${listLanguage}" var="language">
-					      	  <option value ="${language.code}">${language.name}</option>
+					       <form:select path="languageCd"  class="form-control" name="questionsetlang">
+					       <form:option value = "all" label="All"/>  
+					      <c:forEach items="${listLanguage}" var="language">
+					      	  <form:option value ="${language.code}" label="${language.name}"/>
 				              </c:forEach>
-	                       </select>
+	                       </form:select>
 					  </div>
-					 <span><button id="" onclick="" type="button" class="btn btn-info float-right"><i class="fas fa-search"></i> Search</button></span>
+					 <span><button type="submit" class="btn btn-info float-right"><i class="fas fa-search"></i> Search</button></span>
 					  					  
 					 </div>
 			          
 			        
-			      </form>
+			      </form:form>
 			    </div>
 
                 <div class="card-tools">
                   <ul class="pagination pagination-sm">
                     <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="manageQuestion.html/1" class="page-link">1</a></li>
+                    <li class="page-item"><a href="manageQuestion.html/2" class="page-link">2</a></li>
+                    <li class="page-item"><a href="manageQuestion.html/3" class="page-link">3</a></li>
                     <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
                   </ul>
                 </div>

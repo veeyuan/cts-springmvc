@@ -35,6 +35,14 @@
         <put-attribute name="title" value="viewQuestionDet" />  
         <put-attribute name="body" value="/WEB-INF/admin-jsp/viewQuestionDet.jsp" />  
     </definition> 
+    <definition name="modifyQuestion" extends="base-admin.definition">  
+        <put-attribute name="title" value="modifyQuestion" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/modifyQuestion.jsp" />  
+    </definition>
+    <definition name="modifyProcess" extends="base-admin.definition">  
+        <put-attribute name="title" value="modifyProcess" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/modifyProcess.jsp" />  
+    </definition>
     
     <definition name="gradeRstWaitingList" extends="base-admin.definition">  
         <put-attribute name="title" value="gradeRstWaitingList" />  

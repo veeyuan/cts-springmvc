@@ -1,12 +1,12 @@
 package com.cts.controller;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;  
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,7 +19,7 @@ import com.cts.dao.CategoryDao;
 import com.cts.dao.DisciplineDao;
 import com.cts.dao.LanguageDao;
 import com.cts.dao.QuestionDao;
-import com.cts.dao.QuestionListDao;
+import com.cts.model.AttachmentFile;
 import com.cts.model.Category;
 import com.cts.model.Discipline;
 import com.cts.model.Language;
@@ -64,15 +64,22 @@ public class AddQuestionController {
 			
 			
 			if (!questionAttachment.isEmpty()) {
-				question.setQuestionAttachment(questionAttachment);
+				AttachmentFile questionFileObj = new AttachmentFile();
+				questionFileObj.setAttachmentFile(questionAttachment);
+				questionFileObj.setFileName(questionAttachment.getOriginalFilename());
+				questionFileObj.setFormat(questionAttachment.getContentType());
+				question.setQuestionAttachment(questionFileObj);
 			}
 			if (!sampleAnsAttachment.isEmpty()) {
-				question.setSampleAnsAttachment(sampleAnsAttachment);
+				AttachmentFile answerFileObj = new AttachmentFile();
+				answerFileObj.setAttachmentFile(sampleAnsAttachment);
+				answerFileObj.setFileName(sampleAnsAttachment.getOriginalFilename());
+				answerFileObj.setFormat(sampleAnsAttachment.getContentType());
+				question.setSampleAnsAttachment(answerFileObj);
 			}
 			
 			questionDao.addQuestion(question);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Failed to add >>>");
 			model.addAttribute("success","N");
 			e.printStackTrace();
@@ -82,4 +89,6 @@ public class AddQuestionController {
 		
 		return "addProcess";
 	}
+	
+	
 }

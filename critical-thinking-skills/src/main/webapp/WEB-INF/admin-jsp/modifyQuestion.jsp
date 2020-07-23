@@ -2,8 +2,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <% %>
 <html>    
-<head> 
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">   
+<head>    
 <style>
 .form-group{
 	border-radius: 2px;
@@ -50,19 +49,87 @@ a {
   color: inherit; /* blue colors for links too */
   text-decoration: inherit; /* no underline */
 }
+
+#attachmentMsg{
+  font-size:13px;
+  color:red;
+}
 </style>
 <script>
 
-
 function setOption(selected){ //set number of options
+	var x=selected.value;
+	if (x=="2"){
+		document.getElementById("opt3").value="";
+		document.getElementById("opt4").value="";
+		document.getElementById("opt5").value="";
+		document.getElementById("opt3").disabled  =true;
+		document.getElementById("opt4").disabled = true;
+		document.getElementById("opt5").disabled = true;
+	}else if (x=="3"){
+		document.getElementById("opt3").disabled  =false;
+		document.getElementById("opt4").value="";
+		document.getElementById("opt5").value="";
+		document.getElementById("opt4").disabled = true;
+		document.getElementById("opt5").disabled = true;
+	}else if (x=="4"){
+		document.getElementById("opt3").disabled  = false;
+		document.getElementById("opt4").disabled = false;
+		document.getElementById("opt5").value="";
+		document.getElementById("opt5").disabled = true;
+	}else if (x=="5"){
+		document.getElementById("opt3").disabled  = false;
+		document.getElementById("opt4").disabled = false;
+		document.getElementById("opt5").disabled = false;
+	}
+	else{
+		document.getElementById("opt3").value="";
+		document.getElementById("opt4").value="";
+		document.getElementById("opt5").value="";
+		document.getElementById("opt3").disabled  = false;
+		document.getElementById("opt4").disabled = false;
+		document.getElementById("opt5").disabled = false;
+	}
+} 
+
+function setInitOption(selected){ //set number of options
 	var x=selected;
 	document.getElementById("optionNum").value=x;
-	
+	if (x=="2"){
+		document.getElementById("opt3").value="";
+		document.getElementById("opt4").value="";
+		document.getElementById("opt5").value="";
+		document.getElementById("opt3").disabled  =true;
+		document.getElementById("opt4").disabled = true;
+		document.getElementById("opt5").disabled = true;
+	}else if (x=="3"){
+		document.getElementById("opt3").disabled  =false;
+		document.getElementById("opt4").value="";
+		document.getElementById("opt5").value="";
+		document.getElementById("opt4").disabled = true;
+		document.getElementById("opt5").disabled = true;
+	}else if (x=="4"){
+		document.getElementById("opt3").disabled  = false;
+		document.getElementById("opt4").disabled = false;
+		document.getElementById("opt5").value="";
+		document.getElementById("opt5").disabled = true;
+	}else if (x=="5"){
+		document.getElementById("opt3").disabled  = false;
+		document.getElementById("opt4").disabled = false;
+		document.getElementById("opt5").disabled = false;
+	}
+	else{
+		document.getElementById("opt3").value="";
+		document.getElementById("opt4").value="";
+		document.getElementById("opt5").value="";
+		document.getElementById("opt3").disabled  = false;
+		document.getElementById("opt4").disabled = false;
+		document.getElementById("opt5").disabled = false;
+	}
 }
 	
 function setMCQ(selected){ //if it is discipline-specific
 	var x=selected.value;
-	alert(x);
 	if (x=="yes"){
 		document.getElementById("mcqDiv").style.display = "block";
 		document.getElementById("structuredDiv").style.display = "none";
@@ -88,7 +155,7 @@ function setInit(){
 		document.getElementById("structuredDiv").style.display = "none";
 		var num = <%=request.getAttribute("numberOfOptions")%>;
 		if (num !== undefined){
-			setOption(num);			
+			setInitOption(num);			
 		}
 		var mcqans = document.getElementById("mcqanswer").value;
 		document.getElementById("numChoice").value = mcqans;
@@ -100,9 +167,7 @@ function setInit(){
 		
 	}
 }
-function delQuestions(){
-	document.getElementById('delQuestionForm').submit(); 
-}
+
 function addLoadEvent(func) { 
 	var oldonload = window.onload; 
 	if (typeof window.onload != 'function') { 
@@ -119,6 +184,9 @@ function addLoadEvent(func) {
 
 addLoadEvent(setInit); 
 
+function submitChange(){
+	document.getElementById('questionForm').submit();
+}
 
 </script>  
 </head>  
@@ -145,32 +213,27 @@ addLoadEvent(setInit);
                   View Question
                 </h3>
                 </div>
-                 <form id="delQuestionForm" method="post" action="deleteProcess.html">
-                   <input type="hidden" name="delQuestionList" value="${question.id}"/>                                
-                 </form>
-                <form:form id="questionForm" action ="modifyQuestion.html"  method="post" modelAttribute="question" >                			 
-                <input type="hidden" name="questionID" id="questionID" value="${question.id}"/>               
+                <form:form id="questionForm" action ="modifyProcess.html"  method="post" modelAttribute="question" enctype="multipart/form-data">                			 
+                <input type="hidden" name="questionID" id="questionID" value="${question.id}"/>   
+                <input type="hidden" name="quesAttachmentID" id="quesAttachmentID" value="${question.questionAttachment.id}"/>
+                <input type="hidden" name="ansAttachmentID" id="ansAttachmentID" value="${question.sampleAnsAttachment.id}"/>            
                 <div class="card-tools">
                  <div class="form-row">
 				  <div class="form-group col-md-8">
 				    <label >Question</label>
-				    <form:textarea path="questionDscp" class="form-control" id="" rows="2" placeholder="Question" value="${question.questionDscp}" readonly="true"/>
+				    <form:textarea path="questionDscp" class="form-control" id="" rows="2" placeholder="Question" value="${question.questionDscp}" />
 				 </div>
-				 <%if ("Y".equals(request.getAttribute("hasQuestionAttachment"))&& "N".equals(request.getAttribute("isQuesAttachmentIMG"))){ %>
-				 <div class="form-group col-md-2">
+				  <div class="form-group col-md-2">
 				 		<label >Attachment (for Question)</label>
-				 		<a   href="downloadAttachment.html?id=${question.questionAttachment.id}">${question.questionAttachment.fileName}</a>
+				 		<input type="file" class="form-control-file" id="exampleFormControlFile1" name="questionAttachment">
 				  </div>
-				 <%} %>
+				  <%if ("Y".equals(request.getAttribute("hasQuestionAttachment"))){ %>
+				  <div class="form-group col-md-1">
+				 		<p id="attachmentMsg">${question.questionAttachment.fileName} is uploaded. New attachment will replace it.</p>
+				  </div>
+				  <%} %>
 				 </div>
-				  <%if ("Y".equals(request.getAttribute("hasQuestionAttachment"))&& "Y".equals(request.getAttribute("isQuesAttachmentIMG"))){ %>	
-					 <div class="form-row">				 
-					  <div id="AAdiv" class="form-group col-md-8">
-				 		<label >Attachment (for Question)</label><br>
-				 		<img src="data:image/jpg;base64,${question.questionAttachment.base64Image}" width="240" height="300"/>
-				 		</div>
-				 		</div>
-				 		<%} %>
+			
 				 
 				  
 				  <div class="form-row">
@@ -180,7 +243,7 @@ addLoadEvent(setInit);
 	  				  	 <input type="hidden" id="discipline" value="${question.disciplineCd}">  
 	                     <form:select path="disciplineCd" id="disciplineCd" class="form-control" >
 	                       <c:forEach items="${listDiscipline}" var="discipline">
-					      	  <form:option value ="${discipline.code}" label="${discipline.name}" disabled="true"/>
+					      	  <form:option value ="${discipline.code}" label="${discipline.name}" />
 				              </c:forEach>
 	                       </form:select>
 	                   </div>
@@ -191,7 +254,7 @@ addLoadEvent(setInit);
 					      <input type="hidden" id="category" value="${question.categoryCd}"> 
 					      <form:select path="categoryCd" id="categoryCd" class="form-control" >
 					      	<c:forEach items="${listCategory}" var="category">
-					      	  <form:option value ="${category.code}" label="${category.name}" disabled="true"/>
+					      	  <form:option value ="${category.code}" label="${category.name}" />
 				              </c:forEach>
 	                       </form:select>
 					  </div>
@@ -200,7 +263,7 @@ addLoadEvent(setInit);
 					      <input type="hidden" id="language" value="${question.languageCd}"> 
 					      <form:select path="languageCd" id="languageCd" class="form-control" name="questionsetlang">
 					      <c:forEach items="${listLanguage}" var="language">
-					      	  <form:option value ="${language.code}" label="${language.name}" disabled="true"/>
+					      	  <form:option value ="${language.code}" label="${language.name}" />
 				              </c:forEach>
 	                       </form:select>
 					  </div>
@@ -208,11 +271,11 @@ addLoadEvent(setInit);
 					    <label >Multi-choiced Question?</label><br>
 					    <input type="hidden" id="isMcq" value="${question.mcq}">  
 							<div class="custom-control custom-radio custom-control-inline">
-							  <input type="radio"  id="mcq1" name="radio-all-mcq" class="custom-control-input" value="yes" disabled>
+							  <input onclick="setMCQ(this);" type="radio"  id="mcq1" name="radio-all-mcq" class="custom-control-input" value="yes" >
 							  <label class="custom-control-label" for="mcq1">Yes</label>
 							</div>
 							<div class="custom-control custom-radio custom-control-inline">
-							  <input type="radio" id="mcq2" name="radio-all-mcq" class="custom-control-input" value="no" disabled>
+							  <input onclick="setMCQ(this);" type="radio" id="mcq2" name="radio-all-mcq" class="custom-control-input" value="no" >
 							  <label class="custom-control-label" for="mcq2">No</label>
 							</div>				 
 					   </div>
@@ -222,7 +285,7 @@ addLoadEvent(setInit);
 					 <div class="form-row">					
 					    <div  class="form-group col-md-3" >
 	                   		<label >Number of Choices</label>
-							<select onchange="setOption(this)" class="form-control" id="optionNum" disabled>
+							<select onchange="setOption(this)" class="form-control" id="optionNum" >
 							<option value="2">2</option>
 					      	<option value="3">3</option>
 	                        <option value="4">4</option>
@@ -231,7 +294,7 @@ addLoadEvent(setInit);
 	                   <div  class="form-group col-md-2" >
 	                   		<label >Correct Answer</label>
 	                   		<input type="hidden" id="mcqanswer" value="${question.sampleAns}">
-	                   		<form:input path="mcqAns" class="form-control" id="numChoice" placeholder="Option Number (eg. 1)" value="" readonly="true" />                			               		
+	                   		<form:input path="mcqAns" class="form-control" id="numChoice" placeholder="Option Number (eg. 1)" value=""  />                			               		
 	                   </div>			 
 					 </div>
 					 
@@ -239,31 +302,31 @@ addLoadEvent(setInit);
 					 <div class="form-group row">
 					    <label class="col-sm-1 col-form-label">Option 1</label>
 					    <div class="col-sm-9">
-    					 	<form:textarea path="option1" class="form-control" id="opt1" rows="1" placeholder="-" readonly="true" />
+    					 	<form:textarea path="option1" class="form-control" id="opt1" rows="1" placeholder="Option 1" />
 				   		</div>
 				  </div>
 					<div class="form-group row">
 					    <label class="col-sm-1 col-form-label">Option 2</label>
 					    <div class="col-sm-9">
-    					 	<form:textarea path="option2"  class="form-control" id="opt2" rows="1" placeholder="-" readonly="true" />
+    					 	<form:textarea path="option2"  class="form-control" id="opt2" rows="1" placeholder="Option 2"  />
 				   		</div>
 				  </div>
 					<div  class="form-group row">
 					    <label class="col-sm-1 col-form-label">Option 3</label>
 					    <div class="col-sm-9">
-    					 	<form:textarea path="option3"  class="form-control" id="opt3" rows="1" placeholder="-"  readonly="true"/>
+    					 	<form:textarea path="option3"  class="form-control" id="opt3" rows="1" placeholder="Option 3"  />
 				   		</div>
 				  </div>
 				  <div class="form-group row">
 					    <label class="col-sm-1 col-form-label">Option 4</label>
 					    <div class="col-sm-9">
-    					 	<form:textarea path="option4"  class="form-control" id="opt4" rows="1" placeholder="-" readonly="true"/>
+    					 	<form:textarea path="option4"  class="form-control" id="opt4" rows="1" placeholder="Option 4" />
 				   		</div>
 				  </div>
 				  <div class="form-group row">
 					    <label class="col-sm-1 col-form-label">Option 5</label>
 					    <div class="col-sm-9">
-    					 	<form:textarea path="option5"  class="form-control" id="opt5" rows="1" placeholder="-"   readonly="true" />
+    					 	<form:textarea path="option5"  class="form-control" id="opt5" rows="1" placeholder="Option 5"   />
 				   		</div>
 				  </div>
 				  
@@ -272,23 +335,19 @@ addLoadEvent(setInit);
 				   <div class="form-row">
 					  <div class="form-group col-md-8">
 					    <label >Sample Answer</label>
-					    <form:textarea path="sampleAns" class="form-control" id="" rows="1" placeholder="as marking scheme" readonly="true"/>
+					    <form:textarea path="sampleAns" class="form-control" id="" rows="1" placeholder="as marking scheme" />
 					 </div>
-					 <%if ("Y".equals(request.getAttribute("hasAnswerAttachment")) && "N".equals(request.getAttribute("isAnsAttachmentIMG"))){ %>	
-						 <div class="form-group col-md-2">
-					 		<label >Attachment (for Sample Answer)</label>
-					 		<a   href="downloadAttachment.html?id=${question.sampleAnsAttachment.id}">${question.sampleAnsAttachment.fileName}</a>					 		
-					  	</div>
-					 <%} %>
+					 <div class="form-group col-md-2">
+				 		<label >Attachment (for Sample Answer)</label>
+				 		<input type="file" class="form-control-file" id="exampleFormControlFile1" name="sampleAnsAttachment">
+				  </div>
+				   <%if ("Y".equals(request.getAttribute("hasAnswerAttachment"))){ %>
+				  <div class="form-group col-md-1">
+				 		<p id="attachmentMsg">${question.sampleAnsAttachment.fileName} is uploaded. New attachment will replace it.</p>
+				  </div>
+				  <%} %>
 					 </div>
-					 <%if ("Y".equals(request.getAttribute("hasAnswerAttachment")) && "Y".equals(request.getAttribute("isAnsAttachmentIMG"))){ %>	
-					 <div class="form-row">				 
-					  <div id="AAdiv" class="form-group col-md-8">
-				 		<label >Attachment (for Sample Answer)</label><br>
-				 		<img src="data:image/jpg;base64,${question.sampleAnsAttachment.base64Image}" width="240" height="300"/>
-				 		</div>
-				 		</div>
-				 		<%} %>
+					 
 				  
 				  </div>
 
@@ -299,7 +358,7 @@ addLoadEvent(setInit);
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Analysis &  Evaluation</div>
 				        </div>
-				        <form:input path="analysisScore" class="form-control" id="" placeholder="0" name="" readonly="true"/>
+				        <form:input path="analysisScore" class="form-control" id="" placeholder="0" name="" />
 				      </div>
 				    </div>
 				    <div class="col-sm-3 my-1">
@@ -307,7 +366,7 @@ addLoadEvent(setInit);
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Logic & Reasoning</div>
 				        </div>
-				        <form:input path="logicScore" class="form-control" id="" placeholder="0" name="" readonly="true"/>
+				        <form:input path="logicScore" class="form-control" id="" placeholder="0" name="" />
 				      </div>
 				      </div>
 				      <div class="col-sm-3 my-1">
@@ -315,7 +374,7 @@ addLoadEvent(setInit);
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Judgement</div>
 				        </div>
-				        <form:input path="judgementScore" class="form-control" id="" placeholder="0" name="" readonly="true"/>
+				        <form:input path="judgementScore" class="form-control" id="" placeholder="0" name="" />
 				      </div>
 				    </div>
 				    </div>
@@ -325,7 +384,7 @@ addLoadEvent(setInit);
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Problem Solving</div>
 				        </div>
-				        <form:input path="probSolveScore" class="form-control" id="" placeholder="0" name="" readonly="true"/>
+				        <form:input path="probSolveScore" class="form-control" id="" placeholder="0" name="" />
 				      </div>
 				    </div>
 				    <div class="col-sm-3 my-1">
@@ -333,7 +392,7 @@ addLoadEvent(setInit);
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Creative Thinking</div>
 				        </div>
-				        <form:input path="creativeScore" class="form-control" id="" placeholder="0" name="" readonly="true"/>
+				        <form:input path="creativeScore" class="form-control" id="" placeholder="0" name="" />
 				      </div>
 				    </div>
 				    </div>
@@ -344,16 +403,15 @@ addLoadEvent(setInit);
 				  
 					 
 					</div>
+	                  </form:form>
 	                                    
 				   </div>
               
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <button onclick="modifyQuestion()" id="btn-addquestionset" class="btn btn-info float-right"><i id="btn-icon" class="fas fa-edit"></i> Modify</button>   
-                <button  id="btn-addquestionset-back" onclick="delQuestions()" type="button" class="btn btn-info float-right"><i class="fas fa-trash"></i> Delete</button>          
-                <button  id="btn-addquestionset-back"  class="btn btn-info float-right"><a href="manageQuestion.html"><i id="btn-icon" class="fas fa fa-arrow-left"></i>Back</a></button>
+                <button onclick="submitChange()" id="btn-addquestionset" class="btn btn-info float-right"><i id="btn-icon" class="fas fa-edit"></i> Submit Change</button>             
+                <button Onclick="history.back(-1)" id="btn-addquestionset-back"  class="btn btn-info float-right"><i id="btn-icon" class="fas fa fa-arrow-left"></i>Back</button>
               </div>
-              </form:form>
             </div>
             <!-- /.card -->
             </section>  

@@ -51,10 +51,21 @@ public class ManageQuestionController {
 	FileDao fileDao;
 	
 	@RequestMapping("/manageQuestion")  
-	public ModelAndView  directToManageQuestion()  
+	public ModelAndView  directToManageQuestion() throws IOException  
 	{  
 		ModelAndView model = new ModelAndView("manageQuestion"); 
-		List<Question> listQuestion =   questionListDao.getQuestionList();
+		int numPerPg=5; 
+		List<Question> listQuestion =   questionListDao.getQuestionList(numPerPg);
+		Question question = new Question();
+		List<Question> allQuestionList =   questionListDao.filterQuestionList(question,0,0);
+		int totalRecords = allQuestionList.size();
+		int recordsPerPg = 5;
+		int totalPages = totalRecords/recordsPerPg;
+		if (totalRecords%recordsPerPg>0) {
+			totalPages++;
+		}
+		model.getModelMap().addAttribute("totalPages",Integer.toString(totalPages));
+		model.getModelMap().addAttribute("currentPage",Integer.toString(1));
 		model.addObject("listQuestion",listQuestion);
 		List<Discipline> listDiscipline =   disciplineDao.getDisciplineList();
 		model.addObject("listDiscipline",listDiscipline);
@@ -67,18 +78,29 @@ public class ManageQuestionController {
 	}  
 	
 	@RequestMapping(value="/manageQuestion", method = RequestMethod.POST)  
-	public ModelAndView  filterQuestion(@ModelAttribute("question")Question question, 
+	public ModelAndView  filterQuestion(@RequestParam("targetPage") String strTargetPage,
+			@ModelAttribute("question")Question question, 
 		      BindingResult result) throws IOException  
 	{  
-		/*int numPerPg=5;  
-		int startRow=1;		
-        if(pageid==1){}    
+		int numPerPg=5;  
+		int startRow=1;
+		int targetPage = Integer.parseInt(strTargetPage);
+        if(targetPage==1){}    
         else{    
-        	startRow=(pageid-1)*numPerPg+1;    
+        	startRow=(targetPage-1)*numPerPg+1;    
         }    
-        int endRow=startRow+numPerPg-1;*/
+        int endRow=startRow+numPerPg-1;
 		ModelAndView model = new ModelAndView("manageQuestion"); 
-		List<Question> listQuestion =   questionListDao.filterQuestionList(question);
+		List<Question> allQuestionList =   questionListDao.filterQuestionList(question,0,0);
+		List<Question> listQuestion =   questionListDao.filterQuestionList(question,startRow,endRow);
+		int totalRecords = allQuestionList.size();
+		int recordsPerPg = 5;
+		int totalPages = totalRecords/recordsPerPg;
+		if (totalRecords%recordsPerPg>0) {
+			totalPages++;
+		}
+		model.getModelMap().addAttribute("totalPages",Integer.toString(totalPages));
+		model.getModelMap().addAttribute("currentPage",strTargetPage);
 		model.addObject("listQuestion",listQuestion);
 		List<Discipline> listDiscipline =   disciplineDao.getDisciplineList();
 		model.addObject("listDiscipline",listDiscipline);
@@ -86,8 +108,9 @@ public class ManageQuestionController {
 		model.addObject("listCategory",listCategory);
 		List<Language> listLanguage =   languageDao.getLanguageList();
 		model.addObject("listLanguage",listLanguage);
-		model.addObject("question",new Question());
+		model.addObject("question",question);
 	    return model;  
+	    
 	}  
 	
 	

@@ -19,9 +19,11 @@ public class QuestionListDao {
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {  
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
-	public List<Question> getQuestionList() {
-	    String sqlStmt = "select * from tbl_question where del<>1 ORDER BY question_dscp ASC";
-	   // String sqlStmt = "select * from tbl_question where del<>1 AND rownum between 1 and "+numPerPg+" ORDER BY question_dscp ASC";
+	
+	
+	public List<Question> getQuestionList(int numPerPg) {
+	    //String sqlStmt = "select * from tbl_question where del<>1 ORDER BY question_dscp ASC";
+	    String sqlStmt = "select * from tbl_question where del<>1 AND rownum between 1 and "+numPerPg+" ORDER BY question_dscp ASC";
 
 	    List<Question> questionLst = getQuestion(sqlStmt);
 	    return questionLst;
@@ -50,22 +52,22 @@ public class QuestionListDao {
 	}
 		
 	
-	public List<Question> filterQuestionList(Question questionType) throws IOException  {		
+	public List<Question> filterQuestionList(Question questionType,int startRow, int endRow) throws IOException  {		
 		List<Question> questionList = new ArrayList() ;
 		ResultSet resultSet = null;
 		Connection connection;
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_FILTER_QUESTION(?,?,?,?,?)}");
+			CallableStatement cs = connection.prepareCall("{call SP_FILTER_QUESTION(?,?,?,?,?,?,?)}");
 	        cs.setString(1, questionType.getQuestionDscp());
 	        cs.setString(2, checkIsAll(questionType.getDisciplineCd()));
 	        cs.setString(3, checkIsAll(questionType.getCategoryCd()));
 	        cs.setString(4, checkIsAll(questionType.getLanguageCd()));
-	       // cs.setInt(5, startRow);
-	       // cs.setInt(6, endRow);
-	        cs.registerOutParameter(5, OracleTypes.CURSOR); 
+	        cs.setInt(5, startRow);
+	        cs.setInt(6, endRow);
+	        cs.registerOutParameter(7, OracleTypes.CURSOR); 
 	        cs.execute();
-	        resultSet = (ResultSet) cs.getObject(5);
+	        resultSet = (ResultSet) cs.getObject(7);
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
 		        	Question question = new Question();

@@ -57,9 +57,37 @@ function getQuestionDet(id){
 	document.getElementById('questionID').value=id;
 	document.getElementById('viewQuestionForm').submit();
 }
+
+function getPageNum(objButton){
+	var target=objButton.value;
+	document.getElementById('targetPage').value=target;
+	document.getElementById('filterForm').submit();
+	
+}
+
+function search(){
+	document.getElementById('targetPage').value = "1";
+	document.getElementById('filterForm').submit();
+}
 </script>  
 </head>    
-<body>    
+<body> 
+<% 
+int currentPage=0;
+int totalPage=0;
+int previousPage=0;
+int nextPage=0;
+if ("POST".equalsIgnoreCase(request.getMethod())) {
+	   currentPage = Integer.parseInt((String)request.getAttribute("currentPage"));	   
+	   previousPage = currentPage-1;
+	   nextPage = currentPage+1; 
+} else{
+	currentPage=1;
+}
+totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
+
+                  	 
+%>    
   <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -87,10 +115,11 @@ function getQuestionDet(id){
                 </h3>
 			   
 			    <div class="searchfilter">
-			      <form:form id="filterForm" action ="manageQuestion.html"  method="post" modelAttribute="question" >			        
+			      <form:form id="filterForm" action ="manageQuestion.html"  method="post" modelAttribute="question" >
+			      <input type="hidden" name="targetPage" id="targetPage" value="1"/>
 			         <div class="form-row">
 			         <div class="form-group col-md-4">
-			         		<form:input path="questionDscp" id="search"  class="form-control"  placeholder="Search question..." />			         
+			         		<form:input path="questionDscp" id="search"  class="form-control"  placeholder="Search question..." />	
 			         </div>
 			         <div class="form-group col-md-2">
 	                        <form:select path="categoryCd" class="form-control" >
@@ -118,7 +147,7 @@ function getQuestionDet(id){
 				              </c:forEach>
 	                       </form:select>
 					  </div>
-					 <span><button type="submit" class="btn btn-info float-right"><i class="fas fa-search"></i> Search</button></span>
+					 <span><button onclick="search()" class="btn btn-info float-right"><i class="fas fa-search"></i> Search</button></span>
 					  					  
 					 </div>
 			          
@@ -128,11 +157,29 @@ function getQuestionDet(id){
 
                 <div class="card-tools">
                   <ul class="pagination pagination-sm">
-                    <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
-                    <li class="page-item"><a href="manageQuestion.html/1" class="page-link">1</a></li>
-                    <li class="page-item"><a href="manageQuestion.html/2" class="page-link">2</a></li>
-                    <li class="page-item"><a href="manageQuestion.html/3" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+                   <%if (currentPage==1){ %>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='1' class="page-link" /></li>
+                    	<%if (totalPage>1){ %>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='2' class="page-link" /></li>
+                    		<%if (totalPage>2){ %>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='3' class="page-link" /></li>
+                    		<%} %>
+                    <li class="page-item"><button onclick="getPageNum(this)" type='button' value='<%=currentPage+1%>' class="page-link" />&raquo;</button></li>
+                    	<%} %>
+                    <%}else if (currentPage==totalPage){ %>
+                    <li class="page-item"><button onclick="getPageNum(this)" type='button' value='<%=currentPage-1%>' class="page-link" />&laquo;</button></li>
+                    	<%if (currentPage-2>0){ %>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='<%=currentPage-2%>' class="page-link" /></li>
+                    	<%} %>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='<%=currentPage-1%>' class="page-link" /></li>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='<%=currentPage%>' class="page-link" /></li>
+                    <%}else{ %>
+                    <li class="page-item"><button onclick="getPageNum(this)" type='button' value='<%=currentPage-1%>' class="page-link" />&laquo;</button></li>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='<%=previousPage%>' class="page-link" /></li>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='<%=currentPage%>' class="page-link" /></li>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='<%=nextPage%>' class="page-link" /></li>
+                    <li class="page-item"><button onclick="getPageNum(this)" type='button' value='<%=currentPage+1%>' class="page-link" />&raquo;</button></li>
+                    <%} %>
                   </ul>
                 </div>
               </div>

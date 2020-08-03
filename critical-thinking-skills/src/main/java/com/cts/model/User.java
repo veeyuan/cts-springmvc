@@ -2,18 +2,19 @@ package com.cts.model;
 
 public class User extends Login{
 	
-
 	
-	public User(String username, String password, String roleCd) {
-		super(username, password, roleCd);
-		// TODO Auto-generated constructor stub
-	}
 	private String id;
 	private String fullname;
 	private String email;
 	private String disciplineCd;
 	private String categoryCd;
+		
+	public User(String username, String password, String roleCd) {
+		super(username, password, roleCd);
+		// TODO Auto-generated constructor stub
+	}
 	
+	public User() {}
 	public String getId() {
 		return id;
 	}

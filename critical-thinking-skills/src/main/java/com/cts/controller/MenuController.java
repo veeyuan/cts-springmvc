@@ -11,5 +11,7 @@ public class MenuController {
 	public String redirectToGradeRstWaitingList()  
 	{  
 	    return "gradeRstWaitingList";  
-	}  
+	} 
+	
+	
 }  

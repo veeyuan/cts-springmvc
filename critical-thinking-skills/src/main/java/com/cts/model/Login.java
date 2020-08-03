@@ -13,6 +13,8 @@ public class Login {
 		this.roleCd = roleCd;
 		
 	}
+	
+	public Login() {}
 	public String getUsername() {
 		return username;
 	}

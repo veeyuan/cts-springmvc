@@ -238,7 +238,7 @@ function changeUni(selected){
                                         </div>
                                         <div class="form-group">	
                                     	<div class="custom-control custom-radio custom-control-inline">
-										  <input type="radio"  id="customRadio2" name="roleCd" class="custom-control-input" value="NORMAL" checked>
+										  <input type="radio"  id="customRadio2" name="roleCd" class="custom-control-input" value="TEST-TAKER" checked>
 										  <label class="custom-control-label" for="customRadio2">Normal</label>
 										</div>
                                     	 <div class="custom-control custom-radio custom-control-inline">

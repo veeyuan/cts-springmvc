@@ -5,7 +5,7 @@
 <head>    
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Test-Takers | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -36,7 +36,7 @@
   border-color:#FED136;
   }
 
-  </style> 
+  </style>
   <script>
   function setInit(){
 		//setUserName
@@ -58,11 +58,10 @@
 	} 
 
 	addLoadEvent(setInit); 
-  </script>   
+  </script>    
 </head>    
-<body  class="hold-transition sidebar-mini layout-fixed">   
+<body  class="hold-transition sidebar-mini layout-fixed">    
 <input type="hidden" id="username" value="<%=request.getSession().getAttribute("username").toString()%>">
- 
 <div class="wrapper">
             
         <tiles:insertAttribute name="menu" />

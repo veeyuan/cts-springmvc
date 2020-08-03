@@ -47,6 +47,20 @@
     <definition name="gradeRstWaitingList" extends="base-admin.definition">  
         <put-attribute name="title" value="gradeRstWaitingList" />  
         <put-attribute name="body" value="/WEB-INF/admin-jsp/gradeRstWaitingList.jsp" />  
-    </definition> 
+    </definition>
+    
+    
+    <definition name="base-test-taker.definition"  
+        template="/WEB-INF/test-taker-jsp/layout.jsp">  
+        <put-attribute name="title" value="" />  
+        <put-attribute name="menu" value="/WEB-INF/test-taker-jsp/menu.jsp" />  
+        <put-attribute name="body" value="" />  
+        <put-attribute name="footer" value="/WEB-INF/test-taker-jsp/footer.jsp" />  
+    </definition>   
+    
+    <definition name="takeTest" extends="base-test-taker.definition">  
+        <put-attribute name="title" value="takeTest" />  
+        <put-attribute name="body" value="/WEB-INF/test-taker-jsp/takeTest.jsp" />  
+    </definition>
   
 </tiles-definitions>  

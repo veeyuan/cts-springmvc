@@ -292,7 +292,7 @@ public class ManageQuestionController {
 				if (ansAttachmentID!= null && ansAttachmentID.length() != 0) {
 					AttachmentFile answerFileObj = new AttachmentFile();
 					answerFileObj.setId(ansAttachmentID);
-					question.setQuestionAttachment(answerFileObj);
+					question.setSampleAnsAttachment(answerFileObj);
 				}
 			}
 			

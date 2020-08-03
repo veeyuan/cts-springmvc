@@ -35,28 +35,28 @@
             </a>
           </li>
           <li class="nav-item">
-            <a id="gradeLink" href="gradeRstWaitingList.html" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+            <a id="testLink" href="takeTest.html" class="nav-link">
+              <i class="nav-icon far fa-edit"></i>
               <p>
-                Grade Results
-                <span class="badge badge-info right">2</span>
+                Take Test              
               </p>
             </a>
           </li>
           
           <li class="nav-item">
-            <a id="manageLink" href="manageQuestion.html" class="nav-link">
-               <i class="nav-icon fas fa-edit"></i>
+            <a id="viewRstLink" href="" class="nav-link">
+               <i class="nav-icon fas fa-chart-bar"></i>
               <p>
-                Manage Questions
+                View Result
+                 <span class="badge badge-info right">2</span>
               </p>
             </a>
           </li>
           <li id="btn-managequestion" class="nav-item">
-            <a id="addLink" href="addQuestion.html" class="nav-link">
-               <i class="nav-icon fas fa-copy"></i>
+            <a id="manageProfileLink" href="" class="nav-link">
+               <i class="nav-icon fas fa-user-circle"></i>
               <p >
-                Add Question
+                Manage Profile
               </p>
             </a>
           </li> 

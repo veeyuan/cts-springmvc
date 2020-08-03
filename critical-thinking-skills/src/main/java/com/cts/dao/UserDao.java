@@ -1,5 +1,7 @@
 package com.cts.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -27,11 +29,52 @@ public class UserDao {
 		return jdbcTemplate.query(sqlStmt, new RowMapper<User>() {
 			public User mapRow(ResultSet rs, int row) throws SQLException{
 				User user = new User(login.getUsername(),login.getPassword(),login.getRoleCd());
-			    user.setId(rs.getString("id"));		    
+			    user.setId(rs.getString("id"));		
+			    user.setUsername(rs.getString("user_name"));		
 			    user.setRoleCd(rs.getString("role_cd"));
 			    return user;
 			}
 		});
+	}
+	
+	public User getUserDet(String userid) {		
+		 String sql = "SELECT * FROM tbl_user_det WHERE USER_ID = ?";
+		 User user = new User();
+		 try {
+			Connection connection = jdbcTemplate.getDataSource().getConnection();
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setString(1,userid);		
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				user.setId(userid);
+				user.setDisciplineCd(rs.getString("DISCIPLINE_CD"));
+				user.setCategoryCd(rs.getString("CATEGORY_CD"));
+			}
+			rs.close();
+			ps.close();
+					} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		 String sql2 = "SELECT * FROM tbl_user WHERE ID = ?";
+		 try {
+				Connection connection = jdbcTemplate.getDataSource().getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql2);
+				ps.setString(1,userid);		
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					user.setUsername(rs.getString("user_name"));
+				}
+				rs.close();
+				ps.close();
+						} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 return user;
+
+
 	}
 	
 }

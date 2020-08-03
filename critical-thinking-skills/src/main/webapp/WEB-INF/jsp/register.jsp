@@ -165,35 +165,7 @@ function checkConfPswd(){
 	}
 
 }
-/*
-function changeRole(selected){
-	var role=selected.value;
-	var stu_div = document.getElementById("studentid");
-	var lec_div = document.getElementById("staffid");
-	if (role=="lec"){
-		lec_div.style.display = "block";
-		stu_div.style.display = "none";
-	}else{
-		stu_div.style.display = "block";
-		lec_div.style.display = "none";
-	}
 
-}
- 
-function changeUni(selected){
-	var x=selected.value;
-	var div = document.getElementById("other-uni");
-	var mssg_required = document.getElementById("uni-error-req-msg");
-	if (x=="others"){
-		 div.style.display = "block";
-		 mssg_required.style.display = "none";
-
-	}else{
-		 div.style.display = "none";
-		 mssg_required.style.display = "none";
-	}
-} 
-*/
 
 
 </script>
@@ -255,7 +227,7 @@ function changeUni(selected){
                             <div class="tab-pane fade show" id="register" role="tabpanel" aria-labelledby="profile-tab">
                                 <h3  class="register-heading"><%=dictionaryManager.getTerm("index.authentication.register",strLang) %></h3>
                                 <div class="row register-form">
-                                    <div class="col-md-6">
+                                    <div class="col-md-10">
                                     	
                                         <div class="form-group">
                                             <input type="text"  class="form-control" id="fullname" onchange="checkName()" placeholder="<%=dictionaryManager.getTerm("index.authentication.fullname",strLang) %> *" required value="" />
@@ -297,7 +269,7 @@ function changeUni(selected){
 
 
                                     
-                                    <div class="col-md-6">
+                                    <div class="col-md-10">
 <%-- 									<div class="form-group">	
                                     	<div class="custom-control custom-radio custom-control-inline">
 										  <input type="radio" onclick="changeRole(this);" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="stu" checked>

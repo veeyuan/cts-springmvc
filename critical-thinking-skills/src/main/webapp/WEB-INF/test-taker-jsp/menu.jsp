@@ -60,6 +60,14 @@
               </p>
             </a>
           </li> 
+          <li class="nav-item">
+            <a id="logoutLink" href="logout.html" class="nav-link">
+               <i class="nav-icon fas fa-door-open"></i>
+              <p>
+                Logout
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

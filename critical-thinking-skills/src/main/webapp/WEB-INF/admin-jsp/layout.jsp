@@ -35,6 +35,11 @@
   background-color:#FED136;
   border-color:#FED136;
   }
+  #logoutLink{
+    background-color: transparent;
+    color: #6c757d;
+}
+  
 
   </style> 
   <script>

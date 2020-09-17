@@ -56,8 +56,18 @@
 #instruction{
 	line-height: 2.5;
 }
+
+@media (min-width: 1200px) {
+   .modal-xlg {
+      width: 90%; 
+   }
+}
 </style>
 <script>
+
+function getQuestions(){
+	document.getElementById('questionForm').submit();
+} 
 
 function setInit(){
 	//setUserName
@@ -109,7 +119,7 @@ addLoadEvent(setInit);
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-             <form:form id="questionForm" action ="modifyQuestion.html"  method="post" modelAttribute="user" >
+             <form:form id="questionForm" action ="startTest.html"  method="post" modelAttribute="user" >
              <input type="hidden" id="username" value="<%=request.getSession().getAttribute("username").toString()%>">
              <input type="hidden" id="userid" value="${user.id}"> 
               <div class="form-row">					  
@@ -145,13 +155,15 @@ addLoadEvent(setInit);
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <button  id="btn-delete" onclick="" type="button" class="btn btn-info float-right"><i class="far fa-edit"></i> Start Test</button>  
+                <button  id="btn-start" onclick="getQuestions()" type="button" class="btn btn-info float-right"><i class="far fa-edit"></i> Start Test</button>  
                
               </div>
             </div>
-	                                    
+	                       
 				 
             <!-- /.card -->
             </section>
+            
+           
 </body>    
 </html>    

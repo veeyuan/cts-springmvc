@@ -45,7 +45,12 @@
 #btn-icon{
 	margin-right:5px;
 }
-
+img{
+    max-width: 70%;
+    max-height: 70%;
+    display: block; /* remove extra space below image */
+    }
+    
 a {
   color: inherit; /* blue colors for links too */
   text-decoration: inherit; /* no underline */
@@ -153,9 +158,9 @@ addLoadEvent(setInit);
 				 </div>
 				  <%if ("Y".equals(request.getAttribute("hasQuestionAttachment"))&& "Y".equals(request.getAttribute("isQuesAttachmentIMG"))){ %>	
 					 <div class="form-row">				 
-					  <div id="AAdiv" class="form-group col-md-8">
+					  <div class="form-group col-md-8">
 				 		<label >Attachment (for Question)</label><br>
-				 		<img src="data:image/jpg;base64,${question.questionAttachment.base64Image}" width="240" height="300"/>
+				 		<img  src="data:image/jpg;base64,${question.questionAttachment.base64Image}" />
 				 		</div>
 				 		</div>
 				 		<%} %>
@@ -271,9 +276,9 @@ addLoadEvent(setInit);
 					 </div>
 					 <%if ("Y".equals(request.getAttribute("hasAnswerAttachment")) && "Y".equals(request.getAttribute("isAnsAttachmentIMG"))){ %>	
 					 <div class="form-row">				 
-					  <div id="AAdiv" class="form-group col-md-8">
+					  <div  class="form-group col-md-8">
 				 		<label >Attachment (for Sample Answer)</label><br>
-				 		<img src="data:image/jpg;base64,${question.sampleAnsAttachment.base64Image}" width="240" height="300"/>
+				 		<img src="data:image/jpg;base64,${question.sampleAnsAttachment.base64Image}"/>
 				 		</div>
 				 		</div>
 				 		<%} %>

@@ -62,5 +62,15 @@
         <put-attribute name="title" value="takeTest" />  
         <put-attribute name="body" value="/WEB-INF/test-taker-jsp/takeTest.jsp" />  
     </definition>
+    
+     <definition name="startTest" extends="base-test-taker.definition">  
+        <put-attribute name="title" value="startTest" />  
+        <put-attribute name="body" value="/WEB-INF/test-taker-jsp/startTest.jsp" />  
+    </definition>
+    
+     <definition name="submitTest" extends="base-test-taker.definition">  
+        <put-attribute name="title" value="submitTest" />  
+        <put-attribute name="body" value="/WEB-INF/test-taker-jsp/submitTest.jsp" />  
+    </definition>
   
 </tiles-definitions>  

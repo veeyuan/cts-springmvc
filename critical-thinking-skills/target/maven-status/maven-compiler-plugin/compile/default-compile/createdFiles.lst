@@ -5,6 +5,7 @@ com\cts\controller\LoginController.class
 com\cts\dao\FileDao.class
 com\cts\dao\QuestionDao.class
 com\cts\controller\AddQuestionController.class
+com\cts\model\Submission.class
 com\cts\dao\CategoryDao.class
 com\cts\dao\LanguageDao$1.class
 com\cts\dao\QuestionListDao.class
@@ -13,13 +14,16 @@ com\cts\model\Login.class
 com\cts\dao\DisciplineDao.class
 com\cts\dao\CategoryDao$1.class
 com\cts\ind\DictionaryManager.class
+com\cts\model\Answer.class
 com\cts\model\AttachmentFile.class
+com\cts\dao\TestDao.class
 com\cts\model\Discipline.class
 com\cts\controller\ManageQuestionController.class
 com\cts\dao\DisciplineDao$1.class
 com\cts\dao\UserDao$1.class
 com\cts\dao\UserDao.class
 com\cts\ind\OracleConn.class
+com\cts\controller\TakeTestController.class
 com\cts\dao\FileDao$1.class
 com\cts\dao\LanguageDao.class
 com\cts\model\Category.class

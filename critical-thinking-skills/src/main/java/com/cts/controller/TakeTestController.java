@@ -83,14 +83,19 @@ public class TakeTestController {
 	@RequestMapping(value = "/submitTest", method = RequestMethod.POST)
 	public String submitAnswer(HttpServletRequest request,@ModelAttribute("submission")Submission submission,BindingResult result ,ModelMap model) throws IOException, SQLException{
 			String id = request.getSession().getAttribute("userid").toString();
-			//String username = request.getSession().getAttribute("username").toString();
-    		//User userDet = userDao.getUserDet(id);
-    		//model.addObject("user",userDet);
 			submission.setUserId(id);
 			long millis=System.currentTimeMillis();
 			java.sql.Date date=new java.sql.Date(millis);
 			submission.setSubmitDt(date);
+			try {
 			testDao.submitAnswer(submission);
+			}catch(SQLException e) {
+				System.out.println("Failed to add >>>");
+				model.addAttribute("success","N");
+				e.printStackTrace();
+				return "submitTest";
+			}
+			model.addAttribute("success","Y");
 			
 			
 		

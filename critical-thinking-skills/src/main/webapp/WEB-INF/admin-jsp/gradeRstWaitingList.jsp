@@ -1,3 +1,5 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>    
 <head>
 <!--  jQuery -->
@@ -50,6 +52,11 @@
    background-color: transparent;
     color: #6c757d;
 }
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
 </style>
 <script>
 $(document).ready(function(){
@@ -68,11 +75,37 @@ function gradeQuestion(){
 	document.getElementById('gradeQuestionForm').submit(); 
    }
    
+function getPageNum(objButton){
+	var target=objButton.value;
+	document.getElementById('targetPage').value=target;
+	document.getElementById('filterForm').submit();
+	
+}
 
+function getSubmission(id){
+	document.getElementById('submissionID').value=id;
+	document.getElementById('viewSubmissionForm').submit();
+}
 
 </script> 
 </head>    
 <body>    
+<% 
+int currentPage=0;
+int totalPage=0;
+int previousPage=0;
+int nextPage=0;
+if ("POST".equalsIgnoreCase(request.getMethod())) {
+	   currentPage = Integer.parseInt((String)request.getAttribute("currentPage"));	   
+	   previousPage = currentPage-1;
+	   nextPage = currentPage+1; 
+} else{
+	currentPage=1;
+}
+totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
+
+                  	 
+%>
  <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -115,9 +148,7 @@ function gradeQuestion(){
 	                <div class="form-group col-md-2">
 					      <select class="form-control" name="">
 					      	  <option placeholder="">All disciplines</option>
-				              <option>Computer Science</option>
-				              <option>Biology</option>
-				              <option>Mathematics</option>
+				             
 	                       </select>
 					  </div>
 					 <div class="form-group col-md-2">
@@ -135,11 +166,29 @@ function gradeQuestion(){
 
                 <div class="card-tools">
                   <ul class="pagination pagination-sm">
-                    <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+                    <%if (currentPage==1){ %>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='1' class="page-link" /></li>
+                    	<%if (totalPage>1){ %>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='2' class="page-link" /></li>
+                    		<%if (totalPage>2){ %>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='3' class="page-link" /></li>
+                    		<%} %>
+                    <li class="page-item"><button onclick="getPageNum(this)" type='button' value='<%=currentPage+1%>' class="page-link" />&raquo;</button></li>
+                    	<%} %>
+                    <%}else if (currentPage==totalPage){ %>
+                    <li class="page-item"><button onclick="getPageNum(this)" type='button' value='<%=currentPage-1%>' class="page-link" />&laquo;</button></li>
+                    	<%if (currentPage-2>0){ %>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='<%=currentPage-2%>' class="page-link" /></li>
+                    	<%} %>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='<%=currentPage-1%>' class="page-link" /></li>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='<%=currentPage%>' class="page-link" /></li>
+                    <%}else{ %>
+                    <li class="page-item"><button onclick="getPageNum(this)" type='button' value='<%=currentPage-1%>' class="page-link" />&laquo;</button></li>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='<%=previousPage%>' class="page-link" /></li>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='<%=currentPage%>' class="page-link" /></li>
+                    <li class="page-item"><input onclick="getPageNum(this)" type='button' value='<%=nextPage%>' class="page-link" /></li>
+                    <li class="page-item"><button onclick="getPageNum(this)" type='button' value='<%=currentPage+1%>' class="page-link" />&raquo;</button></li>
+                    <%} %>
                   </ul>
                 </div>
               </div>
@@ -148,52 +197,41 @@ function gradeQuestion(){
               <table class="table table-hover">
 				  <thead>
 				    <tr>
-				      <th scope="col">Username</th>
+				      <th scope="col">Name</th>
 				      <th scope="col">Category</th>
-				      <th scope="col">Discipline</th>
-				      <th scope="col">Number of Questions</th>
+				      <th scope="col">Discipline</th> 
+				      <th scope="col">Language</th>
+				      <th scope="col">Require Marking</th>
 				      <th scope="col">Submitted Date</th>
 				    </tr>
 				  </thead>
-				  <tbody>
-                 <c:forEach items="${listQuestionCreated}" var="questset">
-				<form id="gradeQuestionForm" method="post" action="gradeSubmissionDet.jsp"><input type="hidden" name="submissionid" id="submissionid" value="${submission.id}"></form>
-					 <tr onclick="gradeQuestion()" class="text">
-      					<th scope="row">
-      					<!-- checkbox -->
-		                    <div class="icheck-primary d-inline ml-2">
-		                      <input type="checkbox" value="" name="todo1" id="todoCheck1">
-		                      <label for="todoCheck1"></label>
-		                    </div>						                     
-							<!-- General tools such as edit or delete-->
-		                    <span id="editdiv" class="tools">
+				  <tbody>                 
+                 <c:forEach items="${listSubmission}" var="submission">		
+                 <input type="hidden" id="id${submission.submissionId}" value="${submission.submissionId}"/>		 		
+					 <tr onclick="getSubmission(document.getElementById('id${submission.submissionId}').value)" >
+			 			
+      					<td>  											  
+  				             <span id="editdiv" class="tools">
 		                      <i class="fas fa-edit"></i>
-		                      <i class="fas fa-trash-o"></i>
-		                    </span> 
-		                   
-		                    <!-- todo text -->
-		                    <span > ${submission.title}</span>
-		                    
-		
-		                                   
-                  		</th>
-					      <td>${submission.category}</td>
-					      <td>${submission.discipline}</td>
-					      <td>${submission.questionNo}</td>
-					      <td>${submission.submitdt}</td>
-   					 </tr>	
-                 
-               
+		                    </span>  	
+		                     <c:out value="${submission.testTakerName}" />		               
+                  		</td>
+					      <td>${submission.categoryCd}</td>
+					      <td>${submission.disciplineCd}</td> 
+					      <td>${submission.languageCd}</td> 
+					      <td>${submission.noReqManualGrading}</td>
+					      <td>${submission.submitDt}</td>
+   					 </tr>	                 
                 </c:forEach>
-                 </ul>
                  </tbody>
 				</table>
+			 <form id="viewSubmissionForm" method="post" action="gradeResults.html">
+			 <input type="hidden" name="submissionID" id="submissionID"/>
+			 </form>			 
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <button  id="btn-delete" onclick="" type="button" class="btn btn-info float-right"><i class="fas fa-trash"></i> Delete</button>  
-               
-              </div>
+             
             </div>
 	                                    
 				 

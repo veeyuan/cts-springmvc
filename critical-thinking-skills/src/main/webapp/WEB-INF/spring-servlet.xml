@@ -53,6 +53,9 @@
 <bean id="testDao" class="com.cts.dao.TestDao">
 <property name="jdbcTemplate" ref="jt"></property>
 </bean>
+<bean id="submissionListDao" class="com.cts.dao.SubmissionListDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     <property name="maxUploadSize" value="20848820" />
 </bean>

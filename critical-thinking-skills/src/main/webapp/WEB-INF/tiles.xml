@@ -49,6 +49,16 @@
         <put-attribute name="body" value="/WEB-INF/admin-jsp/gradeRstWaitingList.jsp" />  
     </definition>
     
+     <definition name="gradeResults" extends="base-admin.definition">  
+        <put-attribute name="title" value="gradeResults" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/gradeResults.jsp" />  
+    </definition>
+    
+    <definition name="submitGrades" extends="base-admin.definition">  
+        <put-attribute name="title" value="submitGrades" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/submitGrades.jsp" />  
+    </definition>
+    
     
     <definition name="base-test-taker.definition"  
         template="/WEB-INF/test-taker-jsp/layout.jsp">  

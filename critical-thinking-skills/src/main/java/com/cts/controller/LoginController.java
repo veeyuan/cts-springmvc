@@ -18,12 +18,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cts.dao.CategoryDao;
 import com.cts.dao.DisciplineDao;
 import com.cts.dao.LanguageDao;
+import com.cts.dao.SubmissionListDao;
 import com.cts.dao.UserDao;
 import com.cts.model.Category;
 import com.cts.model.Discipline;
 import com.cts.model.Language;
 import com.cts.model.Login;
 import com.cts.model.User;
+
 @Controller
 public class LoginController {
 	 @Autowired  
@@ -34,6 +36,8 @@ public class LoginController {
 		CategoryDao categoryDao;
 	@Autowired  
 		LanguageDao languageDao;
+	@Autowired  
+	SubmissionListDao submissionListDao;
 	
 	 @RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
 	  public ModelAndView loginProcess(@RequestParam("username") String username,@RequestParam("password") String pswd,@RequestParam("roleCd") String role,HttpServletRequest request) {
@@ -46,6 +50,8 @@ public class LoginController {
 	    		mav = new ModelAndView("gradeRstWaitingList");
 	    		request.getSession().setAttribute("userid", user.getId());
 	    		request.getSession().setAttribute("username", user.getUsername());
+	    		return new ModelAndView("redirect:/gradeRstWaitingList.html");
+	    		
 	    	}
 	    	if (("TEST-TAKER").equalsIgnoreCase(user.getRoleCd())) {
 	    		mav = new ModelAndView("takeTest");

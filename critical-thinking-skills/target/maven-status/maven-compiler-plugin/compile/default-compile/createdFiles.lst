@@ -1,6 +1,8 @@
 com\cts\model\Question.class
+com\cts\dao\SubmissionListDao.class
 com\cts\model\User.class
 com\cts\dao\QuestionListDao$1.class
+com\cts\controller\GradeResultController.class
 com\cts\controller\LoginController.class
 com\cts\dao\FileDao.class
 com\cts\dao\QuestionDao.class

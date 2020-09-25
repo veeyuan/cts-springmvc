@@ -8,6 +8,7 @@ public class Answer {
 	private String questionId;
 	private AttachmentFile attachment;
 	private CommonsMultipartFile oriFile;
+	private String submittedAnsId;
 	/**
 	 * @return the strAnswer
 	 */
@@ -55,6 +56,18 @@ public class Answer {
 	 */
 	public void setOriFile(CommonsMultipartFile oriFile) {
 		this.oriFile = oriFile;
+	}
+	/**
+	 * @return the submittedAnsId
+	 */
+	public String getSubmittedAnsId() {
+		return submittedAnsId;
+	}
+	/**
+	 * @param submittedAnsId the submittedAnsId to set
+	 */
+	public void setSubmittedAnsId(String submittedAnsId) {
+		this.submittedAnsId = submittedAnsId;
 	}
 
 

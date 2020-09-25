@@ -39,7 +39,11 @@
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
                 Grade Results
-                <span class="badge badge-info right">2</span>
+                <% 
+                int waitingtogradeNum = (Integer)request.getSession().getAttribute("waitingtogradeNum");
+                if (waitingtogradeNum>0){ %>  
+                <span class="badge badge-info right" ><%=request.getSession().getAttribute("waitingtogradeNum").toString() %> </span>
+                <%} %>
               </p>
             </a>
           </li>

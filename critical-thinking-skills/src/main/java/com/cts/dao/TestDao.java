@@ -100,7 +100,7 @@ public class TestDao {
         cs.setString(1,submissionId );
         cs.setString(2, submission.getUserId());
     	cs.setDate(3, submission.getSubmitDt());
-    	cs.setInt(4, submission.getNoReqManualGrading());
+    	cs.setInt(4, submission.getCalculateNoReqManualGrading());
     	cs.execute();
     	cs.close();
     	return submissionId;

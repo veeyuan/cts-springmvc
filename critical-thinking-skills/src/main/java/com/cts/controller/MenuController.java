@@ -7,11 +7,9 @@ public class MenuController {
 	    
 	
 	
-	@RequestMapping("/gradeRstWaitingList")  
-	public String redirectToGradeRstWaitingList()  
-	{  
-	    return "gradeRstWaitingList";  
-	} 
-	
-	
+	/*
+	 * @RequestMapping("/gradeRstWaitingList") public String
+	 * redirectToGradeRstWaitingList() { return "gradeRstWaitingList"; }
+	 * 
+	 */	
 }  

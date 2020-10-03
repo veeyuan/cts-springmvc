@@ -73,7 +73,7 @@ function submitForm(){
 function getNextPage(){
 	var target=document.getElementById("currentPageInd").value;	
 	target++;
-
+	
 	var maxInd=document.getElementById("maxPageNum").value;
 	if (target<maxInd){
 		var id="#div-question-ind"+target;
@@ -82,6 +82,10 @@ function getNextPage(){
 		$(id).css("display", "block");
 		$('#currentPageInd').val(target);
 		showNextPreviousBtn();
+	}
+	maxInd--;
+	if (target==maxInd){
+		$('#submitbtn').css("display", "block");
 	}
 	
 	
@@ -385,7 +389,7 @@ int totalQuestionNum = submission.getQuestionLst().size();
                
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-				<button onclick="submitForm()" class="btn btn-info float-right"><i id="btn-icon" class="fas fa-edit"></i> Submit</button>   
+				<button style="display: none;" id="submitbtn" onclick="submitForm()" class="btn btn-info float-right"><i id="btn-icon" class="fas fa-edit"></i> Submit</button>   
                 <button id="nextbtn" onclick="getNextPage()" type="button" class="btn btn-info float-right"><i style="margin-right:3px;"class="fa fa-chevron-circle-right"></i> Next</button>          
                 <button id="previousbtn" onclick="getPreviousPage()" class="btn btn-info float-right"><i style="margin-right:3px;" id="btn-icon" class="fa fa-chevron-circle-left"></i>Previous</button>
                                   

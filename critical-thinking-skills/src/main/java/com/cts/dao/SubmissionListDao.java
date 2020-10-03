@@ -75,7 +75,7 @@ public class SubmissionListDao {
 	    return submissionLst;
 	  }
 	
-	public List<Submission> getSubmissionList(String name, String disciplineCd, String categoryCd,String languageCd, Date submittedDt,int startRow, int endRow) {
+	public List<Submission> getSubmissionList(Submission filterSubmission,int startRow, int endRow) {
 
 	    List<Submission> submissionLst = new ArrayList() ;
 	    ResultSet resultSet = null;
@@ -83,11 +83,15 @@ public class SubmissionListDao {
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
 			CallableStatement cs = connection.prepareCall("{call SP_FILTER_SUBMISSION(?,?,?,?,?,?,?,?)}");
-			cs.setString(1, name);
-	        cs.setString(2, disciplineCd);
-	        cs.setString(3, categoryCd);
-	        cs.setString(4, languageCd);
-	        cs.setDate(5, submittedDt);
+			cs.setString(1, checkIsAll(filterSubmission.getTestTakerName()));
+	        cs.setString(2, checkIsAll(filterSubmission.getDisciplineCd()));
+	        cs.setString(3, checkIsAll(filterSubmission.getCategoryCd()));
+	        cs.setString(4, checkIsAll(filterSubmission.getLanguageCd()));
+	        if (filterSubmission.getSubmitDt()==null) {
+	        	 cs.setDate(5, null);
+	        }else {
+		        cs.setDate(5, filterSubmission.getSubmitDt());
+	        }
 	        cs.setInt(6, startRow);
 	        cs.setInt(7, endRow);
 	        cs.registerOutParameter(8, OracleTypes.CURSOR); 
@@ -99,6 +103,10 @@ public class SubmissionListDao {
 		        	submission.setSubmissionId(resultSet.getString("id"));
 		        	submission.setNoReqManualGrading(resultSet.getInt("NUM_REQUIRE_MANUAL_GRADE"));
 		        	submission.setSubmitDt(resultSet.getDate("SUBMITTED_DT"));
+		        	submission.setDisciplineCd(resultSet.getString("DISCIPLINE_CD"));
+		        	submission.setCategoryCd(resultSet.getString("CATEGORY_CD"));
+		        	submission.setLanguageCd(resultSet.getString("LANGUAGE_CD"));
+		        	submission.setTestTakerName(resultSet.getString("FULLNAME"));
 		        	submissionLst.add(submission);
 		        }
 	        }    
@@ -187,6 +195,15 @@ public class SubmissionListDao {
 		}
 		return submission;
 	}
+	
+	
+	public String checkIsAll(String val) {
+		if ("All".equalsIgnoreCase(val)) {
+			return null;
+		}
+		return val;
+	}
+	
 	
 	public String getBase64Image(Blob blob) throws SQLException, IOException {
 		InputStream inputStream = blob.getBinaryStream();

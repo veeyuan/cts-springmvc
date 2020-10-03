@@ -59,18 +59,12 @@ a {
 }
 </style>
 <script>
-$(document).ready(function(){
-    var date_input=$('input[name="date"]'); //our date input has the name "date"
-    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-    var options={
-      format: 'mm/dd/yyyy',
-      container: container,
-      todayHighlight: true,
-      autoclose: true,
-    };
-    date_input.datepicker(options);
-  })
-  
+
+$(document).ready(function() {
+	   $(function() {
+	   $("#datepick").datepicker({dateFormat: 'yy/mm/dd'});
+	   });
+	   });
 function gradeQuestion(){
 	document.getElementById('gradeQuestionForm').submit(); 
    }
@@ -87,6 +81,10 @@ function getSubmission(id){
 	document.getElementById('viewSubmissionForm').submit();
 }
 
+function changeDate(){
+	var date = document.getElementById('datepick').value;
+	document.getElementById('submitDt').value=date;
+}
 </script> 
 </head>    
 <body>    
@@ -133,36 +131,49 @@ totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
                 </h3>
 			   
 			    <div class="searchfilter">
-			      <form>			        
+			      <form:form id="filterForm" action ="gradeRstWaitingList.html"  method="post" modelAttribute="filterSubmission" >
+			      <input type="hidden" name="targetPage" id="targetPage" value="1"/>
 			         <div class="form-row">
 			         <div class="form-group col-md-4">
-			         		<input id="search"  class="form-control" type="text" placeholder="Search submission..." />			         
+			         		<form:input path="testTakerName" id="search"  class="form-control"  placeholder="Search test-taker's name..." />	
+			         			         
 			         </div>
-			         <div class="form-group col-md-2">
-					      	<select class="form-control" name="">					      	
-	                        <option value="general">General</option>
-	                        <option value="">Primary School</option>
-	                       	</select>
-					  </div>
 			        
-	                <div class="form-group col-md-2">
-					      <select class="form-control" name="">
-					      	  <option placeholder="">All disciplines</option>
-				             
-	                       </select>
+			        
+	               <div class="form-group col-md-2">
+	                        <form:select path="categoryCd" class="form-control" >
+	                        <form:option value = "all" label="All"/>
+					      	<c:forEach items="${listCategory}" var="category">
+					      	  <form:option value ="${category.code}" label="${category.name}"/>
+				              </c:forEach>
+	                       </form:select>
+					  </div>
+					  
+					   <div class="form-group col-md-2">
+					       <form:select path="languageCd"  class="form-control" name="questionsetlang">
+					       <form:option value = "all" label="All"/>  
+					      <c:forEach items="${listLanguage}" var="language">
+					      	  <form:option value ="${language.code}" label="${language.name}"/>
+				              </c:forEach>
+	                       </form:select>
 					  </div>
 					 <div class="form-group col-md-2">
-				        <input class="form-control" id="date" name="date" placeholder="Submitted By" type="text"/>
-				      </div>
+					 <% if ((String)request.getAttribute("filterSubmitDt")!=null){ %>
+					 <input onchange="changeDate()" id="datepick"  class="form-control"  placeholder="Submitted By" value="<%=(String)request.getAttribute("filterSubmitDt")%>"/>	
+					 <%}else{ %> 
+					 <input onchange="changeDate()" id="datepick"  class="form-control"  placeholder="Submitted By" />	
+					 <%} %>
+					 <input type="hidden" name="submitDt" id="submitDt"/>
+					 </div>
 					     
 				
-					 <span><button id="" onclick="" type="button" class="btn btn-info float-right"><i class="fas fa-search"></i> Search</button></span>
+					 <span><button onclick="search()" class="btn btn-info float-right"><i class="fas fa-search"></i> Search</button></span>
 					  					  
 					 </div>
 			          
 			        
-			      </form>
-			    </div>
+					</form:form>			  
+					  </div>
 
                 <div class="card-tools">
                   <ul class="pagination pagination-sm">

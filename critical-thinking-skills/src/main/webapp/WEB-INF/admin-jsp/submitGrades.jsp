@@ -125,7 +125,7 @@ a {
               
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-              <button id="btn-addquestionset"  class="btn btn-info float-right"><a href="gradeRstWaitingList.html"><i id="btn-icon" class="fas fa-plus"></i> View Submission</a></button> 
+              <button id="btn-addquestionset"  class="btn btn-info float-right"><a href="gradeRstWaitingList.html"> View Submission</a></button> 
               	<% if (!"Y".equals(request.getAttribute("success"))){ %>
               	<button onclick="history.back(-1)"  id="btn-addquestionset-back"  class="btn btn-info float-right"><i id="btn-icon" class="fas fa fa-arrow-left"></i>Back</button>
               	<%} %>

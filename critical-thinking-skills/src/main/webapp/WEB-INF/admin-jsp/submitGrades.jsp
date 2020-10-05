@@ -109,7 +109,7 @@ a {
                		<div id="success">               		
                		<i id="success-icon" class="fa fa-check-circle fa-2x"> </i>               		
                		<p>Successfully graded!</p>
-               	 	<p id="smallMsg">Submission with id:<%=request.getAttribute("submissionid").toString() %> is marked.</p>
+               	 	<p id="smallMsg">The graded scores have been recorded.</p>
                		</div>
                		<%}else{ %>
                		<div id="failure"> 

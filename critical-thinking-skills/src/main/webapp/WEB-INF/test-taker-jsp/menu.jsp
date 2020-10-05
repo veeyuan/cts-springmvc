@@ -48,7 +48,7 @@
                <i class="nav-icon fas fa-chart-bar"></i>
               <p>
                 View Result
-                 <span class="badge badge-info right">2</span>
+               
               </p>
             </a>
           </li>

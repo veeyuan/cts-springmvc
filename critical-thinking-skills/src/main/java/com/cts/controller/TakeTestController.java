@@ -95,10 +95,12 @@ public class TakeTestController {
 				e.printStackTrace();
 				return "submitTest";
 			}
-			model.addAttribute("success","Y");
-			
-			
-		
+			return "redirect:/submitTest.html";
+	}
+	
+	@RequestMapping(value = "/submitTest", method = RequestMethod.GET)
+	public String submitTestReload(ModelMap model) throws IOException {
+		model.addAttribute("success","Y");
 		return "submitTest";
 	}
 

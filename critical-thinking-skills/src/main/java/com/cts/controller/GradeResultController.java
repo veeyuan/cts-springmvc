@@ -133,13 +133,16 @@ public class GradeResultController {
 				e.printStackTrace();
 				return "submitGrades";
 			}
-			model.addAttribute("success","Y");
-			model.addAttribute("submissionid",submission.getSubmissionId());
+			
 			
 		
-		return "submitGrades";
+			return "redirect:/submitGrades.html";
 	}
 	
-	
+	@RequestMapping(value = "/submitGrades", method = RequestMethod.GET)
+	public String submitGradesReload(ModelMap model) throws IOException {
+		model.addAttribute("success","Y");
+		return "submitGrades";
+	}
 
 }

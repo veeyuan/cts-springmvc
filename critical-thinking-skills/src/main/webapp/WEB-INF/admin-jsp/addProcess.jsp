@@ -83,55 +83,6 @@ a {
 <script>
 
 
-function setOption(selected){ //set number of options
-	var x=selected.value;
-	if (x=="2"){
-		document.getElementById("opt3").value="";
-		document.getElementById("opt4").value="";
-		document.getElementById("opt5").value="";
-		document.getElementById("opt3").disabled  =true;
-		document.getElementById("opt4").disabled = true;
-		document.getElementById("opt5").disabled = true;
-	}else if (x=="3"){
-		document.getElementById("opt3").disabled  =false;
-		document.getElementById("opt4").value="";
-		document.getElementById("opt5").value="";
-		document.getElementById("opt4").disabled = true;
-		document.getElementById("opt5").disabled = true;
-	}else if (x=="4"){
-		document.getElementById("opt3").disabled  = false;
-		document.getElementById("opt4").disabled = false;
-		document.getElementById("opt5").value="";
-		document.getElementById("opt5").disabled = true;
-	}else if (x=="5"){
-		document.getElementById("opt3").disabled  = false;
-		document.getElementById("opt4").disabled = false;
-		document.getElementById("opt5").disabled = false;
-	}
-	else{
-		document.getElementById("opt3").value="";
-		document.getElementById("opt4").value="";
-		document.getElementById("opt5").value="";
-		document.getElementById("opt3").disabled  = false;
-		document.getElementById("opt4").disabled = false;
-		document.getElementById("opt5").disabled = false;
-	}
-}
-	
-function setMCQ(selected){ //if it is discipline-specific
-	var x=selected.value;
-	if (x=="yes"){
-		document.getElementById("mcqDiv").style.display = "block";
-		document.getElementById("structuredDiv").style.display = "none";
-	}else{
-		document.getElementById("mcqDiv").style.display = "none";
-		document.getElementById("structuredDiv").style.display = "block";
-		
-
-	}
-}
-
-
 </script>  
 </head>    
 

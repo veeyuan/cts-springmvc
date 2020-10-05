@@ -1,5 +1,6 @@
 package com.cts.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,5 +83,18 @@ public class LoginController {
 	     session.invalidate();
 	     return "redirect:/";
 	 } 
+	 
+	 
+	 @RequestMapping(value = "/registerProcess", method = RequestMethod.POST)
+	  public ModelAndView registerProcess(@RequestParam("registerUserName") String username,@RequestParam("registerPswd") String pswd,
+			  @RequestParam("emailaddr") String emailAddr,@RequestParam("fullname") String fullName,HttpServletRequest request) throws SQLException {
+	    ModelAndView mav = null;
+	    User user = new User(username,pswd,"TEST-TAKER");
+	    user.setFullname(fullName);
+	    user.setEmail(emailAddr);
+	    userDao.createTestTaker(user);
+	    
+	    return mav;
+	  }
 
 }

@@ -1,5 +1,6 @@
 package com.cts.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -75,6 +76,19 @@ public class UserDao {
 		 return user;
 
 
+	}
+	
+	public void createTestTaker(User user) throws SQLException {
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+        CallableStatement cs = connection.prepareCall("{call SP_CREATE_TESTTAKER(?,?,?,?,?)}");
+       
+        cs.setString(1, user.getUsername());
+        cs.setString(2,user.getPassword());
+        cs.setString(3, user.getRoleCd());
+        cs.setString(4,user.getEmail());
+        cs.setString(5, user.getFullname());
+        cs.execute();
+    	 cs.close();
 	}
 	
 }

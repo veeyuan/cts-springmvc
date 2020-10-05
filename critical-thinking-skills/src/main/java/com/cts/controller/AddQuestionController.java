@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;  
@@ -51,7 +54,7 @@ public class AddQuestionController {
     } 
 	
 	
-	@RequestMapping(value = "/addProcess", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/addProcess", method = RequestMethod.POST)
 	public String addQuestion(@RequestParam("questionAttachment") CommonsMultipartFile questionAttachment,@RequestParam("sampleAnsAttachment") CommonsMultipartFile sampleAnsAttachment,@RequestParam("radio-all-mcq") String strMCQ, @ModelAttribute("question")Question question, 
 		      BindingResult result, ModelMap model) throws IOException {
 		try {
@@ -89,6 +92,50 @@ public class AddQuestionController {
 		
 		return "addProcess";
 	}
+	*/
+	@RequestMapping(value = "/addProcess", method = RequestMethod.POST)
+	public String addQuestion(@RequestParam("questionAttachment") CommonsMultipartFile questionAttachment,@RequestParam("sampleAnsAttachment") CommonsMultipartFile sampleAnsAttachment,@RequestParam("radio-all-mcq") String strMCQ, @ModelAttribute("question")Question question, 
+		      BindingResult result, ModelMap model) throws IOException {
+		try {
+			
+			if ("Yes".equalsIgnoreCase(strMCQ)) {
+				question.setMcq(true);
+			}else {
+				question.setMcq(false);
+			}
+			
+			
+			if (!questionAttachment.isEmpty()) {
+				AttachmentFile questionFileObj = new AttachmentFile();
+				questionFileObj.setAttachmentFile(questionAttachment);
+				questionFileObj.setFileName(questionAttachment.getOriginalFilename());
+				questionFileObj.setFormat(questionAttachment.getContentType());
+				question.setQuestionAttachment(questionFileObj);
+			}
+			if (!sampleAnsAttachment.isEmpty()) {
+				AttachmentFile answerFileObj = new AttachmentFile();
+				answerFileObj.setAttachmentFile(sampleAnsAttachment);
+				answerFileObj.setFileName(sampleAnsAttachment.getOriginalFilename());
+				answerFileObj.setFormat(sampleAnsAttachment.getContentType());
+				question.setSampleAnsAttachment(answerFileObj);
+			}
+			
+			questionDao.addQuestion(question);
+		} catch (SQLException e) {
+			System.out.println("Failed to add >>>");
+			model.addAttribute("success","N");
+			e.printStackTrace();
+			return "addProcess";
+		}
+		
+		
+		return "redirect:/addProcess.html";
+	}
 	
+	@RequestMapping(value = "/addProcess", method = RequestMethod.GET)
+	public String addQuestionReload(ModelMap model) throws IOException {
+		model.addAttribute("success","Y");
+		return "addProcess";
+	}
 	
 }

@@ -82,7 +82,13 @@ img{
 </style>
 <script>
 
-
+function preventBack() { 
+    window.history.forward();  
+} 
+  
+setTimeout("preventBack()", 0); 
+  
+window.onunload = function () { null }; 
  function startTimer(duration, display) {
     var start = Date.now(),
         diff,

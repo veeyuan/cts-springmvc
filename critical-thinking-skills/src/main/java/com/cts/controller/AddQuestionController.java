@@ -53,46 +53,6 @@ public class AddQuestionController {
 	    return model;
     } 
 	
-	
-	/*@RequestMapping(value = "/addProcess", method = RequestMethod.POST)
-	public String addQuestion(@RequestParam("questionAttachment") CommonsMultipartFile questionAttachment,@RequestParam("sampleAnsAttachment") CommonsMultipartFile sampleAnsAttachment,@RequestParam("radio-all-mcq") String strMCQ, @ModelAttribute("question")Question question, 
-		      BindingResult result, ModelMap model) throws IOException {
-		try {
-			
-			if ("Yes".equalsIgnoreCase(strMCQ)) {
-				question.setMcq(true);
-			}else {
-				question.setMcq(false);
-			}
-			
-			
-			if (!questionAttachment.isEmpty()) {
-				AttachmentFile questionFileObj = new AttachmentFile();
-				questionFileObj.setAttachmentFile(questionAttachment);
-				questionFileObj.setFileName(questionAttachment.getOriginalFilename());
-				questionFileObj.setFormat(questionAttachment.getContentType());
-				question.setQuestionAttachment(questionFileObj);
-			}
-			if (!sampleAnsAttachment.isEmpty()) {
-				AttachmentFile answerFileObj = new AttachmentFile();
-				answerFileObj.setAttachmentFile(sampleAnsAttachment);
-				answerFileObj.setFileName(sampleAnsAttachment.getOriginalFilename());
-				answerFileObj.setFormat(sampleAnsAttachment.getContentType());
-				question.setSampleAnsAttachment(answerFileObj);
-			}
-			
-			questionDao.addQuestion(question);
-		} catch (SQLException e) {
-			System.out.println("Failed to add >>>");
-			model.addAttribute("success","N");
-			e.printStackTrace();
-			return "addProcess";
-		}
-		model.addAttribute("success","Y");
-		
-		return "addProcess";
-	}
-	*/
 	@RequestMapping(value = "/addProcess", method = RequestMethod.POST)
 	public String addQuestion(@RequestParam("questionAttachment") CommonsMultipartFile questionAttachment,@RequestParam("sampleAnsAttachment") CommonsMultipartFile sampleAnsAttachment,@RequestParam("radio-all-mcq") String strMCQ, @ModelAttribute("question")Question question, 
 		      BindingResult result, ModelMap model) throws IOException {

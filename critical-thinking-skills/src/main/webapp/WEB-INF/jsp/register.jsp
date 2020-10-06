@@ -312,10 +312,11 @@ function submitRegisterForm(){
                                             <div style="display:none;text-align: left;}" id="confpswd-error-inv-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.inv.confirmpswd",strLang) %></div>
                                         </div>
                                         
-                                        <button class="btnRegister" onclick="submitRegisterForm()" ><%=dictionaryManager.getTerm("index.authentication.register",strLang) %></button>
                                     
                                     </div>
                                     </form>
+                                     <button class="btnRegister" onclick="submitRegisterForm()" ><%=dictionaryManager.getTerm("index.authentication.register",strLang) %></button>
+                                    
                                 </div>
                             </div>
                         </div>

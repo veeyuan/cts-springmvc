@@ -35,6 +35,45 @@
     	document.getElementById("language").value=lang;
     	document.getElementById('langForm').submit(); 
 	   }
+    
+    function setInit(){
+    	var registerStatus = getUrlVars()["register"];
+    	if(registerStatus=='success'){
+    		alert("Successfully registered! Please proceed to login.")
+    	}
+    	if (registerStatus=='fail'){
+    		alert("Failed to register. Please try again.")
+    	}
+
+    	var loginStatus = getUrlVars()["login"];
+    	if (loginStatus=='fail'){
+    		alert("Invalid login details. Please try again.")
+    	}
+		
+	}
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+	function addLoadEvent(func) { 
+		var oldonload = window.onload; 
+		if (typeof window.onload != 'function') { 
+			window.onload = func; 
+		} else { 
+			window.onload = function() { 
+				if (oldonload) { 
+					oldonload(); 
+				} 
+				func(); 
+			} 
+		} 
+	} 
+
+	addLoadEvent(setInit); 
+    
     </script>
     
     <body id="page-top">
@@ -44,11 +83,9 @@
                 <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/navbar-logo.svg" /></a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i class="fas fa-bars ml-1"></i></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ml-auto">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services"><%=dictionaryManager.getTerm("index.services.title",strLang) %></a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio"><%=dictionaryManager.getTerm("index.constructs.title",strLang) %></a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about"><%=dictionaryManager.getTerm("index.nav.importance",strLang) %></a></li>
-<%--                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact"><%=dictionaryManager.getTerm("index.nav.contact",strLang) %></a></li>
- --%>                        <li class="nav-item"><a class="nav-link portfolio-link" data-toggle="modal" href="#registerModal">Register / Login</a></li>
+                      <li class="nav-item"><a class="nav-link portfolio-link" data-toggle="modal" href="#registerModal">Register / Login</a></li>
                         <li class="nav-item">
                         	<div class="dropdown">
 							  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="global" src="assets/img/index/global-icon-lang.png" /> <%=strLang %></button>
@@ -71,28 +108,7 @@
                 <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"><%=dictionaryManager.getTerm("index.main.cts.tellmemore",strLang) %></a>
             </div>
         </header>
-        <!-- Services-->
-        <section class="page-section" id="services">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase"><%=dictionaryManager.getTerm("index.services.title",strLang) %></h2>
-                    <h3 class="section-subheading text-muted"><%=dictionaryManager.getTerm("index.services.title.dscp",strLang) %></h3>
-                </div>
-                <div class="row text-center">
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x"><i class="fas fa-circle fa-stack-2x text-primary"></i><i class="fas fa-digital-tachograph fa-stack-1x fa-inverse"></i></span>
-                        <h4 class="my-3"><%=dictionaryManager.getTerm("index.services.learning",strLang) %></h4>
-                        <p class="text-muted"><%=dictionaryManager.getTerm("index.services.learning.dscp",strLang) %></p>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x"><i class="fas fa-circle fa-stack-2x text-primary"></i><i class="fas fa-chalkboard-teacher fa-stack-1x fa-inverse"></i></span>
-                        <h4 class="my-3"><%=dictionaryManager.getTerm("index.services.teaching",strLang) %></h4>
-                        <p class="text-muted"><%=dictionaryManager.getTerm("index.services.teaching.dscp",strLang) %></p>
-                    </div>
-                    
-                </div>
-            </div>
-        </section>
+      
         <!-- Assessment Constructs-->
         <section class="page-section bg-light" id="portfolio">
             <div class="container">
@@ -231,87 +247,7 @@
             </div>
         </section>
         
-        <%-- 
-        <!-- Team-->
-        <section class="page-section bg-light" id="team">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase"><%=dictionaryManager.getTerm("index.team.title",strLang) %></h2>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="assets/img/team/1.jpg" alt="" />
-                            <h4>Dr. Ow Siew Hock</h4>
-                            <p class="text-muted"><%=dictionaryManager.getTerm("index.team.supervisor",strLang) %></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="assets/img/team/2.jpg" alt="" />
-                            <h4>Wong Vee Yuan</h4>
-                            <p class="text-muted"><%=dictionaryManager.getTerm("index.team.developer",strLang) %></p>
-<!--                             <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a><a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a><a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
- -->                        </div>
-                    </div>
-                    
-                </div>
-               
-            </div>
-        </section>
-        --%>
-        
-        <!-- Contact-->
-        <section class="page-section" id="contact">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase"><%=dictionaryManager.getTerm("index.contact.title",strLang) %></h2>
-                    <h3 class="section-subheading text-muted"><%=dictionaryManager.getTerm("index.contact.subtitle",strLang) %></h3>
-                </div>
-                <form id="contactForm" name="sentMessage" novalidate="novalidate">
-                    <div class="row align-items-stretch mb-5">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input class="form-control" id="name" type="text" placeholder="<%=dictionaryManager.getTerm("index.contact.name",strLang) %>" required="required" data-validation-required-message="Please enter your name." />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" id="email" type="email" placeholder="<%=dictionaryManager.getTerm("index.contact.email",strLang) %>" required="required" data-validation-required-message="Please enter your email address." />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="form-group mb-md-0">
-                                <input class="form-control" id="phone" type="tel" placeholder="<%=dictionaryManager.getTerm("index.contact.phone",strLang) %>" required="required" data-validation-required-message="Please enter your phone number." />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-textarea mb-md-0">
-                                <textarea class="form-control" id="message" placeholder="<%=dictionaryManager.getTerm("index.contact.message",strLang) %>" required="required" data-validation-required-message="Please enter a message."></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <div id="success"></div>
-                        <button class="btn btn-primary btn-xl text-uppercase" id="sendMessageButton" type="submit"><%=dictionaryManager.getTerm("index.contact.btn.send",strLang) %></button>
-                    </div>
-                </form>
-            </div>
-        </section>
-        <!-- Footer-->
-        <footer class="footer py-4">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 text-lg-left">Copyright Reserved 2020</div>
-                    <div class="col-lg-4 my-3 my-lg-0">
-                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a><a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a><a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-<!--                     <div class="col-lg-4 text-lg-right"><a class="mr-3" href="#!">Privacy Policy</a><a href="#!">Terms of Use</a></div>
- -->                </div>
-            </div>
-        </footer>
-        
-        
+      
         
         
         
@@ -416,6 +352,7 @@
         </div>  
         
             <!-- Register-->
+           
         <div class="portfolio-modal modal fade" id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content" style="padding-top:40px;">
@@ -424,6 +361,7 @@
                </div>
             </div>
         </div>  
+       
         
         <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

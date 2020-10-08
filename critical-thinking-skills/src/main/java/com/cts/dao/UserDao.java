@@ -50,6 +50,18 @@ public class UserDao {
 				user.setId(userid);
 				user.setDisciplineCd(rs.getString("DISCIPLINE_CD"));
 				user.setCategoryCd(rs.getString("CATEGORY_CD"));
+				user.setLanguageCd(rs.getString("LANGUAGE_CD"));
+				if ("Y".equalsIgnoreCase(rs.getString("READY_TO_TEST"))) {
+					user.setReadyToTakeTest(true);
+				}else {
+					user.setReadyToTakeTest(false);
+				}
+				if ("Y".equalsIgnoreCase(rs.getString("COMPLETE_SURVEY"))) {
+					user.setCompleteSurvey(true);
+				}else {
+					user.setCompleteSurvey(false);
+				}
+				
 			}
 			rs.close();
 			ps.close();
@@ -87,6 +99,18 @@ public class UserDao {
         cs.setString(3, user.getRoleCd());
         cs.setString(4,user.getEmail());
         cs.setString(5, user.getFullname());
+        cs.execute();
+    	 cs.close();
+	}
+	
+	public void updateTestSpec(User user) throws SQLException {
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+        CallableStatement cs = connection.prepareCall("{call SP_UPDATE_TESTSPEC(?,?,?,?)}");
+       
+        cs.setString(1, user.getId());
+        cs.setString(2,user.getCategoryCd());
+        cs.setString(3, user.getDisciplineCd());
+        cs.setString(4,user.getLanguageCd());
         cs.execute();
     	 cs.close();
 	}

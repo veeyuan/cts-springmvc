@@ -53,7 +53,7 @@
             </a>
           </li>
           <li id="btn-managequestion" class="nav-item">
-            <a id="manageProfileLink" href="" class="nav-link">
+            <a id="manageProfileLink" href="manageProfile.html" class="nav-link">
                <i class="nav-icon fas fa-user-circle"></i>
               <p >
                 Manage Profile

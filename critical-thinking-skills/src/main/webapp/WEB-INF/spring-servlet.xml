@@ -56,6 +56,21 @@
 <bean id="submissionListDao" class="com.cts.dao.SubmissionListDao">
 <property name="jdbcTemplate" ref="jt"></property>
 </bean>
+<bean id="ageGroupDao" class="com.cts.dao.AgeGroupDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
+<bean id="employmentStatusDao" class="com.cts.dao.EmploymentStatusDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
+<bean id="educationLevelDao" class="com.cts.dao.EducationLevelDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
+<bean id="nationalityDao" class="com.cts.dao.NationalityDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
+<bean id="surveyDao" class="com.cts.dao.SurveyDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     <property name="maxUploadSize" value="20848820" />
 </bean>

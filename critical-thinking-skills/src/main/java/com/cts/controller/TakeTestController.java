@@ -49,11 +49,17 @@ public class TakeTestController {
 			String username = request.getSession().getAttribute("username").toString();
     		User userDet = userDao.getUserDet(id);
     		model.addObject("user",userDet);
-    		List<Discipline> listDiscipline =   disciplineDao.getDisciplineList();
-    		model.addObject("listDiscipline",listDiscipline);
-			List<Category> listCategory =   categoryDao.getCategoryList();
-			model.addObject("listCategory",listCategory);
-		
+    		if (userDet.isReadyToTakeTest()) {    			
+        		List<Discipline> listDiscipline =   disciplineDao.getDisciplineList();
+        		model.addObject("listDiscipline",listDiscipline);
+    			List<Category> listCategory =   categoryDao.getCategoryList();
+    			model.addObject("listCategory",listCategory);
+    			List<Language> listLanguage =   languageDao.getLanguageList();
+    			model.addObject("listLanguage",listLanguage);
+    			
+    			return model;
+    		}
+    		
 		
 		return model;
 	}
@@ -65,10 +71,6 @@ public class TakeTestController {
 			String username = request.getSession().getAttribute("username").toString();
     		User userDet = userDao.getUserDet(id);
     		model.addObject("user",userDet);
-    		List<Discipline> listDiscipline =   disciplineDao.getDisciplineList();
-    		model.addObject("listDiscipline",listDiscipline);
-			List<Category> listCategory =   categoryDao.getCategoryList();
-			model.addObject("listCategory",listCategory);
 			//in modal
 			List<Question> listQuestion = testDao.getQuestions(userDet.getDisciplineCd(), userDet.getCategoryCd(), "ENG");
 			Submission submission = new Submission();

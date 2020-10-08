@@ -82,5 +82,20 @@
         <put-attribute name="title" value="submitTest" />  
         <put-attribute name="body" value="/WEB-INF/test-taker-jsp/submitTest.jsp" />  
     </definition>
+    
+     <definition name="manageProfile" extends="base-test-taker.definition">  
+        <put-attribute name="title" value="manageProfile" />  
+        <put-attribute name="body" value="/WEB-INF/test-taker-jsp/manageProfile.jsp" />  
+    </definition>
+    
+     <definition name="fillSurvey" extends="base-test-taker.definition">  
+        <put-attribute name="title" value="fillSurvey" />  
+        <put-attribute name="body" value="/WEB-INF/test-taker-jsp/fillSurvey.jsp" />  
+    </definition>
+    
+     <definition name="fillPersonalDetails" extends="base-test-taker.definition">  
+        <put-attribute name="title" value="fillPersonalDetails" />  
+        <put-attribute name="body" value="/WEB-INF/test-taker-jsp/fillPersonalDetails.jsp" />  
+    </definition>
   
 </tiles-definitions>  

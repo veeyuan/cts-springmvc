@@ -61,12 +61,7 @@ public class LoginController {
 	    		mav = new ModelAndView("takeTest");
 	    		request.getSession().setAttribute("userid", user.getId());
 	    		request.getSession().setAttribute("username", user.getUsername());
-	    		User userDet = userDao.getUserDet(user.getId());
-	    		mav.addObject("user",userDet);
-	    		List<Discipline> listDiscipline =   disciplineDao.getDisciplineList();
-				mav.addObject("listDiscipline",listDiscipline);
-				List<Category> listCategory =   categoryDao.getCategoryList();
-				mav.addObject("listCategory",listCategory);
+	    		return new ModelAndView("redirect:/takeTest.html");
 			
 	    	}
 	    

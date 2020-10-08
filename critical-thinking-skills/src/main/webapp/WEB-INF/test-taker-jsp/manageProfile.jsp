@@ -1,5 +1,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.cts.model.SurveyForm" %>
 <%@ page import="com.cts.model.User" %>
 
 <html>    
@@ -36,8 +39,8 @@
 	background-color: white;
 }
 #testLink{
-	background-color: #FED136;
-    color: #fff;
+	background-color: transparent;
+    color: #6c757d;
 }
 
 #dashboardLink{
@@ -51,8 +54,9 @@
 }
 
 #manageProfileLink{
-   background-color: transparent;
-    color: #6c757d;
+   
+    background-color: #FED136;
+    color: #fff;
 }
 
 #instruction{
@@ -67,10 +71,16 @@
 </style>
 <script>
 
-function getQuestions(){
-	document.getElementById('questionForm').submit();
-} 
+function getForm(id){
+	document.getElementById('formid').value=id;
+	document.getElementById('surveyForm').submit();
+}
 
+function submitChange(){
+	document.getElementById('testSpecForm').submit();
+	
+	
+}
 function setInit(){
 	//setUserName
 	var username = document.getElementById("username").value;
@@ -82,23 +92,18 @@ function setInit(){
 	var language = document.getElementById("language").value;
 	$('#languageCd').val(language).change(); 
 }
-
-
 addLoadEvent(setInit); 
-
-   
 
 
 </script> 
-</head>  
-<% User user = (User)request.getAttribute("user"); %>  
+</head>    
 <body>   
  <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 id="title" class="m-0 text-dark">Take Test</h1>
+            <h1 id="title" class="m-0 text-dark">Manage Profile</h1>
           </div><!-- /.col -->
           <!-- <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -112,28 +117,88 @@ addLoadEvent(setInit);
     <!-- /.content-header -->
     <section class="content">
 	<div class="container-fluid">
-	<%if (user.isReadyToTakeTest()){ %>
-           <div class="card">
+          
+            
+              <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
-                  Start Test
+                  Survey Form
                 </h3>
                
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              
-             <form:form id="questionForm" action ="startTest.html"  method="post" modelAttribute="user" >
-             <input type="hidden" id="username" value="<%=request.getSession().getAttribute("username").toString()%>">
+                 <table class="table table-hover">
+				  <thead>
+				    <tr>
+				      <th scope="col">Section</th>
+				      <th scope="col">Title</th>
+				      <th scope="col">Submitted</th>
+				      
+				    </tr>
+				  </thead>
+				  <tbody>                 
+				  <%User user = (User)request.getAttribute("user");
+				  List<SurveyForm> formlist = (List<SurveyForm>) request.getAttribute("formLst"); 
+				  int ind=0;
+				  char no='A';
+				 
+ %>
+                 <c:forEach items="${listForm}" var="form">		
+                 <input type="hidden" id="id${form.id}" value="${form.id}"/>	
+                 <% 
+                 if (!formlist.get(ind).isCompleted()){
+                	%>	 		
+					 <tr onclick="getForm(document.getElementById('id${form.id}').value)" >
+					 <%}else{ %> 
+					 <tr>
+				<%} %>
+			 			<td><%=no%></td>
+      					<td>  											  
+  				             	
+		                     <c:out value="${form.formName}" />		               
+                  		</td>
+                  		<% if (formlist.get(ind).isCompleted()){ %>
+					      <td><i class="fas fa-check"></i></span></td>
+					      <%}else{ %>
+					      <td ><span><i class="fas fa-times"></i><span></td>
+					      <%} %>
+   					 </tr>	 
+   					 <% no+=1;
+   					 ind++;%>                
+                </c:forEach>
+                 </tbody>
+				</table>
+			 <form id="surveyForm" method="post" action="fillSurvey.html">
+			 <input type="hidden" name="formid" id="formid"/>
+			 </form>
+              </div>
+              <!-- /.card-body -->
+             
+            </div>
+             <%if (user.isCompleteSurvey()){ %>
+             <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="ion ion-clipboard mr-1"></i>
+                  Test Specification
+                </h3>
+               
+              </div>
+              <!-- /.card-header -->
+             
+              <div class="card-body">
+             <form:form id="testSpecForm" action ="processTestSpec.html"  method="post" modelAttribute="user" >
              <input type="hidden" id="userid" value="${user.id}"> 
+             <input type="hidden" id="enableEdit" value="no"> 
               <div class="form-row">					  
 	  				  <div class="form-group col-md-3">
 	  				  <label >Discipline</label>
 	  				  	 <input type="hidden" id="discipline" value="${user.disciplineCd}">  
 	                     <form:select path="disciplineCd" id="disciplineCd" class="form-control" >
 	                       <c:forEach items="${listDiscipline}" var="discipline">
-					      	  <form:option value ="${discipline.code}" label="${discipline.name}" disabled="true"/>
+					      	  <form:option value ="${discipline.code}" label="${discipline.name}" />
 				              </c:forEach>
 	                       </form:select>
 	                   </div>
@@ -144,11 +209,11 @@ addLoadEvent(setInit);
 					      <input type="hidden" id="category" value="${user.categoryCd}"> 
 					      <form:select path="categoryCd" id="categoryCd" class="form-control" >
 					      	<c:forEach items="${listCategory}" var="category">
-					      	  <form:option value ="${category.code}" label="${category.name}" disabled="true"/>
+					      	  <form:option value ="${category.code}" label="${category.name}" />
 				              </c:forEach>
 	                       </form:select>
 					  </div>
-					  <div class="form-group col-md-2">
+					 <div class="form-group col-md-2">
 					  <label >Language</label>
 	  				  	 <input type="hidden" id="language" value="${user.languageCd}">  
 	                     <form:select path="languageCd" id="languageCd" class="form-control" >
@@ -160,31 +225,18 @@ addLoadEvent(setInit);
 					  
 					 </div>
                </form:form>   
-              <p id="instruction">Please make sure the above details is accurate, for questions will be generated according to the criteria. 
-              If you want to make change, please change the details in Manage Profile.
-              <br>There are <b>20 questions</b> which can be either multi-choice questions or short-structured questions.
-              You need to answer all the questions <b>within 1 hour</b>. 
-              <br>Once you are ready, you may click on the button to start the test. <p>
+             
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <button  id="btn-start" onclick="getQuestions()" type="button" class="btn btn-info float-right"><i class="far fa-edit"></i> Start Test</button>  
-               
+              <%if (user.isReadyToTakeTest()){ %>
+                <button  id="btn-submit-spec"  onclick="submitChange()" type="button" class="btn btn-info float-right"><i class="fas fa-check"></i> Submit Change</button>  
+               <%}else{ %>
+                 <button  id="btn-submit-spec"  onclick="submitChange()" type="button" class="btn btn-info float-right"><i class="fas fa-check"></i> Submit </button>                
+               <%} %>
               </div>
             </div>
-	 <%}else{ %>   
-	 <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="ion ion-clipboard mr-1"></i>
-                  Start Test
-                </h3>
-               
-              </div>
-	  <div class="card-body">
-	   <p id="instruction">You are required to complete the survey form in <a href="manageProfile.html">Manage Profile</a> and select your test specification to start test.<p>
-              </div>
-	 <%} %>                   
+	          <%} %>             
 				 
             <!-- /.card -->
             </section>

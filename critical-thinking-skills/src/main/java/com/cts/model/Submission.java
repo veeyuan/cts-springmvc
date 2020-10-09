@@ -16,6 +16,10 @@ public class Submission {
 	private String disciplineCd;
 	private String categoryCd;
 	private String testTakerName;
+	
+	private boolean hasTakenTest;
+	private boolean isRstReady;
+	
 	/**
 	 * @return the questionLst
 	 */
@@ -158,6 +162,30 @@ public class Submission {
 	 */
 	public void setTestTakerName(String testTakerName) {
 		this.testTakerName = testTakerName;
+	}
+	/**
+	 * @return the hasTakenTest
+	 */
+	public boolean isHasTakenTest() {
+		return hasTakenTest;
+	}
+	/**
+	 * @param hasTakenTest the hasTakenTest to set
+	 */
+	public void setHasTakenTest(boolean hasTakenTest) {
+		this.hasTakenTest = hasTakenTest;
+	}
+	/**
+	 * @return the isRstReady
+	 */
+	public boolean isRstReady() {
+		return isRstReady;
+	}
+	/**
+	 * @param isRstReady the isRstReady to set
+	 */
+	public void setRstReady(boolean isRstReady) {
+		this.isRstReady = isRstReady;
 	}
 
 }

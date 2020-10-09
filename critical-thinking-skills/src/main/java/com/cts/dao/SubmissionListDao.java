@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -258,4 +260,67 @@ public class SubmissionListDao {
     	cs.close();
 	}
 	
+	public boolean hasTakenTest(String userId) {
+		String sqlStmt = "select count(id) from tbl_submission where USER_ID=?" ;
+		int num = (Integer) jdbcTemplate.queryForObject(
+				sqlStmt, new Object[] { userId }, Integer.class);
+		if (num>0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isResultReady(String userId) {
+		String sqlStmt = "select READY_TO_RELEASE_RST from tbl_submission where USER_ID=?" ;
+		String isRstReady = (String) jdbcTemplate.queryForObject(
+				sqlStmt, new Object[] { userId }, String.class);
+		if ("Y".equalsIgnoreCase(isRstReady)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public Submission getScoresAnalysis(Submission submission) throws ParseException {
+		ResultSet resultSet = null;
+		Connection connection;
+		List<GradedScores> scoreLst=new ArrayList<GradedScores>();
+		try {
+			connection = jdbcTemplate.getDataSource().getConnection();
+			CallableStatement cs = connection.prepareCall("{call SP_RETRIEVE_RESULTS(?,?)}");
+	        cs.setString(1, submission.getUserId());
+	        cs.registerOutParameter(2, OracleTypes.CURSOR); 
+	        cs.execute();
+	        resultSet = (ResultSet) cs.getObject(2);
+	        if (resultSet!=null) {
+		        while (resultSet.next()) {
+		        	GradedScores scores = new GradedScores();
+		        	scores.setAnalysisScore(Integer.parseInt(resultSet.getString("PERCENTAGE_ANALYSIS_EVALUATION")));
+		        	scores.setLogicScore(Integer.parseInt(resultSet.getString("PERCENTAGE_LOGIC_REASONING")));
+		        	scores.setJudgementScore(Integer.parseInt(resultSet.getString("PERCENTAGE_JUDGEMENT")));
+		        	scores.setProbSolveScore(Integer.parseInt(resultSet.getString("PERCENTAGE_PROBLEM_SOLVING")));
+		        	scores.setCreativeScore(Integer.parseInt(resultSet.getString("PERCENTAGE_CREATIVE")));
+		        	scoreLst.add(scores);
+		        	submission.setScoresLst(scoreLst);
+		        	submission.setSubmitDt(resultSet.getDate("SUBMITTED_DT"));
+		        	submission.setCategoryCd(resultSet.getString("CATEGORY_CD"));
+		        	submission.setDisciplineCd(resultSet.getString("DISCIPLINE_CD"));
+		        	submission.setLanguageCd(resultSet.getString("LANGUAGE_CD"));
+		        	submission.setTestTakerName(resultSet.getString("FULLNAME"));
+		        	
+		        }
+	        }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				resultSet.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+        
+		return submission;
+	}
 }

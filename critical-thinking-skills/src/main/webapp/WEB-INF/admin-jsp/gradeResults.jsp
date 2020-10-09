@@ -128,6 +128,10 @@ function showNextPreviousBtn(){
 
 function setInit(){
 	document.getElementById("div-question-ind0").style.display = "block";
+	var maxInd=document.getElementById("maxPageNum").value;
+	if (maxInd==1){
+		$('#submitbtn').css("display", "block");
+	}
 	showNextPreviousBtn();
 }
 addLoadEvent(setInit); 

@@ -97,5 +97,10 @@
         <put-attribute name="title" value="fillPersonalDetails" />  
         <put-attribute name="body" value="/WEB-INF/test-taker-jsp/fillPersonalDetails.jsp" />  
     </definition>
+    
+    <definition name="viewResult" extends="base-test-taker.definition">  
+        <put-attribute name="title" value="viewResult" />  
+        <put-attribute name="body" value="/WEB-INF/test-taker-jsp/viewResult.jsp" />  
+    </definition>
   
 </tiles-definitions>  

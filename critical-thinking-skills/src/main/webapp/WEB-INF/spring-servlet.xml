@@ -71,6 +71,9 @@
 <bean id="surveyDao" class="com.cts.dao.SurveyDao">
 <property name="jdbcTemplate" ref="jt"></property>
 </bean>
+<bean id="hotsComponentDao" class="com.cts.dao.HotsComponentDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     <property name="maxUploadSize" value="20848820" />
 </bean>

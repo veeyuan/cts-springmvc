@@ -58,16 +58,18 @@ public class QuestionListDao {
 		Connection connection;
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_FILTER_QUESTION(?,?,?,?,?,?,?)}");
+			CallableStatement cs = connection.prepareCall("{call SP_FILTER_QUESTION(?,?,?,?,?,?,?,?,?)}");
 	        cs.setString(1, questionType.getQuestionDscp());
-	        cs.setString(2, checkIsAll(questionType.getDisciplineCd()));
-	        cs.setString(3, checkIsAll(questionType.getCategoryCd()));
+	        cs.setString(2, null);
+	        cs.setString(3, null);
 	        cs.setString(4, checkIsAll(questionType.getLanguageCd()));
 	        cs.setInt(5, startRow);
 	        cs.setInt(6, endRow);
-	        cs.registerOutParameter(7, OracleTypes.CURSOR); 
+	        cs.setString(7, checkIsAll(questionType.getHotsComponentCd()));
+	        cs.setString(8, questionType.getStrIsSelectedToAsk());
+	        cs.registerOutParameter(9, OracleTypes.CURSOR); 
 	        cs.execute();
-	        resultSet = (ResultSet) cs.getObject(7);
+	        resultSet = (ResultSet) cs.getObject(9);
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
 		        	Question question = new Question();
@@ -75,6 +77,14 @@ public class QuestionListDao {
 		        	question.setDisciplineCd(resultSet.getString("DISCIPLINE_CD"));
 		        	question.setCategoryCd(resultSet.getString("CATEGORY_CD"));
 		        	question.setLanguageCd(resultSet.getString("LANGUAGE_CD"));
+		        	question.setHotsComponentCd(resultSet.getString("HOTS_COMPONENT"));
+		        	question.setHotsDSCP(resultSet.getString("COMPONENT_NAME"));		        	
+		        	question.setStrIsSelectedToAsk(resultSet.getString("SELECTED_TO_ASK"));
+		        	if ("Y".equalsIgnoreCase(resultSet.getString("SELECTED_TO_ASK"))) {
+		        		question.setSelectedToAsk(true);
+		        	}else {
+		        		question.setSelectedToAsk(false);
+		        	}
 		        	String dscp = resultSet.getString("question_dscp");
 					dscp = dscp.substring(0, Math.min(dscp.length(), 100));
 					question.setQuestionDscp(dscp);

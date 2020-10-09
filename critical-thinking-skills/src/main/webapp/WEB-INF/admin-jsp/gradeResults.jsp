@@ -217,13 +217,13 @@ int totalQuestionNum = submission.getQuestionLst().size();
 				 
 				   <div class="form-row">
 					  <div class="form-group col-md-8">
-					    <label >Sample Answer</label>
+					    <label >Answer</label>
 					    <form:textarea path="questionLst[${status.index}].sampleAns" class="form-control" rows="2" placeholder="as marking scheme" readonly="true"/>
 					 </div>
 					<% if (question.getSampleAnsAttachment()!=null){ 
 			  		if (!question.getSampleAnsAttachment().getFormat().toLowerCase().contains("image".toLowerCase())){%>
 				  	<div class="form-group col-md-2">
-					 		<label >Sample Answer Attachment</label>
+					 		<label >Answer Attachment</label>
             			<a href="downloadAttachment.html?id=${question.sampleAnsAttachment.id}">${question.sampleAnsAttachment.fileName}</a>
 					  	</div>
 					  	</div>
@@ -231,7 +231,7 @@ int totalQuestionNum = submission.getQuestionLst().size();
 					  	</div>
 					  	<div class="form-row">				  
 							<div  class="form-group col-md-8">
-					 		<label >Sample Answer Attachment</label><br>
+					 		<label >Answer Attachment</label><br>
 					 		<img src="data:image/jpg;base64,${question.sampleAnsAttachment.base64Image}"/>
 					 		</div>
 				 		</div>
@@ -242,7 +242,7 @@ int totalQuestionNum = submission.getQuestionLst().size();
 			  	</div>	
 			  <%} %>
 				  
-				  <label >Scores Weightage</label>
+				  <label >Scores</label>
 					<div class="form-row align-items-center">
 				    <div class="col-sm-2 my-1">
 				      <div class="input-group">

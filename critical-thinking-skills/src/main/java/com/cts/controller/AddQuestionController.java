@@ -20,11 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cts.dao.CategoryDao;
 import com.cts.dao.DisciplineDao;
+import com.cts.dao.HotsComponentDao;
 import com.cts.dao.LanguageDao;
 import com.cts.dao.QuestionDao;
 import com.cts.model.AttachmentFile;
 import com.cts.model.Category;
 import com.cts.model.Discipline;
+import com.cts.model.HotsComponent;
 import com.cts.model.Language;
 import com.cts.model.Question;  
 @Controller  
@@ -39,6 +41,8 @@ public class AddQuestionController {
 	CategoryDao categoryDao;
 	@Autowired  
 	LanguageDao languageDao;
+	@Autowired  
+	HotsComponentDao hotsComponentDao;
 	
 	@RequestMapping("/addQuestion")  
     public ModelAndView redirectToAddQuestion()  
@@ -50,6 +54,8 @@ public class AddQuestionController {
 		model.addObject("listCategory",listCategory);
 		List<Language> listLanguage =   languageDao.getLanguageList();
 		model.addObject("listLanguage",listLanguage);
+		List<HotsComponent> listHotsComponent =   hotsComponentDao.getHotsComponentList();
+		model.addObject("listHotsComponent",listHotsComponent);
 	    return model;
     } 
 	

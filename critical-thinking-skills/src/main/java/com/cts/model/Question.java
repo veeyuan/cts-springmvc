@@ -25,6 +25,10 @@ public class Question {
 	private int creativeScore;
 	private AttachmentFile questionAttachment;
 	private AttachmentFile sampleAnsAttachment;
+	private String hotsComponentCd;
+	private boolean isSelectedToAsk;
+	private String strIsSelectedToAsk;
+	private String hotsDSCP;
 
 	
 	public String getId() {
@@ -194,6 +198,54 @@ public class Question {
 	 */
 	public void setSampleAnsAttachment(AttachmentFile sampleAnsAttachment) {
 		this.sampleAnsAttachment = sampleAnsAttachment;
+	}
+	/**
+	 * @return the hotsComponentCd
+	 */
+	public String getHotsComponentCd() {
+		return hotsComponentCd;
+	}
+	/**
+	 * @param hotsComponentCd the hotsComponentCd to set
+	 */
+	public void setHotsComponentCd(String hotsComponentCd) {
+		this.hotsComponentCd = hotsComponentCd;
+	}
+	/**
+	 * @return the isSelectedToAsk
+	 */
+	public boolean isSelectedToAsk() {
+		return isSelectedToAsk;
+	}
+	/**
+	 * @param isSelectedToAsk the isSelectedToAsk to set
+	 */
+	public void setSelectedToAsk(boolean isSelectedToAsk) {
+		this.isSelectedToAsk = isSelectedToAsk;
+	}
+	/**
+	 * @return the strIsSelectedToAsk
+	 */
+	public String getStrIsSelectedToAsk() {
+		return strIsSelectedToAsk;
+	}
+	/**
+	 * @param strIsSelectedToAsk the strIsSelectedToAsk to set
+	 */
+	public void setStrIsSelectedToAsk(String strIsSelectedToAsk) {
+		this.strIsSelectedToAsk = strIsSelectedToAsk;
+	}
+	/**
+	 * @return the hotsDSCP
+	 */
+	public String getHotsDSCP() {
+		return hotsDSCP;
+	}
+	/**
+	 * @param hotsDSCP the hotsDSCP to set
+	 */
+	public void setHotsDSCP(String hotsDSCP) {
+		this.hotsDSCP = hotsDSCP;
 	}
 	
 }

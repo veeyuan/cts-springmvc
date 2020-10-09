@@ -255,6 +255,27 @@ function submitChange(){
 				              </c:forEach>
 	                       </form:select>
 					  </div>
+					  </div>
+					  <div class="form-row">
+					  <div class="form-group col-md-3">
+					      <label >HOTS Component</label>
+					      <form:select path="hotsComponentCd"  class="form-control" name="hotsComponentCd">
+					      <c:forEach items="${listHotsComponent}" var="hots">
+					      	  <form:option value ="${hots.code}" label="${hots.name}"/>
+				              </c:forEach>
+	                       </form:select>
+					  </div>
+					  <div class="form-group col-md-3">
+					    <label >Display for answering?</label><br>
+							<div class="custom-control custom-radio custom-control-inline">
+							  <form:radiobutton path="strIsSelectedToAsk" id="mcqA" name="radio-all-mcq" class="custom-control-input" value="Y" checked="Yes"/>
+							  <label class="custom-control-label" for="mcqA">Yes</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+							  <form:radiobutton path="strIsSelectedToAsk"  id="mcqB" name="radio-all-mcq" class="custom-control-input" value="N"  />
+							  <label class="custom-control-label" for="mcqB">No</label>
+							</div>				 
+					   </div>
 					  <div class="form-group col-md-3">
 					    <label >Multi-choiced Question?</label><br>
 					    <input type="hidden" id="isMcq" value="${question.mcq}">  
@@ -280,7 +301,7 @@ function submitChange(){
 	                        <option value="5">5</option>
 	                       </select>	                   </div>
 	                   <div  class="form-group col-md-2" >
-	                   		<label >Correct Answer</label>
+	                   		<label >Answer</label>
 	                   		<input type="hidden" id="mcqanswer" value="${question.sampleAns}">
 	                   		<form:input path="mcqAns" class="form-control" id="numChoice" placeholder="Option Number (eg. 1)" value=""  />                			               		
 	                   </div>			 
@@ -322,11 +343,11 @@ function submitChange(){
 				  <div id="structuredDiv" style="display:none">
 				   <div class="form-row">
 					  <div class="form-group col-md-8">
-					    <label >Sample Answer</label>
+					    <label >Answer</label>
 					    <form:textarea path="sampleAns" class="form-control" id="" rows="1" placeholder="as marking scheme" />
 					 </div>
 					 <div class="form-group col-md-2">
-				 		<label >Attachment (for Sample Answer)</label>
+				 		<label >Attachment (for Answer)</label>
 				 		<input type="file" class="form-control-file" id="exampleFormControlFile1" name="sampleAnsAttachment">
 				  </div>
 				   <%if ("Y".equals(request.getAttribute("hasAnswerAttachment"))){ %>
@@ -339,7 +360,7 @@ function submitChange(){
 				  
 				  </div>
 
-					<br><label >Scores Weightage</label>
+					<br><label >Scores</label>
 					<div class="form-row align-items-center">
 				    <div class="col-sm-3 my-1">
 				      <div class="input-group">

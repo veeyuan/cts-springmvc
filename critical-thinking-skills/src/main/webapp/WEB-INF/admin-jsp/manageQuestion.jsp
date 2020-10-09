@@ -1,5 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page import="com.cts.model.Question" %>
+<%@ page import="java.util.List" %>
 
 <html>    
 <head>    
@@ -46,6 +48,22 @@ a {
 	width: 30px;
   	overflow: hidden;
 }
+
+.form-check{
+	margin:3px;
+	font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color:white;
+}
+.form-check-label{
+	margin-left:3px;
+	margin-top:2px;
+}
+.form-check-input{
+	width: 20px; 
+    height: 20px; 
+}
 </style>
 <script>
 
@@ -68,6 +86,16 @@ function getPageNum(objButton){
 function search(){
 	document.getElementById('targetPage').value = "1";
 	document.getElementById('filterForm').submit();
+}
+
+function changeSelected(){
+	  var checkBox = document.getElementById("defaultCheck1");
+	  if (checkBox.checked == true){
+		  document.getElementById("strIsSelectedToAsk").value = "Y";
+	  }else{
+		  document.getElementById("strIsSelectedToAsk").value = "N";
+	  }
+	  
 }
 </script>  
 </head>    
@@ -122,24 +150,14 @@ totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
 			         		<form:input path="questionDscp" id="search"  class="form-control"  placeholder="Search question..." />	
 			         </div>
 			         <div class="form-group col-md-2">
-	                        <form:select path="categoryCd" class="form-control" >
-	                        <form:option value = "all" label="All"/>
-					      	<c:forEach items="${listCategory}" var="category">
-					      	  <form:option value ="${category.code}" label="${category.name}"/>
+					      <form:select path="hotsComponentCd"  class="form-control" name="hotsComponentCd">
+					      <form:option value = "all" label="All"/>		
+					      <c:forEach items="${listHotsComponent}" var="hots">
+					      	  <form:option value ="${hots.code}" label="${hots.name}"/>
 				              </c:forEach>
 	                       </form:select>
 					  </div>
-			        
-	                <div class="form-group col-md-2">
-					       <form:select path="disciplineCd"  class="form-control" >
-					       <form:option value = "all" label="All"/>					       
-	                       <c:forEach items="${listDiscipline}" var="discipline">
-					      	  <form:option value ="${discipline.code}" label="${discipline.name}"/>
-				              </c:forEach>
-	                       </form:select>
-					  </div>
-					  
-					 <div class="form-group col-md-2">
+			        <div class="form-group col-md-2">
 					       <form:select path="languageCd"  class="form-control" name="questionsetlang">
 					       <form:option value = "all" label="All"/>  
 					      <c:forEach items="${listLanguage}" var="language">
@@ -147,6 +165,17 @@ totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
 				              </c:forEach>
 	                       </form:select>
 					  </div>
+	                <div class="form-group col-md-2">
+					       <div class="form-check">
+					       <form:hidden path = "strIsSelectedToAsk" id="strIsSelectedToAsk" value = "N"/>				       
+							  <input onclick="changeSelected()" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+							  <label class="form-check-label" for="defaultCheck1">
+							    Only selected 
+							  </label>
+							</div>				       
+					  </div>
+					  
+					 
 					 <span><button onclick="search()" class="btn btn-info float-right"><i class="fas fa-search"></i> Search</button></span>
 					  					  
 					 </div>
@@ -191,13 +220,15 @@ totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
 				    <tr>
 				      <th scope="col"> </th>
 				      <th scope="col">Question</th>
-				      <th scope="col">Category</th>
-				      <th scope="col">Discipline</th>
-				      <th scope="col">Language</th>
+				      <th scope="col">HOTS Component</th>
+				      <th scope="col">Language</th>				      
+				      <th scope="col">Is Selected</th>
 				      <th scope="col">MCQ</th>
 				    </tr>
 				  </thead>
-				  <tbody>                 
+				  <tbody>    
+				  <% List<Question> questionlst = (List<Question>) request.getAttribute("listQuestion");
+				 int i=0;%>             
                  <c:forEach items="${listQuestion}" var="question">				
 					 <tr >
 					 	<td id="checkboxCol">					 	
@@ -216,10 +247,19 @@ totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
 		                     <c:out value="${question.questionDscp}" />		               
 		                </a>                   
                   		</td>
-					      <td>${question.categoryCd}</td>
-					      <td>${question.disciplineCd}</td>
+					      <td>${question.hotsDSCP}</td>
 					      <td>${question.languageCd}</td>
-					      <td>${question.mcq}</td>
+					      <%if (questionlst.get(i).isSelectedToAsk()){ %>
+					      <td>Yes</td>
+					      <%}else{ %>
+					      <td>No</td>
+					      <%} %>
+					      
+					      <%if (questionlst.get(i).isMcq()){ %>
+					      <td>Yes</td>
+					      <%}else{ %>
+					      <td>No</td>
+					      <%} i++; %>
    					 </tr>	                 
                 </c:forEach>
                  </tbody>

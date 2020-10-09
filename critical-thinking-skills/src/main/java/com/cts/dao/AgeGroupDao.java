@@ -15,7 +15,7 @@ public class AgeGroupDao {
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
 	public List<AgeGroup> getAgeGroupList() {
-	    String sqlStmt = "select * from tbl_age_group" ;
+	    String sqlStmt = "select * from tbl_age_group order by AGE_GROUP_CD" ;
 	    List<AgeGroup> list = getList(sqlStmt);
 	    return list;
 	  }

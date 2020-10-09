@@ -26,12 +26,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cts.dao.CategoryDao;
 import com.cts.dao.DisciplineDao;
 import com.cts.dao.FileDao;
+import com.cts.dao.HotsComponentDao;
 import com.cts.dao.LanguageDao;
 import com.cts.dao.QuestionDao;
 import com.cts.dao.QuestionListDao;
 import com.cts.model.AttachmentFile;
 import com.cts.model.Category;
 import com.cts.model.Discipline;
+import com.cts.model.HotsComponent;
 import com.cts.model.Language;
 import com.cts.model.Question;
 
@@ -49,14 +51,15 @@ public class ManageQuestionController {
     QuestionDao questionDao;
 	@Autowired  
 	FileDao fileDao;
-	
+	@Autowired  
+	HotsComponentDao hotsComponentDao;
 	@RequestMapping("/manageQuestion")  
 	public ModelAndView  directToManageQuestion() throws IOException  
 	{  
 		ModelAndView model = new ModelAndView("manageQuestion"); 
 		int numPerPg=5; 
-		List<Question> listQuestion =   questionListDao.getQuestionList(numPerPg);
 		Question question = new Question();
+		List<Question> listQuestion =   questionListDao.filterQuestionList(question,1,5);
 		List<Question> allQuestionList =   questionListDao.filterQuestionList(question,0,0);
 		int totalRecords = allQuestionList.size();
 		int recordsPerPg = 5;
@@ -73,6 +76,8 @@ public class ManageQuestionController {
 		model.addObject("listCategory",listCategory);
 		List<Language> listLanguage =   languageDao.getLanguageList();
 		model.addObject("listLanguage",listLanguage);
+		List<HotsComponent> listHotsComponent =   hotsComponentDao.getHotsComponentList();
+		model.addObject("listHotsComponent",listHotsComponent);
 		model.addObject("question",new Question());
 	    return model;  
 	}  
@@ -108,6 +113,8 @@ public class ManageQuestionController {
 		model.addObject("listCategory",listCategory);
 		List<Language> listLanguage =   languageDao.getLanguageList();
 		model.addObject("listLanguage",listLanguage);
+		List<HotsComponent> listHotsComponent =   hotsComponentDao.getHotsComponentList();
+		model.addObject("listHotsComponent",listHotsComponent);
 		model.addObject("question",question);
 	    return model;  
 	    
@@ -181,6 +188,8 @@ public class ManageQuestionController {
 			model.addObject("listCategory",listCategory);
 			List<Language> listLanguage =   languageDao.getLanguageList();
 			model.addObject("listLanguage",listLanguage);
+			List<HotsComponent> listHotsComponent =   hotsComponentDao.getHotsComponentList();
+			model.addObject("listHotsComponent",listHotsComponent);
 		}else {
 		//	model.getModelMap().addAttribute("success","N");
 		}
@@ -213,6 +222,8 @@ public class ManageQuestionController {
 			model.addObject("listCategory",listCategory);
 			List<Language> listLanguage =   languageDao.getLanguageList();
 			model.addObject("listLanguage",listLanguage);
+			List<HotsComponent> listHotsComponent =   hotsComponentDao.getHotsComponentList();
+			model.addObject("listHotsComponent",listHotsComponent);
 			int numberOfOptions = 0;
 			if (question.isMcq()) {
 				model.getModelMap().addAttribute("isMcq","Y");

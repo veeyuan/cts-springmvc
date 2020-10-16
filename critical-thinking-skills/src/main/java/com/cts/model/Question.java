@@ -29,7 +29,8 @@ public class Question {
 	private boolean isSelectedToAsk;
 	private String strIsSelectedToAsk;
 	private String hotsDSCP;
-
+    private boolean isSubmitted;
+    private int timeLimitMin;
 	
 	public String getId() {
 		return id;
@@ -246,6 +247,30 @@ public class Question {
 	 */
 	public void setHotsDSCP(String hotsDSCP) {
 		this.hotsDSCP = hotsDSCP;
+	}
+	/**
+	 * @return the isSubmitted
+	 */
+	public boolean isSubmitted() {
+		return isSubmitted;
+	}
+	/**
+	 * @param isSubmitted the isSubmitted to set
+	 */
+	public void setSubmitted(boolean isSubmitted) {
+		this.isSubmitted = isSubmitted;
+	}
+	/**
+	 * @return the timeLimitMin
+	 */
+	public int getTimeLimitMin() {
+		return timeLimitMin;
+	}
+	/**
+	 * @param timeLimitMin the timeLimitMin to set
+	 */
+	public void setTimeLimitMin(int timeLimitMin) {
+		this.timeLimitMin = timeLimitMin;
 	}
 	
 }

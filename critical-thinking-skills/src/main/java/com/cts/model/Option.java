@@ -1,6 +1,6 @@
 package com.cts.model;
 
-public class Discipline extends Option {
+public class Option {
 	private String code;
 	private String name;
 	public String getCode() {

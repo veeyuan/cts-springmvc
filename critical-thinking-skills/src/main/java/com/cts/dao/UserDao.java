@@ -2,6 +2,7 @@ package com.cts.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,6 +62,11 @@ public class UserDao {
 				}else {
 					user.setCompleteSurvey(false);
 				}
+				if ("Y".equalsIgnoreCase(rs.getString("CONSENT_SURVEY"))) {
+					user.setConsentGrantedToSurvey(true);
+				}else {
+					user.setConsentGrantedToSurvey(false);
+				}
 				
 			}
 			rs.close();
@@ -103,16 +109,40 @@ public class UserDao {
     	 cs.close();
 	}
 	
-	public void updateTestSpec(User user) throws SQLException {
-		Connection connection = jdbcTemplate.getDataSource().getConnection();
-        CallableStatement cs = connection.prepareCall("{call SP_UPDATE_TESTSPEC(?,?,?,?)}");
-       
-        cs.setString(1, user.getId());
-        cs.setString(2,user.getCategoryCd());
-        cs.setString(3, user.getDisciplineCd());
-        cs.setString(4,user.getLanguageCd());
-        cs.execute();
-    	 cs.close();
+	public void updateTestSpec(User user) throws SQLException {		
+    	 String sql = "UPDATE TBL_USER_DET SET DISCIPLINE_CD = ?,CATEGORY_CD = ?,LANGUAGE_CD = ?,READY_TO_TEST = 'Y' WHERE USER_ID = ?";
+ 		jdbcTemplate.update(sql, user.getDisciplineCd(),user.getCategoryCd(),user.getLanguageCd(),user.getId());
+	}
+	
+	public void grantConsentToSurvey(String userid) {
+		String sql = "UPDATE tbl_user_det SET CONSENT_SURVEY='Y' WHERE USER_ID=?";
+		jdbcTemplate.update(sql,userid);
+	}
+	
+	public boolean hasStartedTest(String userid) {
+		String sqlStmt = "SELECT COUNT(ID) FROM TBL_SUBMISSION WHERE USER_ID ='"+userid+"' and SUBMITTED_DT IS NULL";
+		int submissionCount=(Integer) jdbcTemplate.queryForObject(
+				 sqlStmt, new Object[] {}, Integer.class);
+		if (submissionCount>0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public String getLastTakeTestDate(String userid) {
+		String sqlStmt ="SELECT COUNT(SUBMITTED_DT) FROM TBL_SUBMISSION WHERE USER_ID = '"+userid+"' AND SUBMITTED_DT IS NOT NULL";
+		String sqlStmt2 ="SELECT MAX(SUBMITTED_DT) FROM TBL_SUBMISSION WHERE USER_ID = '"+userid+"' AND SUBMITTED_DT IS NOT NULL";
+
+		int numOfRecord=(int) jdbcTemplate.queryForObject(
+				 sqlStmt, new Object[] {}, Integer.class);
+
+		if (numOfRecord==0) {
+			return "noRecords";
+		}
+		Date lastTakeTestDt=(Date) jdbcTemplate.queryForObject(
+				 sqlStmt2, new Object[] {}, Date.class);
+		
+		return lastTakeTestDt.toString();
 	}
 	
 }

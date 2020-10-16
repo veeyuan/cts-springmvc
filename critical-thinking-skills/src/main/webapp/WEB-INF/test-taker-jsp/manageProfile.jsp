@@ -18,26 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     
  <style>
-.searchfilter{
-	width:80%;
-	border-radius: 5px;
-	margin-left:3%;
-	margin-top:50px;
-	background: rgba(0, 0, 0, 0.5);
-	padding-top:16px;
-	padding-left:40px;
-	padding-bottom:0;
-	padding-right:0;
-	justify-content:space-between;
-	
-}
 
-.ui-datepicker-title{
-	text-align: center;
-}
-#ui-datepicker-div {
-	background-color: white;
-}
 #testLink{
 	background-color: transparent;
     color: #6c757d;
@@ -68,6 +49,7 @@
       width: 90%; 
    }
 }
+
 </style>
 <script>
 
@@ -94,7 +76,25 @@ function setInit(){
 }
 addLoadEvent(setInit); 
 
+function changeSelected(){
+	  var checkBox = document.getElementById("defaultCheck1");
+	  if (checkBox.checked == true){
+		  document.getElementById("consentToTakeSurvey").value = "Y";
+	  }else{
+		  document.getElementById("consentToTakeSurvey").value = "N";
+	  }
+	  
+}
 
+function submitConsent(){
+	var consent =  document.getElementById("consentToTakeSurvey").value ;
+	if (consent=='Y'){
+		document.getElementById('consentForm').submit();
+	}else{
+		alert("You have not signed the consent form.");
+	}
+	
+}
 </script> 
 </head>    
 <body>   
@@ -120,6 +120,10 @@ addLoadEvent(setInit);
           
             
               <div class="card">
+              
+              <!-- /.card-header -->
+              <%User user = (User)request.getAttribute("user"); %>
+              <%if (user.isConsentGrantedToSurvey()){ %>
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
@@ -127,7 +131,6 @@ addLoadEvent(setInit);
                 </h3>
                
               </div>
-              <!-- /.card-header -->
               <div class="card-body">
                  <table class="table table-hover">
 				  <thead>
@@ -139,12 +142,10 @@ addLoadEvent(setInit);
 				    </tr>
 				  </thead>
 				  <tbody>                 
-				  <%User user = (User)request.getAttribute("user");
+				  <%
 				  List<SurveyForm> formlist = (List<SurveyForm>) request.getAttribute("formLst"); 
 				  int ind=0;
-				  char no='A';
-				 
- %>
+				  char no='A';%>
                  <c:forEach items="${listForm}" var="form">		
                  <input type="hidden" id="id${form.id}" value="${form.id}"/>	
                  <% 
@@ -236,7 +237,45 @@ addLoadEvent(setInit);
                <%} %>
               </div>
             </div>
-	          <%} %>             
+	          <%}}else{ %>      
+	          <div class="card-header">
+                <h3 class="card-title">
+                  <i class="ion ion-clipboard mr-1"></i>
+                  Consent of Participation
+                </h3>
+               
+              </div>
+	          <div class="card-body">
+             <form:form id="consentForm" action ="manageProfile.html" method="post"  >
+             <input type="hidden" id="consentToTakeSurvey" name="consentToTakeSurvey" value="N">		
+             <div style="margin-left:5%;margin-right:5%;text-align: justify;line-height: 2;">
+             <p> Dear Sir/Madam/Mr/Mrs/Miss, </p>
+			 <p> We are currently carrying out a research entitled &lsquo;Investigating Correlation between Critical Thinking Skills and Mitigation of the Spreading of COVID-19: A Pilot Study in Malaysia and Indonesia&rsquo;. We would like to invite you to participate in this study by answering the survey questionnaire which will take 10 to 15 minutes. 
+				The data collected will be kept confidential. No personal details of individuals such as name will be revealed, and all data in the final research report will only be group data. Raw data for this study will be collected primarily through a simple questionnaire which consists of THREE (3) sections. It is hoped that the findings of the study will increase awareness as well as contribute to the corpus of knowledge on the correlation between critical thinking skills and mitigation of the spreading of COVID-19 among Malaysians and Indonesians. 
+				Your participation in this study is entirely voluntary. You may choose to discontinue your participation in this study at any time during the data collection phase. If you agree to participate fully, however, kindly sign the consent section (digital signature) before the commencement of the study. 
+				Feel free to contact us if you need more clarification. We can be contacted via email as follows: <p>
+				<p>
+				Associate Professor Dr. Ow Siew Hock (Malaysia)<br>
+				Email	: show@um.edu.my<br>
+				Assistant Professor Dr. Chuang Huei Gau (Malaysia)<br>
+				Email	: chuanghg@utar.edu.my<br>
+				Assistant Professor Dr. Moses Glorino (Indonesia)<br>
+				Email	: moses.glorino@fib.unair.ac.id
+              </p>
+             <div class="form-check">
+                					       
+				<input style="margin-top:10px;"onclick="changeSelected()" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+				<label class="form-check-label" for="defaultCheck1">
+				I agree to participate in the research entitled &lsquo;Investigating Correlation between Critical Thinking Skills and Mitigation of the Spreading of COVID-19: A Pilot Study in Malaysia and Indonesia&rsquo;.
+				</label>
+			</div>	
+			</div>			     
+             </form:form>
+             </div>
+             <div class="card-footer clearfix">
+                <button onclick="submitConsent()" class="btn btn-info float-right"><i id="btn-icon" class="fas fa-check"></i> Submit Consent Form</button>             
+              </div>
+	          <%} %>       
 				 
             <!-- /.card -->
             </section>

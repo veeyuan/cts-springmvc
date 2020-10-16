@@ -1,6 +1,6 @@
 package com.cts.model;
 
-public class Nationality {
+public class Nationality extends Option{
 	private String code;
 	private String name;
 	public String getCode() {

@@ -27,7 +27,7 @@ public class QuestionDao {
 
 	public void addQuestion(Question question) throws SQLException, IOException {
 		 Connection connection = jdbcTemplate.getDataSource().getConnection();
-         CallableStatement cs = connection.prepareCall("{call SP_CREATE_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+         CallableStatement cs = connection.prepareCall("{call SP_CREATE_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         
          cs.setString(1, question.getQuestionDscp());
          cs.setString(2, question.getDisciplineCd());
@@ -79,6 +79,7 @@ public class QuestionDao {
      	 }
      	 cs.setString(23,question.getHotsComponentCd());
      	 cs.setString(24,question.getStrIsSelectedToAsk());
+     	 cs.setInt(25,question.getTimeLimitMin());
      	 cs.execute();
      	 cs.close();
 	}
@@ -153,6 +154,7 @@ public class QuestionDao {
 		        	question.setCreativeScore(Integer.parseInt(resultSet.getString("CREATIVE")));
 		        	question.setHotsComponentCd(resultSet.getString("HOTS_COMPONENT"));
 		        	question.setStrIsSelectedToAsk(resultSet.getString("SELECTED_TO_ASK"));
+		        	question.setTimeLimitMin(Integer.parseInt(resultSet.getString("TIME_LIMIT_MINUTE")));
 		        }
 	        }
 		} catch (SQLException e) {
@@ -174,7 +176,7 @@ public class QuestionDao {
 	
 	public void modifyQuestion( Question question) throws SQLException, IOException {
 		 Connection connection = jdbcTemplate.getDataSource().getConnection();
-         CallableStatement cs = connection.prepareCall("{call SP_MODIFY_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+         CallableStatement cs = connection.prepareCall("{call SP_MODIFY_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         
          cs.setString(1, question.getQuestionDscp());
          cs.setString(2, question.getDisciplineCd());
@@ -251,6 +253,7 @@ public class QuestionDao {
      	 cs.setString(23,question.getId());
      	 cs.setString(26,question.getHotsComponentCd());
      	 cs.setString(27,question.getStrIsSelectedToAsk());
+     	 cs.setInt(28, question.getTimeLimitMin());
      	 cs.execute();
      	 cs.close();
 	}

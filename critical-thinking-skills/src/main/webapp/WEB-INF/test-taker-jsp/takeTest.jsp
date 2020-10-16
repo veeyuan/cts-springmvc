@@ -1,6 +1,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page import="com.cts.model.User" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.GregorianCalendar" %>
 
 <html>    
 <head>
@@ -91,7 +94,25 @@ addLoadEvent(setInit);
 
 </script> 
 </head>  
-<% User user = (User)request.getAttribute("user"); %>  
+<% User user = (User)request.getAttribute("user"); 
+String lastTestDate = request.getAttribute("lastTestDate").toString(); 
+boolean hasTakenTestRecently = false;
+if (!"noRecords".equalsIgnoreCase(lastTestDate)){
+	String[] values = lastTestDate.split("-");
+	int year = Integer.parseInt(values[0]);
+	int month = Integer.parseInt(values[1]);
+	int day = Integer.parseInt(values[2]);
+	Calendar sixMonthsAgo = Calendar.getInstance();             
+	sixMonthsAgo.add(Calendar.MONTH, -6);                       
+	Calendar newDate = new GregorianCalendar(year, month, day);
+	if (!newDate.before(sixMonthsAgo)) {
+		hasTakenTestRecently = true;
+	}
+}
+
+
+
+%>  
 <body>   
  <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -113,6 +134,7 @@ addLoadEvent(setInit);
     <section class="content">
 	<div class="container-fluid">
 	<%if (user.isReadyToTakeTest()){ %>
+		
            <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
@@ -121,10 +143,10 @@ addLoadEvent(setInit);
                 </h3>
                
               </div>
-              <!-- /.card-header -->
+              <%if (!hasTakenTestRecently){ %>
               <div class="card-body">
               
-             <form:form id="questionForm" action ="startTest.html"  method="post" modelAttribute="user" >
+             <form:form id="questionForm" action ="takeTest.html"  method="post" modelAttribute="user" >
              <input type="hidden" id="username" value="<%=request.getSession().getAttribute("username").toString()%>">
              <input type="hidden" id="userid" value="${user.id}"> 
               <div class="form-row">					  
@@ -153,7 +175,7 @@ addLoadEvent(setInit);
 	  				  	 <input type="hidden" id="language" value="${user.languageCd}">  
 	                     <form:select path="languageCd" id="languageCd" class="form-control" >
 	                       <c:forEach items="${listLanguage}" var="language">
-					      	  <form:option value ="${language.code}" label="${language.name}" />
+					      	  <form:option value ="${language.code}" label="${language.name}" disabled="true" />
 				              </c:forEach>
 	                       </form:select>
 	                   </div>
@@ -161,9 +183,7 @@ addLoadEvent(setInit);
 					 </div>
                </form:form>   
               <p id="instruction">Please make sure the above details is accurate, for questions will be generated according to the criteria. 
-              If you want to make change, please change the details in Manage Profile.
-              <br>There are <b>20 questions</b> which can be either multi-choice questions or short-structured questions.
-              You need to answer all the questions <b>within 1 hour</b>. 
+              If you want to make change, please change the test specification in Manage Profile.        
               <br>Once you are ready, you may click on the button to start the test. <p>
               </div>
               <!-- /.card-body -->
@@ -171,6 +191,14 @@ addLoadEvent(setInit);
                 <button  id="btn-start" onclick="getQuestions()" type="button" class="btn btn-info float-right"><i class="far fa-edit"></i> Start Test</button>  
                
               </div>
+            
+            <%}else{ %>
+            <div class="card-body">
+            <p id="instruction">You have just completed your test on <%=lastTestDate %>.    
+              <br>You can only test yourself again six months after your last test.  <p>
+            </div>
+            
+            <%} %>
             </div>
 	 <%}else{ %>   
 	 <div class="card">

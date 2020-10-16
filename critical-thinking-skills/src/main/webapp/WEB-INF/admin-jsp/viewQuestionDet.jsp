@@ -218,7 +218,7 @@ addLoadEvent(setInit);
 							  <label class="custom-control-label" for="mcqB">No</label>
 							</div>				 
 					   </div>
-					  <div class="form-group col-md-3">
+					  <div class="form-group col-md-2">
 					    <label >Multi-choiced Question?</label><br>
 					    <input type="hidden" id="isMcq" value="${question.mcq}">  
 							<div class="custom-control custom-radio custom-control-inline">
@@ -230,6 +230,10 @@ addLoadEvent(setInit);
 							  <label class="custom-control-label" for="mcq2">No</label>
 							</div>				 
 					   </div>
+					   <div class="form-group col-md-2">
+				    <label >Time Limit (Minute)</label>
+				    <form:input path="timeLimitMin" class="form-control"  placeholder="0" readonly="true"/>
+				 </div>
 					 </div>
 					 
 					 <div id="mcqDiv">

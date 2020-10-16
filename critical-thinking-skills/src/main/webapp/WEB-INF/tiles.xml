@@ -102,5 +102,17 @@
         <put-attribute name="title" value="viewResult" />  
         <put-attribute name="body" value="/WEB-INF/test-taker-jsp/viewResult.jsp" />  
     </definition>
+    
+     <definition name="testSection" extends="base-test-taker.definition">  
+        <put-attribute name="title" value="testSection" />  
+        <put-attribute name="body" value="/WEB-INF/test-taker-jsp/testSection.jsp" />  
+    </definition>
+    
+    <definition name="answerQuestion" extends="base-test-taker.definition">  
+        <put-attribute name="title" value="answerQuestion" />  
+        <put-attribute name="body" value="/WEB-INF/test-taker-jsp/answerQuestion.jsp" />  
+    </definition>
+    
+   
   
 </tiles-definitions>  

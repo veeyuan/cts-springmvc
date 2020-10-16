@@ -97,6 +97,18 @@ function changeSelected(){
 	  }
 	  
 }
+
+function setInit(){
+	var check =  document.getElementById("strIsSelectedToAsk").value ;
+	if (check=='Y'){
+		document.getElementById("defaultCheck1").checked = true;
+	}else{
+		document.getElementById("defaultCheck1").checked = false;
+	}
+}
+
+addLoadEvent(setInit); 
+
 </script>  
 </head>    
 <body> 
@@ -167,7 +179,7 @@ totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
 					  </div>
 	                <div class="form-group col-md-2">
 					       <div class="form-check">
-					       <form:hidden path = "strIsSelectedToAsk" id="strIsSelectedToAsk" value = "N"/>				       
+					       <form:hidden path = "strIsSelectedToAsk" id="strIsSelectedToAsk" />				       
 							  <input onclick="changeSelected()" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 							  <label class="form-check-label" for="defaultCheck1">
 							    Only selected 

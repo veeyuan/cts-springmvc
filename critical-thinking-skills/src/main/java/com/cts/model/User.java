@@ -17,7 +17,8 @@ public class User extends Login{
 	private String highestEduLevelCd;
 	private String gender;
 	private boolean completeSurvey;
-		
+	private boolean consentGrantedToSurvey;
+	
 	public User(String username, String password, String roleCd) {
 		super(username, password, roleCd);
 		// TODO Auto-generated constructor stub
@@ -166,6 +167,22 @@ public class User extends Login{
 	public void setCompleteSurvey(boolean completeSurvey) {
 		this.completeSurvey = completeSurvey;
 	}
+
+	/**
+	 * @return the consentGrantedToSurvey
+	 */
+	public boolean isConsentGrantedToSurvey() {
+		return consentGrantedToSurvey;
+	}
+
+	/**
+	 * @param consentGrantedToSurvey the consentGrantedToSurvey to set
+	 */
+	public void setConsentGrantedToSurvey(boolean consentGrantedToSurvey) {
+		this.consentGrantedToSurvey = consentGrantedToSurvey;
+	}
+
+	
 	
 	
 

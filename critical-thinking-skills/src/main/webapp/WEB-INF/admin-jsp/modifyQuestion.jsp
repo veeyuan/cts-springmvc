@@ -265,7 +265,7 @@ function submitChange(){
 				              </c:forEach>
 	                       </form:select>
 					  </div>
-					  <div class="form-group col-md-3">
+					  <div class="form-group col-md-2">
 					    <label >Display for answering?</label><br>
 							<div class="custom-control custom-radio custom-control-inline">
 							  <form:radiobutton path="strIsSelectedToAsk" id="mcqA" name="radio-all-mcq" class="custom-control-input" value="Y" checked="Yes"/>
@@ -276,7 +276,7 @@ function submitChange(){
 							  <label class="custom-control-label" for="mcqB">No</label>
 							</div>				 
 					   </div>
-					  <div class="form-group col-md-3">
+					  <div class="form-group col-md-2">
 					    <label >Multi-choiced Question?</label><br>
 					    <input type="hidden" id="isMcq" value="${question.mcq}">  
 							<div class="custom-control custom-radio custom-control-inline">
@@ -288,6 +288,10 @@ function submitChange(){
 							  <label class="custom-control-label" for="mcq2">No</label>
 							</div>				 
 					   </div>
+					   <div class="form-group col-md-2">
+				    <label >Time Limit (Minute)</label>
+				    <form:input path="timeLimitMin" class="form-control"  placeholder="0" />
+				 </div>
 					 </div>
 					 
 					 <div id="mcqDiv">

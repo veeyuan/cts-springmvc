@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -63,7 +64,6 @@ public class ManageProfileController {
 		String id = request.getSession().getAttribute("userid").toString();		
 		User userDet = userDao.getUserDet(id);
 		model.addObject("user",userDet);
-		
 		List<Discipline> listDiscipline =   disciplineDao.getDisciplineList();
 		model.addObject("listDiscipline",listDiscipline);
 		List<Category> listCategory =   categoryDao.getCategoryList();
@@ -76,6 +76,32 @@ public class ManageProfileController {
 		request.setAttribute("formLst",listForm );
 		return model;
 	}
+	
+	@RequestMapping(value="/manageProfile",method = RequestMethod.POST)  
+	public ModelAndView  directToManageProfile(HttpServletRequest request,@RequestParam("consentToTakeSurvey") String consentToTakeSurvey) 
+	{  
+		ModelAndView model = new ModelAndView("manageProfile"); 
+		String id = request.getSession().getAttribute("userid").toString();		
+		User userDet = userDao.getUserDet(id);
+		model.addObject("user",userDet);
+		if ("Y".equalsIgnoreCase(consentToTakeSurvey)) {
+			userDao.grantConsentToSurvey(id);
+			return new ModelAndView("redirect:/manageProfile.html"); 
+		}
+		List<Discipline> listDiscipline =   disciplineDao.getDisciplineList();
+		model.addObject("listDiscipline",listDiscipline);
+		List<Category> listCategory =   categoryDao.getCategoryList();
+		model.addObject("listCategory",listCategory);
+		List<Language> listLanguage =   languageDao.getLanguageList();
+		model.addObject("listLanguage",listLanguage);
+		
+		List<SurveyForm> listForm = surveyDao.getSurveyList(id, "ENG");
+		model.addObject("listForm",listForm);
+		request.setAttribute("formLst",listForm );
+		return model;
+	}
+	
+	
 	@RequestMapping("/fillSurvey")  
 	public ModelAndView  fillSurvey(@RequestParam("formid") String formId,HttpServletRequest request) 
 	{  
@@ -109,6 +135,7 @@ public class ManageProfileController {
 		request.setAttribute("questionLstSize",Integer.toString(questionLst.size()) );
 		return model;
 	}
+	
 	
 	@RequestMapping("/processDISurvey")
 	public ModelAndView  fillSurvey(@ModelAttribute("user")User user,@RequestParam("formid") String formid,BindingResult result ,HttpServletRequest request) 

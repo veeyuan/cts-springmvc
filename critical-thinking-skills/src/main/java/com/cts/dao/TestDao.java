@@ -18,8 +18,11 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.cts.model.Answer;
 import com.cts.model.AttachmentFile;
+import com.cts.model.HotsComponent;
 import com.cts.model.Question;
+import com.cts.model.Section;
 import com.cts.model.Submission;
+import com.cts.model.User;
 
 import oracle.jdbc.OracleTypes;
 
@@ -29,19 +32,21 @@ public class TestDao {
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
 	
-	public List<Question> getQuestions(String disciplineCd, String categoryCd, String languageCd) throws IOException  {
+	public List<Question> getQuestions(User user,String hotsCd) throws IOException  {
 		List<Question> questionLst = new ArrayList<Question>();
 		ResultSet resultSet = null;
 		Connection connection;
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_RETRIEVE_TEST_QUESTIONS(?,?,?,?)}");
-	        cs.setString(1, categoryCd);
-	        cs.setString(2, disciplineCd);
-	        cs.setString(3, languageCd);
-	        cs.registerOutParameter(4, OracleTypes.CURSOR); 
+			CallableStatement cs = connection.prepareCall("{call SP_RETRIEVE_TEST_QUESTIONS(?,?,?,?,?,?)}");
+	        cs.setString(1, user.getCategoryCd());
+	        cs.setString(2, user.getDisciplineCd());
+	        cs.setString(3, user.getLanguageCd());
+	        cs.setString(4, hotsCd);
+	        cs.setString(5, user.getId());
+	        cs.registerOutParameter(6, OracleTypes.CURSOR); 
 	        cs.execute();
-	        resultSet = (ResultSet) cs.getObject(4);
+	        resultSet = (ResultSet) cs.getObject(6);
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
 		        	Question question = new Question();
@@ -67,7 +72,15 @@ public class TestDao {
 		            	question.setOption4(resultSet.getString("option4"));                	
 		            	question.setOption5(resultSet.getString("option5"));
 		        	}
-		        
+		        	
+		        	if ("Y".equalsIgnoreCase(resultSet.getString("IS_SUBMITTED"))) {
+		            	question.setSubmitted(true);
+		        	}else {
+		        		question.setSubmitted(false);
+		        	}
+		        	question.setHotsDSCP(resultSet.getString("COMPONENT_NAME"));
+		        	question.setTimeLimitMin(Integer.parseInt(resultSet.getString("TIME_LIMIT_MINUTE")));
+		        	question.setHotsComponentCd(resultSet.getString("HOTS_COMPONENT"));
 		        	questionLst.add(question);
 		        }
 	        }
@@ -88,49 +101,29 @@ public class TestDao {
         		return questionLst;
 	}
 	
-	public void submitAnswer(Submission submission) throws SQLException, IOException {
-		String submissionId = createSubmission(submission);
-		insertAnswers(submissionId,submission.getAnswerLst());
-	}
 	
-	public String createSubmission(Submission submission) throws SQLException {
+	
+	public void insertAnswer(String submissionId,Answer answer) throws SQLException, IOException {
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-        CallableStatement cs = connection.prepareCall("{call SP_CREATE_SUBMISSION(?,?,?,?)}");       
-        String submissionId = getSysGuid();
+		CallableStatement cs = connection.prepareCall("{call SP_SUBMIT_ANSWER(?,?,?,?,?,?)}"); 
         cs.setString(1,submissionId );
-        cs.setString(2, submission.getUserId());
-    	cs.setDate(3, submission.getSubmitDt());
-    	cs.setInt(4, submission.getCalculateNoReqManualGrading());
+        cs.setString(2,answer.getQuestionId());
+    	cs.setString(3, answer.getStrAnswer());
+    	if (answer.getOriFile()!=null) {
+    		AttachmentFile fileObj = new AttachmentFile();
+    		fileObj.setAttachmentFile(answer.getOriFile());
+    		fileObj.setFileName(answer.getOriFile().getOriginalFilename());
+    		fileObj.setFormat(answer.getOriFile().getContentType());
+    		 cs.setBlob(4,new ByteArrayInputStream(fileObj.getAttachmentFile().getBytes()));    
+         	 cs.setString(5,fileObj.getFileName());
+         	 cs.setString(6,fileObj.getFormat());    		
+    	}else {
+     		 cs.setBlob(4,(Blob)null);
+     		 cs.setString(5,null);
+        	 cs.setString(6,null);
+     	 }
     	cs.execute();
     	cs.close();
-    	return submissionId;
-	}
-	
-	public void insertAnswers(String submissionId,List<Answer> answerLst ) throws SQLException, IOException {
-		Connection connection = jdbcTemplate.getDataSource().getConnection();
-		for (int i=0;i<answerLst.size();i++) {		
-			Answer answer = answerLst.get(i);
-	        CallableStatement cs = connection.prepareCall("{call SP_SUBMIT_ANSWER(?,?,?,?,?,?)}"); 
-	        cs.setString(1,submissionId );
-	        cs.setString(2,answer.getQuestionId());
-	    	cs.setString(3, answer.getStrAnswer());
-	    	if (answer.getOriFile()!=null) {
-	    		AttachmentFile fileObj = new AttachmentFile();
-	    		fileObj.setAttachmentFile(answer.getOriFile());
-	    		fileObj.setFileName(answer.getOriFile().getOriginalFilename());
-	    		fileObj.setFormat(answer.getOriFile().getContentType());
-	    		 cs.setBlob(4,new ByteArrayInputStream(fileObj.getAttachmentFile().getBytes()));    
-	         	 cs.setString(5,fileObj.getFileName());
-	         	 cs.setString(6,fileObj.getFormat());    		
-	    	}else {
-	     		 cs.setBlob(4,(Blob)null);
-	     		 cs.setString(5,null);
-	        	 cs.setString(6,null);
-	     	 }
-	    	cs.execute();
-	    	cs.close();
-
-		}
 	}
 	
 	public String getSysGuid() {
@@ -158,4 +151,51 @@ public class TestDao {
         outputStream.close();
 	    return base64Image;
 	}
+	
+	
+	public List<Section> getSections(User user,List<HotsComponent> listHotsComponents) throws IOException{
+		List<Section> sectionList = new ArrayList<Section>();
+		for (int i=0;i<listHotsComponents.size();i++) {
+			Section section = new Section(listHotsComponents.get(i));
+			List<Question> listQuestion = getQuestions(user,listHotsComponents.get(i).getCode());
+			section.setCompleted(true);
+			for (int j=0;j<listQuestion.size();j++) {
+				
+				if (!listQuestion.get(j).isSubmitted()) {
+					section.setCompleted(false);
+					break;
+				}else {
+				}
+			}
+			section.setQuestionList(listQuestion);
+			sectionList.add(section);
+			
+			
+		}
+		
+		return sectionList;
+		
+	}
+	public String getSubmissionId(String userid) {
+		String sqlStmt = "SELECT ID FROM TBL_SUBMISSION WHERE USER_ID ='"+userid+"' and SUBMITTED_DT IS NULL";
+		String submissionIid =(String) jdbcTemplate.queryForObject(
+				 sqlStmt, new Object[] {}, String.class);
+		
+		return submissionIid;
+	}
+	public void closeSubmission(String  submissionId) throws SQLException {		
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement cs = connection.prepareCall("{call SP_CLOSE_SUBMISSION(?)}"); 
+        cs.setString(1,submissionId );
+    	cs.execute();
+    	cs.close();
+	}
+	
+
+	public void startTest(User user) {
+		String sql = "INSERT INTO  tbl_submission (USER_ID,DISCIPLINE_CD,CATEGORY_CD,LANGUAGE_CD) VALUES (?,?,?,?)";
+		jdbcTemplate.update(sql,user.getId(),user.getDisciplineCd(),user.getCategoryCd(),user.getLanguageCd());
+	}
+	
+	
 }

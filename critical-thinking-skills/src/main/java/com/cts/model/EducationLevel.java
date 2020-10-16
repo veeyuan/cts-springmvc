@@ -1,6 +1,6 @@
 package com.cts.model;
 
-public class EducationLevel {
+public class EducationLevel extends Option{
 	private String code;
 	private String name;
 	public String getCode() {

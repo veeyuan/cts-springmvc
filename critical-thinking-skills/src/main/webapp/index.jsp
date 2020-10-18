@@ -103,9 +103,9 @@
 
         <header class="masthead">
             <div class="container">
-                 <div class="masthead-subheading"><%=dictionaryManager.getTerm("index.main.cts.subtitle",strLang) %></div>
+                 <div class="masthead-subheading">Assess your thinking critically!</div>
                  <div class="masthead-heading text-uppercase"><%=dictionaryManager.getTerm("index.main.cts.title",strLang) %></div>
-                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"><%=dictionaryManager.getTerm("index.main.cts.tellmemore",strLang) %></a>
+                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#portfolio"><%=dictionaryManager.getTerm("index.main.cts.tellmemore",strLang) %></a>
             </div>
         </header>
       

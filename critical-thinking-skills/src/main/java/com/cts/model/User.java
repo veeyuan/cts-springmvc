@@ -19,6 +19,8 @@ public class User extends Login{
 	private boolean completeSurvey;
 	private boolean consentGrantedToSurvey;
 	
+	private String matricNum;
+	
 	public User(String username, String password, String roleCd) {
 		super(username, password, roleCd);
 		// TODO Auto-generated constructor stub
@@ -180,6 +182,20 @@ public class User extends Login{
 	 */
 	public void setConsentGrantedToSurvey(boolean consentGrantedToSurvey) {
 		this.consentGrantedToSurvey = consentGrantedToSurvey;
+	}
+
+	/**
+	 * @return the matricNum
+	 */
+	public String getMatricNum() {
+		return matricNum;
+	}
+
+	/**
+	 * @param matricNum the matricNum to set
+	 */
+	public void setMatricNum(String matricNum) {
+		this.matricNum = matricNum;
 	}
 
 	

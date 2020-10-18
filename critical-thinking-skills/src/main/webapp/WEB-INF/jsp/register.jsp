@@ -207,7 +207,7 @@ function checkConfPswd(){
 }
 
 function submitRegisterForm(){
-	if (checkName() && checkEmail() && checkUserNm() && checkPswd() && checkConfPswd()){
+	if ( checkEmail() && checkUserNm() && checkPswd() && checkConfPswd()){
 		document.getElementById("registerForm").submit();
 	}else{
 		alert("Please make sure all fields are filled correctly.");
@@ -220,9 +220,11 @@ function submitRegisterForm(){
 <div class="container register">
                 <div class="row">
                     <div class="col-md-3 register-left">
-                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+                        <img style="width:80px; height:80px" src="assets/img/index/idea-icon.png" alt=""/>
                         <h3><%=dictionaryManager.getTerm("index.authentication.title",strLang) %></h3>
-                        <p><%=dictionaryManager.getTerm("index.authentication.dscp",strLang) %></p>
+                        <p><%=dictionaryManager.getTerm("index.authentication.dscp",strLang) %>
+                        <br> - Thomas A. Edison -</p>
+                       
                     </div>
                     <div class="col-md-9 register-right">
                         <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
@@ -270,8 +272,11 @@ function submitRegisterForm(){
                                     <div class="col-md-10">
                                     	
                                         <div class="form-group">
-                                            <input type="text" name="fullname" class="form-control" id="fullname"  onchange="checkName()" placeholder="<%=dictionaryManager.getTerm("index.authentication.fullname",strLang) %> *" required  />
-                                            <div style="display:none;text-align: left;}" id="name-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.nm",strLang) %></div>
+                                            <input type="text" name="fullname" class="form-control" id="fullname" placeholder="<%=dictionaryManager.getTerm("index.authentication.fullname",strLang) %>"   />
+<%--                                             <div style="display:none;text-align: left;}" id="name-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.nm",strLang) %></div>
+ --%>                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="matricNum" class="form-control" id="matricNum"   placeholder="Matric Number"   />
                                         </div>
                                         
                                        

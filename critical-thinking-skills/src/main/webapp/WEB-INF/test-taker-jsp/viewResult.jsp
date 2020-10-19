@@ -90,16 +90,48 @@ function getQuestions(){
 function setInit(){
 	//setUserName
 	var analysisScore = ${submission.scoresLst[0].analysisScore}+"%";
-	$('.analysisScore').width(analysisScore)
+	if ( analysisScore == "0%"){
+		 $('.analysisScore').width("3%");
+		 $(".analysisScore").css("color","black");
+		 $(".analysisScore").css("background-color","#ddd");
+
+	}else{
+		$('.analysisScore').width(analysisScore);
+	}
+	
 
 	var logicScore = ${submission.scoresLst[0].logicScore}+"%";
-	$('.logicScore').width(logicScore);
+	if ( logicScore == "0%"){
+		$('.logicScore').width("3%");
+		 $(".logicScore").css("color","black");
+		 $(".logicScore").css("background-color","#ddd");
+	}else{
+		$('.logicScore').width(logicScore);
+	}
 	var judgementScore = ${submission.scoresLst[0].judgementScore}+"%";
-	$('.judgementScore').width(judgementScore);
+	if ( judgementScore == "0%"){
+		$('.judgementScore').width("3%");
+		 $(".judgementScore").css("color","black");
+		 $(".judgementScore").css("background-color","#ddd");
+	}else{
+		$('.judgementScore').width(judgementScore);
+	}
 	var probSolveScore = ${submission.scoresLst[0].probSolveScore}+"%";
-	$('.probSolveScore').width(probSolveScore)
+	if ( probSolveScore == "0%"){
+		$('.probSolveScore').width("3%");
+		 $(".probSolveScore").css("color","black");
+		 $(".probSolveScore").css("background-color","#ddd");
+	}else{
+		$('.probSolveScore').width(probSolveScore);
+	}
 	var creativeScore = ${submission.scoresLst[0].creativeScore}+"%";
-	$('.creativeScore').width(creativeScore)
+	if ( creativeScore == "0%"){
+		$('.creativeScore').width("3%");
+		 $(".creativeScore").css("color","black");
+		 $(".creativeScore").css("background-color","#ddd");
+	}else{
+		$('.creativeScore').width(creativeScore);
+	}
 	var username = document.getElementById("username").value;
 	$('#usernameDisplay').html(username);
 	var discipline = document.getElementById("discipline").value;
@@ -140,7 +172,7 @@ addLoadEvent(setInit);
     <section class="content">
 	<div class="container-fluid">
 	<%if (submission.isHasTakenTest()){ %>
-		<%if (submission.isRstReady()){ %>
+		
            <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
@@ -228,21 +260,13 @@ addLoadEvent(setInit);
               		
               </div>
               <!-- /.card-body -->
-              
-            </div>
-             <%}else{ %>
-             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="ion ion-clipboard mr-1"></i>
-                  View Results
-                </h3>
+               <div class="card-footer clearfix">
+              	<button onclick="history.back(-1)"  class="btn btn-info float-right"><i id="btn-icon" class="fas fa fa-arrow-left"></i>Back</button>
                
               </div>
-	  <div class="card-body">
-	   <p id="instruction">Your submission has not been graded. You may view your results once it is ready.<p>
-              </div>
-	 <%}}else{ %>   
+            </div>
+            
+	 <%}else{ %>   
 	 <div class="card">
               <div class="card-header">
                 <h3 class="card-title">

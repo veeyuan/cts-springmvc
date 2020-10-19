@@ -287,7 +287,7 @@ public class SubmissionListDao {
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
 			CallableStatement cs = connection.prepareCall("{call SP_RETRIEVE_RESULTS(?,?)}");
-	        cs.setString(1, submission.getUserId());
+	        cs.setString(1, submission.getSubmissionId());
 	        cs.registerOutParameter(2, OracleTypes.CURSOR); 
 	        cs.execute();
 	        resultSet = (ResultSet) cs.getObject(2);
@@ -322,5 +322,46 @@ public class SubmissionListDao {
 		}
         
 		return submission;
+	}
+	
+	public List<Submission> getSubmittedSubmissionList(String userId){
+		ResultSet resultSet = null;
+		Connection connection;
+		List<Submission> submittedSubmissionList =new ArrayList<Submission>();
+		try {
+			connection = jdbcTemplate.getDataSource().getConnection();
+			CallableStatement cs = connection.prepareCall("{call SP_RETRIEVE_GRADED_SUBMISSION(?,?,?,?)}");
+	        cs.setString(1, userId);
+	        cs.setString(2, null);
+	        cs.setString(3, null);
+	        cs.registerOutParameter(4, OracleTypes.CURSOR); 
+	        cs.execute();
+	        resultSet = (ResultSet) cs.getObject(4);
+	        if (resultSet!=null) {
+		        while (resultSet.next()) {
+		        	Submission submission = new Submission();		    
+		        	submission.setSubmissionId(resultSet.getString("ID"));
+		        	submission.setSubmitDt(resultSet.getDate("SUBMITTED_DT"));
+		        	if ("Y".equalsIgnoreCase(resultSet.getString("IS_GRADED"))) {
+		        		submission.setRstReady(true);
+		        	}else {
+		        		submission.setRstReady(false);
+		        	}
+		        	submittedSubmissionList.add(submission);
+		        	
+		        }
+	        }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				resultSet.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return submittedSubmissionList;
 	}
 }

@@ -113,6 +113,11 @@
         <put-attribute name="body" value="/WEB-INF/test-taker-jsp/answerQuestion.jsp" />  
     </definition>
     
+     <definition name="viewResultList" extends="base-test-taker.definition">  
+        <put-attribute name="title" value="viewResultList" />  
+        <put-attribute name="body" value="/WEB-INF/test-taker-jsp/viewResultList.jsp" />  
+    </definition>
+    
    
   
 </tiles-definitions>  

@@ -37,7 +37,7 @@
           </li>
           
           <li class="nav-item">
-            <a id="viewRstLink" href="viewResult.html" class="nav-link">
+            <a id="viewRstLink" href="viewResultList.html" class="nav-link">
                <i class="nav-icon fas fa-chart-bar"></i>
               <p>
                 View Result

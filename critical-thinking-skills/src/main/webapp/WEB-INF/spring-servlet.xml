@@ -83,6 +83,12 @@
 <bean id="programmingRstDao" class="com.cts.dao.ProgrammingRstDao">
 <property name="jdbcTemplate" ref="jt"></property>
 </bean>
+<bean id="chartDao" class="com.cts.dao.ChartDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
+<bean id="reportDao" class="com.cts.dao.ReportDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     <property name="maxUploadSize" value="20848820" />
 </bean>

@@ -59,6 +59,11 @@
         <put-attribute name="body" value="/WEB-INF/admin-jsp/submitGrades.jsp" />  
     </definition>
     
+    <definition name="dashboard" extends="base-admin.definition">  
+        <put-attribute name="title" value="dashboard" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/dashboard.jsp" />  
+    </definition>
+    
     
     <definition name="base-test-taker.definition"  
         template="/WEB-INF/test-taker-jsp/layout.jsp">  

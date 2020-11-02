@@ -7,9 +7,7 @@ public class SurveyForm {
 	private String id;
 	private String formName;
 	private boolean isCompleted;
-	private List<Question> quetionLst;
-	private List<Answer> answerLst;
-	private String ratingScaleImgDir;
+	private List<ProgrammingResults> programmingRstList;
 	/**
 	 * @return the id
 	 */
@@ -47,40 +45,16 @@ public class SurveyForm {
 		this.isCompleted = isCompleted;
 	}
 	/**
-	 * @return the quetionLst
+	 * @return the programmingRstList
 	 */
-	public List<Question> getQuetionLst() {
-		return quetionLst;
+	public List<ProgrammingResults> getProgrammingRstList() {
+		return programmingRstList;
 	}
 	/**
-	 * @param quetionLst the quetionLst to set
+	 * @param programmingRstList the programmingRstList to set
 	 */
-	public void setQuetionLst(List<Question> quetionLst) {
-		this.quetionLst = quetionLst;
-	}
-	/**
-	 * @return the answerLst
-	 */
-	public List<Answer> getAnswerLst() {
-		return answerLst;
-	}
-	/**
-	 * @param answerLst the answerLst to set
-	 */
-	public void setAnswerLst(List<Answer> answerLst) {
-		this.answerLst = answerLst;
-	}
-	/**
-	 * @return the ratingScaleImgDir
-	 */
-	public String getRatingScaleImgDir() {
-		return ratingScaleImgDir;
-	}
-	/**
-	 * @param ratingScaleImgDir the ratingScaleImgDir to set
-	 */
-	public void setRatingScaleImgDir(String ratingScaleImgDir) {
-		this.ratingScaleImgDir = ratingScaleImgDir;
+	public void setProgrammingRstList(List<ProgrammingResults> programmingRstList) {
+		this.programmingRstList = programmingRstList;
 	}
 	
 }

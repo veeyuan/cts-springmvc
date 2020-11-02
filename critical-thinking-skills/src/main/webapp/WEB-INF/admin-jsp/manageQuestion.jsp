@@ -260,7 +260,7 @@ totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
 		                </a>                   
                   		</td>
 					      <td>${question.hotsDSCP}</td>
-					      <td>${question.languageCd}</td>
+					      <td>${question.languageDscp}</td>
 					      <%if (questionlst.get(i).isSelectedToAsk()){ %>
 					      <td>Yes</td>
 					      <%}else{ %>

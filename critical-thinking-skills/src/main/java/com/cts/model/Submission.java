@@ -15,6 +15,9 @@ public class Submission {
 	private String languageCd;
 	private String disciplineCd;
 	private String categoryCd;
+	private String languageDscp;
+	private String disciplineDscp;
+	private String categoryDscp;
 	private String testTakerName;
 	
 	private boolean hasTakenTest;
@@ -186,6 +189,42 @@ public class Submission {
 	 */
 	public void setRstReady(boolean isRstReady) {
 		this.isRstReady = isRstReady;
+	}
+	/**
+	 * @return the languageDscp
+	 */
+	public String getLanguageDscp() {
+		return languageDscp;
+	}
+	/**
+	 * @param languageDscp the languageDscp to set
+	 */
+	public void setLanguageDscp(String languageDscp) {
+		this.languageDscp = languageDscp;
+	}
+	/**
+	 * @return the disciplineDscp
+	 */
+	public String getDisciplineDscp() {
+		return disciplineDscp;
+	}
+	/**
+	 * @param disciplineDscp the disciplineDscp to set
+	 */
+	public void setDisciplineDscp(String disciplineDscp) {
+		this.disciplineDscp = disciplineDscp;
+	}
+	/**
+	 * @return the categoryDscp
+	 */
+	public String getCategoryDscp() {
+		return categoryDscp;
+	}
+	/**
+	 * @param categoryDscp the categoryDscp to set
+	 */
+	public void setCategoryDscp(String categoryDscp) {
+		this.categoryDscp = categoryDscp;
 	}
 
 }

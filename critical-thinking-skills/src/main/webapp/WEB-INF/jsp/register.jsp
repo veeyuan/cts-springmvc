@@ -275,9 +275,6 @@ function submitRegisterForm(){
                                             <input type="text" name="fullname" class="form-control" id="fullname" placeholder="<%=dictionaryManager.getTerm("index.authentication.fullname",strLang) %>"   />
 <%--                                             <div style="display:none;text-align: left;}" id="name-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.nm",strLang) %></div>
  --%>                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" name="matricNum" class="form-control" id="matricNum"   placeholder="Matric Number"   />
-                                        </div>
                                         
                                        
                                         <div class="form-group">

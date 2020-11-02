@@ -38,15 +38,14 @@ public class TestDao {
 		Connection connection;
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_RETRIEVE_TEST_QUESTIONS(?,?,?,?,?,?)}");
+			CallableStatement cs = connection.prepareCall("{call SP_RETRIEVE_TEST_QUESTIONS(?,?,?,?,?)}");
 	        cs.setString(1, user.getCategoryCd());
 	        cs.setString(2, user.getDisciplineCd());
 	        cs.setString(3, user.getLanguageCd());
 	        cs.setString(4, hotsCd);
 	        cs.setString(5, user.getId());
-	        cs.registerOutParameter(6, OracleTypes.CURSOR); 
-	        cs.execute();
-	        resultSet = (ResultSet) cs.getObject(6);
+	       
+	        resultSet =  cs.executeQuery();
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
 		        	Question question = new Question();
@@ -109,7 +108,7 @@ public class TestDao {
         cs.setString(1,submissionId );
         cs.setString(2,answer.getQuestionId());
     	cs.setString(3, answer.getStrAnswer());
-    	if (answer.getOriFile()!=null) {
+    	if (answer.getOriFile()!=null && answer.getOriFile().getOriginalFilename()!="") {
     		AttachmentFile fileObj = new AttachmentFile();
     		fileObj.setAttachmentFile(answer.getOriFile());
     		fileObj.setFileName(answer.getOriFile().getOriginalFilename());

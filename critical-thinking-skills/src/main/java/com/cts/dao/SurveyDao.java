@@ -26,23 +26,21 @@ public class SurveyDao {
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {  
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
-	public List<SurveyForm> getSurveyList(String userid,String languageCd){
+	public List<SurveyForm> getSurveyList(String userid,int languageCd){
 		List<SurveyForm> formList = new ArrayList() ;
 	    ResultSet resultSet = null;
 		Connection connection;
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_GET_SURVEYFORM_LIST(?,?,?)}");
+			CallableStatement cs = connection.prepareCall("{call SP_GET_SURVEY_SECTION_LIST(?,?)}");
 			cs.setString(1, userid);
-	        cs.setString(2, languageCd);	       
-	        cs.registerOutParameter(3, OracleTypes.CURSOR); 
-	        cs.execute();
-	        resultSet = (ResultSet) cs.getObject(3);
+	        cs.setInt(2, languageCd);	      	        
+	        resultSet = cs.executeQuery();
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
 		        	SurveyForm form = new SurveyForm();
 		        	form.setId(resultSet.getString("id"));
-		        	form.setFormName(resultSet.getString("form_name"));
+		        	form.setFormName(resultSet.getString("section_name"));
 		        	if ("Y".equalsIgnoreCase(resultSet.getString("is_complete"))){
 		        		form.setCompleted(true);
 		        	}else {
@@ -84,20 +82,26 @@ public class SurveyDao {
 	
 	public void submitDemoInfo(User user,String formid) throws SQLException {
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-        CallableStatement cs = connection.prepareCall("{call SP_SUBMIT_DEMO_INFO(?,?,?,?,?,?,?)}");       
+        CallableStatement cs = connection.prepareCall("{call SP_SUBMIT_DEMO_INFO(?,?,?,?,?,?,?,?,?,?,?,?,?)}");       
         cs.setString(1,user.getId() );
-        cs.setString(2, user.getGender());
-    	cs.setString(3, user.getAgeGroupCd());
-    	cs.setString(4, user.getEmploymentStatusCd());
-    	cs.setString(5, user.getHighestEduLevelCd());
-    	cs.setString(6,user.getNationalityCd());
-    	cs.setString(7, formid);
+        cs.setString(2, user.getOldMatricNum());
+        cs.setString(3, user.getNewMatricNum());
+    	cs.setInt(4, Integer.parseInt(user.getAgeGroupCd()));
+    	cs.setInt(5, user.getYearOfStudy());
+        cs.setString(6, user.getGender());
+    	cs.setInt(7, Integer.parseInt(user.getEthnicCd()));
+    	cs.setInt(8,Integer.parseInt(user.getNationalityCd()));
+    	cs.setInt(9, Integer.parseInt(user.getFaculty().getCode()));
+    	cs.setInt(10,Integer.parseInt(user.getDepartment().getCode()));
+    	cs.setInt(11, Integer.parseInt(user.getGpa().getCode()));
+    	cs.setInt(12,Integer.parseInt(user.getCgpa().getCode()));
+    	cs.setString(13, formid);
     	cs.execute();
     	cs.close();
 	}
 	
 	public String getFormName(String formId) {
-		String sqlStmt = "select FORM_NAME from tbl_survey_form where id=?" ;
+		String sqlStmt = "select section_name from tbl_survey_section where id=?" ;
 		String name = (String) jdbcTemplate.queryForObject(
 				sqlStmt, new Object[] { formId }, String.class);
 		return name;
@@ -109,12 +113,7 @@ public class SurveyDao {
 				sqlStmt, new Object[] { formId }, String.class);
 		return dir;
 	}
-	
-	public void submitSurvey(SurveyForm survey,String userid) throws SQLException {
-		String submissionid = createSubmission(survey.getId(),userid);
-		submitSurveyAnswer(survey,submissionid,userid);
-	}
-	
+		
 	public String createSubmission(String formid, String userid) throws SQLException {
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
         CallableStatement cs = connection.prepareCall("{call SP_CREATE_SURVEY_SUBMISSION(?,?,?)}");       
@@ -134,20 +133,22 @@ public class SurveyDao {
 		 return id;		 
 	}
 	
-	public void submitSurveyAnswer(SurveyForm survey,String submissionId,String userId) throws SQLException {
-		List<Question> questionLst = survey.getQuetionLst();
-		List<Answer> answerLst = survey.getAnswerLst();
-		Connection connection = jdbcTemplate.getDataSource().getConnection();
-		for (int i=0;i<questionLst.size();i++) {
-			 CallableStatement cs = connection.prepareCall("{call SP_SUBMIT_SURVEY_ANSWERS(?,?,?,?)}");       		    
-		        cs.setString(1,submissionId );
-		        cs.setString(2, questionLst.get(i).getId());
-		        cs.setString(3, answerLst.get(i).getStrAnswer());
-		        cs.setString(4, userId);
-		        cs.execute();
-		    	cs.close();
+	public void submitProgrammingRst(String userid, SurveyForm form) throws SQLException {
+		for (int i=0;i<form.getProgrammingRstList().size();i++) {
+			Connection connection = jdbcTemplate.getDataSource().getConnection();
+	        CallableStatement cs = connection.prepareCall("{call SP_SUBMIT_PROGRAMMING_RST(?,?,?,?)}");       
+	        cs.setString(1,userid);
+	        if (i==form.getProgrammingRstList().size()-1) {
+	        	cs.setString(2,form.getId());
+	        }else {
+	        	cs.setString(2,null);
+	        }
+	        cs.setString(3,form.getProgrammingRstList().get(i).getCode());
+	        cs.setString(4,form.getProgrammingRstList().get(i).getResult());
+	    	cs.execute();
+	    	cs.close();
 		}
-       
+		
 	}
 	
 }

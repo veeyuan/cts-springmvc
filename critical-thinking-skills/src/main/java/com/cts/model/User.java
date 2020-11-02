@@ -12,15 +12,20 @@ public class User extends Login{
 	private boolean readyToTakeTest;
 	
 	private String ageGroupCd;
-	private String employmentStatusCd;
 	private String nationalityCd;
-	private String highestEduLevelCd;
 	private String gender;
 	private boolean completeSurvey;
 	private boolean consentGrantedToSurvey;
 	
-	private String matricNum;
-	
+	private String newMatricNum;
+	private String oldMatricNum;
+	private int yearOfStudy;
+	private Faculty faculty;
+	private Department department;
+	private ResultRange gpa;
+	private ResultRange cgpa;
+	private String ethnicCd;
+
 	public User(String username, String password, String roleCd) {
 		super(username, password, roleCd);
 		// TODO Auto-generated constructor stub
@@ -100,19 +105,7 @@ public class User extends Login{
 		this.ageGroupCd = ageGroupCd;
 	}
 
-	/**
-	 * @return the employmentStatusCd
-	 */
-	public String getEmploymentStatusCd() {
-		return employmentStatusCd;
-	}
-
-	/**
-	 * @param employmentStatusCd the employmentStatusCd to set
-	 */
-	public void setEmploymentStatusCd(String employmentStatusCd) {
-		this.employmentStatusCd = employmentStatusCd;
-	}
+	
 
 	/**
 	 * @return the nationalityCd
@@ -128,19 +121,6 @@ public class User extends Login{
 		this.nationalityCd = nationalityCd;
 	}
 
-	/**
-	 * @return the highestEduLevelCd
-	 */
-	public String getHighestEduLevelCd() {
-		return highestEduLevelCd;
-	}
-
-	/**
-	 * @param highestEduLevelCd the highestEduLevelCd to set
-	 */
-	public void setHighestEduLevelCd(String highestEduLevelCd) {
-		this.highestEduLevelCd = highestEduLevelCd;
-	}
 
 	/**
 	 * @return the gender
@@ -185,17 +165,115 @@ public class User extends Login{
 	}
 
 	/**
-	 * @return the matricNum
+	 * @return the newMatricNum
 	 */
-	public String getMatricNum() {
-		return matricNum;
+	public String getNewMatricNum() {
+		return newMatricNum;
 	}
 
 	/**
-	 * @param matricNum the matricNum to set
+	 * @param newMatricNum the newMatricNum to set
 	 */
-	public void setMatricNum(String matricNum) {
-		this.matricNum = matricNum;
+	public void setNewMatricNum(String newMatricNum) {
+		this.newMatricNum = newMatricNum;
+	}
+
+	/**
+	 * @return the oldMatricNum
+	 */
+	public String getOldMatricNum() {
+		return oldMatricNum;
+	}
+
+	/**
+	 * @param oldMatricNum the oldMatricNum to set
+	 */
+	public void setOldMatricNum(String oldMatricNum) {
+		this.oldMatricNum = oldMatricNum;
+	}
+
+	/**
+	 * @return the yearOfStudy
+	 */
+	public int getYearOfStudy() {
+		return yearOfStudy;
+	}
+
+	/**
+	 * @param yearOfStudy the yearOfStudy to set
+	 */
+	public void setYearOfStudy(int yearOfStudy) {
+		this.yearOfStudy = yearOfStudy;
+	}
+
+	/**
+	 * @return the faculty
+	 */
+	public Faculty getFaculty() {
+		return faculty;
+	}
+
+	/**
+	 * @param faculty the faculty to set
+	 */
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
+	}
+
+	/**
+	 * @return the department
+	 */
+	public Department getDepartment() {
+		return department;
+	}
+
+	/**
+	 * @param department the department to set
+	 */
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	/**
+	 * @return the gpa
+	 */
+	public ResultRange getGpa() {
+		return gpa;
+	}
+
+	/**
+	 * @param gpa the gpa to set
+	 */
+	public void setGpa(ResultRange gpa) {
+		this.gpa = gpa;
+	}
+
+	/**
+	 * @return the cgpa
+	 */
+	public ResultRange getCgpa() {
+		return cgpa;
+	}
+
+	/**
+	 * @param cgpa the cgpa to set
+	 */
+	public void setCgpa(ResultRange cgpa) {
+		this.cgpa = cgpa;
+	}
+
+	/**
+	 * @return the ethnicCd
+	 */
+	public String getEthnicCd() {
+		return ethnicCd;
+	}
+
+	/**
+	 * @param ethnicCd the ethnicCd to set
+	 */
+	public void setEthnicCd(String ethnicCd) {
+		this.ethnicCd = ethnicCd;
 	}
 
 	

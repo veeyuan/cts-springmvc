@@ -3,6 +3,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.cts.model.SurveyForm" %>
+<%@ page import="com.cts.model.Faculty" %>
+<%@ page import="com.cts.model.Department" %>
+
 <html>    
 <head>
 <!--  jQuery -->
@@ -47,6 +50,9 @@
       width: 90%; 
    }
 }
+.hidden{
+    display:none;
+}
 </style>
 <script>
 
@@ -54,12 +60,30 @@ function submit(){
 	document.getElementById('personalDetForm').submit();
 }
 
-   
+
+
+$(function(){
+	$("#facCd").on("change", function(){
+        var $target = $("#deptCd").val(""),facCd = $(this).val();
+        
+        $target
+            .toggleClass("hidden", facCd === "")
+            .find("option:gt(0)").addClass("hidden")
+        	.siblings().filter("[data-type="+facCd+"]").removeClass("hidden"); 
+    });
+});
+
 
 
 </script> 
-</head>    
-<body>   
+</head>   
+ <% List<Faculty> facultyList = (List<Faculty>) request.getAttribute("listFaculty");  %>
+                                                                             	                                        
+ 
+<body> 
+		 <input type="hidden" id="list" value=<%=facultyList%> />  
+
+
  <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -95,10 +119,41 @@ function submit(){
               <div class="card-body">
              <form:form id="personalDetForm" action ="processDISurvey.html"  method="post" modelAttribute="user" >
              <input type="hidden" name="formid" id="formid" value="${form.id}"/>  
+             <div class="form-row">	
+                <div class="form-group col-md-2">
+                <label >New Matric Number</label>
+	                     <form:input path="newMatricNum"  class="form-control" />	                      
+	             </div>
+	             <div class="form-group col-md-2">
+                <label >Old Matric Number</label>
+	                     <form:input path="oldMatricNum"  class="form-control"/>	                      
+	             </div>
+	              <div class="form-group col-md-2">
+	  				  <label >Age Group</label>
+	                     <form:select path="ageGroupCd"  class="form-control" >
+	                       <c:forEach items="${listAgeGroup}" var="listAgeGroup">
+					      	  <form:option value ="${listAgeGroup.code}" label="${listAgeGroup.name}" />
+				              </c:forEach>
+	                       </form:select>
+	                   </div>
+	              <div class="form-group col-md-2">
+                <label >Year of Study</label>
+	                    <form:select path="yearOfStudy"  class="form-control" >
+	                       <%for(int i=2;i<7;i++){ 
+	                       		String val = "Year "+i;
+	                       		if (i==6){
+	                       			val =  "Year 6 or above";
+	                       		}
+	                       %>
+	                       		
+					      	  <form:option value ="<%=i %>" label="<%=val %>" />
+				           <%} %>
+	                       </form:select>
+	             </div>
+	             
+             </div>
               <div class="form-row">	
-             
-              
-              			  <div class="form-group col-md-2">
+              <div class="form-group col-md-2">
 					    <label >Gender</label><br>
 							<div class="custom-control custom-radio custom-control-inline">
 							  <form:radiobutton path="gender"   id="mcq1" name="radio-all-mcq" class="custom-control-input" value="M" checked="true"/>
@@ -109,7 +164,17 @@ function submit(){
 							  <label class="custom-control-label" for="mcq2">Female</label>
 							</div>				 
 					   </div>
-					   <div class="form-group col-md-3">
+              <div class="form-group col-md-2">
+	  				  <label >Ethnic</label>
+	                     <form:select path="ethnicCd"  class="form-control" >
+	                       <c:forEach items="${listEthnic}" var="listEthnic">
+					      	  <form:option value ="${listEthnic.code}" label="${listEthnic.name}" />
+				              </c:forEach>
+	                       </form:select>
+	                   </div>			
+              
+              			  
+					   <div class="form-group col-md-2">
 	  				  <label >Nationality</label>
 	                     <form:select path="nationalityCd"  class="form-control" >
 	                       <c:forEach items="${listNationality}" var="listNationality">
@@ -117,34 +182,54 @@ function submit(){
 				              </c:forEach>
 	                       </form:select>
 	                   </div>				  
-	  				  <div class="form-group col-md-3">
-	  				  <label >Age Group</label>
-	                     <form:select path="ageGroupCd"  class="form-control" >
-	                       <c:forEach items="${listAgeGroup}" var="listAgeGroup">
-					      	  <form:option value ="${listAgeGroup.code}" label="${listAgeGroup.name}" />
+	  				 
+	         </div>    
+	          <div class="form-row">
+	           <div class="form-group col-md-3">
+	  				  <label >Faculty</label>
+	                     <form:select path="faculty.code"  class="form-control" id="facCd" >
+	                       <c:forEach items="${listFaculty}" var="listFaculty">
+					      	  <form:option value ="${listFaculty.code}" label="${listFaculty.name}" />
 				              </c:forEach>
+	                       </form:select>
+	                   </div>	
+	                   
+	             <div class="form-group col-md-3">
+	  				  <label >Department</label>
+	                     <form:select path="department.code"  class="form-control" id="deptCd">
+	                     <form:option value="" disabled="true" selected="true">Select department</form:option>
+	                     <% for (int i=0;i<facultyList.size();i++){ 
+	                     	List<Department> deptList = facultyList.get(i).getDepartmentList();
+	                     	for (int j=0;j<deptList.size();j++){
+	                     	%>
+	                     	 <form:option value ="<%=deptList.get(j).getCode()%>" data-type="<%=facultyList.get(i).getCode() %>" label="<%=deptList.get(j).getName()%>" />
+	                     <%}} %>
+	                     
 	                       </form:select>
 	                   </div>
-	         </div>          
-	          <div class="form-row">	       
-	                <div class="form-group col-md-4">
-					      <label >Highest Educational Level</label>
-					      <form:select path="highestEduLevelCd" class="form-control" >
-					      	<c:forEach items="${listEduLevel}" var="listEduLevel">
-					      	  <form:option value ="${listEduLevel.code}" label="${listEduLevel.name}" />
+	                 
+	                   
+    	 
+	          </div>    
+	          <div class="form-row">
+	           <div class="form-group col-md-2">
+	  				  <label >Latest GPA </label>
+	                     <form:select path="gpa.code"  class="form-control"  >
+	                       <c:forEach items="${listRstRange}" var="listRstRange">
+					      	  <form:option value ="${listRstRange.code}" label="${listRstRange.name}" />
 				              </c:forEach>
 	                       </form:select>
-					  </div>
-					 <div class="form-group col-md-2">
-					  <label >I am currently </label>
-	                     <form:select path="employmentStatusCd" class="form-control" >
-	                       <c:forEach items="${listEmpStatus}" var="listEmpStatus">
-					      	  <form:option value ="${listEmpStatus.code}" label="${listEmpStatus.name}" />
+	                   </div>	
+	           <div class="form-group col-md-2">
+	  				  <label >Latest CGPA </label>
+	                     <form:select path="cgpa.code"  class="form-control"  >
+	                       <c:forEach items="${listRstRange}" var="listRstRange">
+					      	  <form:option value ="${listRstRange.code}" label="${listRstRange.name}" />
 				              </c:forEach>
 	                       </form:select>
-	                   </div>
-					  
-					 </div> 
+	                   </div>	
+	           </div>  
+	         
                </form:form>   
              
               </div>

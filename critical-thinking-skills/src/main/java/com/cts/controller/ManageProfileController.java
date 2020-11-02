@@ -18,20 +18,24 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cts.dao.AgeGroupDao;
 import com.cts.dao.CategoryDao;
 import com.cts.dao.DisciplineDao;
-import com.cts.dao.EducationLevelDao;
-import com.cts.dao.EmploymentStatusDao;
+import com.cts.dao.EthnicDao;
+import com.cts.dao.FacultyDao;
 import com.cts.dao.LanguageDao;
 import com.cts.dao.NationalityDao;
+import com.cts.dao.ProgrammingRstDao;
+import com.cts.dao.ResultRangeDao;
 import com.cts.dao.SurveyDao;
 import com.cts.dao.UserDao;
 import com.cts.model.AgeGroup;
 import com.cts.model.Category;
 import com.cts.model.Discipline;
-import com.cts.model.EducationLevel;
-import com.cts.model.EmploymentStatus;
+import com.cts.model.Ethnic;
+import com.cts.model.Faculty;
 import com.cts.model.Language;
 import com.cts.model.Nationality;
+import com.cts.model.ProgrammingResults;
 import com.cts.model.Question;
+import com.cts.model.ResultRange;
 import com.cts.model.Submission;
 import com.cts.model.SurveyForm;
 import com.cts.model.User;
@@ -51,12 +55,15 @@ public class ManageProfileController {
 	@Autowired
 	AgeGroupDao ageGroupDao;
 	@Autowired
-	EducationLevelDao educationLevelDao;
-	@Autowired
-	EmploymentStatusDao employmentStatusDao;
-	@Autowired
 	NationalityDao nationalityDao;
-	
+	@Autowired
+	EthnicDao ethnicDao;
+	@Autowired
+	FacultyDao facultyDao;
+	@Autowired
+	ResultRangeDao resultRangeDao;
+	@Autowired
+	ProgrammingRstDao programmingRstDao;
 	@RequestMapping("/manageProfile")  
 	public ModelAndView  directToManageProfile(HttpServletRequest request) 
 	{  
@@ -71,9 +78,10 @@ public class ManageProfileController {
 		List<Language> listLanguage =   languageDao.getLanguageList();
 		model.addObject("listLanguage",listLanguage);
 		
-		List<SurveyForm> listForm = surveyDao.getSurveyList(id, "ENG");
+		List<SurveyForm> listForm = surveyDao.getSurveyList(id, 1);
 		model.addObject("listForm",listForm);
 		request.setAttribute("formLst",listForm );
+
 		return model;
 	}
 	
@@ -95,7 +103,7 @@ public class ManageProfileController {
 		List<Language> listLanguage =   languageDao.getLanguageList();
 		model.addObject("listLanguage",listLanguage);
 		
-		List<SurveyForm> listForm = surveyDao.getSurveyList(id, "ENG");
+		List<SurveyForm> listForm = surveyDao.getSurveyList(id, 1);
 		model.addObject("listForm",listForm);
 		request.setAttribute("formLst",listForm );
 		return model;
@@ -105,35 +113,35 @@ public class ManageProfileController {
 	@RequestMapping("/fillSurvey")  
 	public ModelAndView  fillSurvey(@RequestParam("formid") String formId,HttpServletRequest request) 
 	{  
-		ModelAndView model = new ModelAndView("fillSurvey"); 
-		String id = request.getSession().getAttribute("userid").toString();		
-		List<Question> questionLst = surveyDao.getSurveyQuestion(formId);
-		if (questionLst.size()==0) {
-			model = new ModelAndView("fillPersonalDetails"); 
-			
-			List<AgeGroup> listAgeGroup =   ageGroupDao.getAgeGroupList();
-			model.addObject("listAgeGroup",listAgeGroup);
-			List<EducationLevel> listEduLevel  = educationLevelDao.getEduLevelList();
-			model.addObject("listEduLevel",listEduLevel);
-			List<EmploymentStatus> listEmpStatus = employmentStatusDao.getEmploymentStatusList();
-			model.addObject("listEmpStatus",listEmpStatus);
-			List<Nationality> listNationality = nationalityDao.getNationList();
-			model.addObject("listNationality",listNationality);
-			model.addObject("user",new User());
-			SurveyForm survey = new SurveyForm();
-			survey.setId(formId);
-			survey.setFormName(surveyDao.getFormName(formId));
-			model.addObject("form",survey);
-			return model;
-		}
+		ModelAndView model = new ModelAndView("fillPersonalDetails");	
 		SurveyForm survey = new SurveyForm();
 		survey.setId(formId);
 		survey.setFormName(surveyDao.getFormName(formId));
-		survey.setRatingScaleImgDir(surveyDao.getRatingScaleImgDir(formId));
-		survey.setQuetionLst(questionLst);
-		model.addObject("survey",survey);
-		request.setAttribute("questionLstSize",Integer.toString(questionLst.size()) );
+		if (!surveyDao.getFormName(formId).equalsIgnoreCase("Personal Details")) {
+			model = new ModelAndView("fillProgrammingRst"); 
+			List<ProgrammingResults> listProgrammingRst = programmingRstDao.getProgrammingCourseList();
+			model.addObject("listProgrammingRst",listProgrammingRst);
+			model.addObject("form",survey);
+			return model;
+			
+		}
+		List<AgeGroup> listAgeGroup =   ageGroupDao.getAgeGroupList();
+		model.addObject("listAgeGroup",listAgeGroup);
+		List<Nationality> listNationality = nationalityDao.getNationList();
+		model.addObject("listNationality",listNationality);
+		List<Ethnic> listEthnic = ethnicDao.getEthnicList();
+		model.addObject("listEthnic",listEthnic);
+		List<Faculty> listFaculty = facultyDao.getFacultyDeptList();
+		model.addObject("listFaculty",listFaculty);
+		List<ResultRange> listRstRange = resultRangeDao.getRstRangeList();
+		model.addObject("listRstRange",listRstRange);
+		model.addObject("user",new User());
+		
+		model.addObject("form",survey);
 		return model;
+		
+		
+		
 	}
 	
 	
@@ -150,15 +158,13 @@ public class ManageProfileController {
 		}
 		return model;
 	}
-	
-	
-	@RequestMapping("/processSurvey")
-	public ModelAndView  fillSurvey(@ModelAttribute("survey")SurveyForm survey,BindingResult result ,HttpServletRequest request) 
+	@RequestMapping("/processRstSurvey")
+	public ModelAndView  fillRstSurvey(@ModelAttribute("form")SurveyForm form,BindingResult result ,HttpServletRequest request) 
 	{ 
 		ModelAndView model = new ModelAndView("redirect:/manageProfile.html"); 
 		String userid = request.getSession().getAttribute("userid").toString();
 		try {
-			surveyDao.submitSurvey(survey,userid);
+			surveyDao.submitProgrammingRst(userid,form);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

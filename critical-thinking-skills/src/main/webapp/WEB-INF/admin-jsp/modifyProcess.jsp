@@ -120,7 +120,7 @@ a {
                		<%}else{ %>
                		<div id="failure"> 
                		<i id="failure-icon" class="fa fa-times-circle fa-2x"> </i>
-               		<p>Failed to add</p>
+               		<p>Failed to modify</p>
                	 	<p id="smallMsg">You may go back to previous page to submit request again.</p>
                		</div>
                		<%} %>

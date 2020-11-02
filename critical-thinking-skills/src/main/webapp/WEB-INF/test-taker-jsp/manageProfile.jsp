@@ -249,24 +249,25 @@ function submitConsent(){
              <form:form id="consentForm" action ="manageProfile.html" method="post"  >
              <input type="hidden" id="consentToTakeSurvey" name="consentToTakeSurvey" value="N">		
              <div style="margin-left:5%;margin-right:5%;text-align: justify;line-height: 2;">
-             <p> Dear Sir/Madam/Mr/Mrs/Miss, </p>
-			 <p> We are currently carrying out a research entitled &lsquo;Investigating Correlation between Critical Thinking Skills and Mitigation of the Spreading of COVID-19: A Pilot Study in Malaysia and Indonesia&rsquo;. We would like to invite you to participate in this study by answering the survey questionnaire which will take 10 to 15 minutes. 
-				The data collected will be kept confidential. No personal details of individuals such as name will be revealed, and all data in the final research report will only be group data. Raw data for this study will be collected primarily through a simple questionnaire which consists of THREE (3) sections. It is hoped that the findings of the study will increase awareness as well as contribute to the corpus of knowledge on the correlation between critical thinking skills and mitigation of the spreading of COVID-19 among Malaysians and Indonesians. 
-				Your participation in this study is entirely voluntary. You may choose to discontinue your participation in this study at any time during the data collection phase. If you agree to participate fully, however, kindly sign the consent section (digital signature) before the commencement of the study. 
-				Feel free to contact us if you need more clarification. We can be contacted via email as follows: <p>
+             <p> Dear UM Students,  </p>
+			 <p> I am a final year student from the Department of Software Engineering, Faculty of Computer Science & Information Technology, University of Malaya. Currently, I am working on a research project under the supervision of Associate Prof. Dr. Ow Siew Hock, for my final year project. The title of my project is: &lsquo;Assessing Higher Order Thinking Skills (HOTS) and Academic Performance of University Students&rsquo;. I would like to invite you to participate in this study by answering the HOTS assessment questions which will take 25 to 30 minutes.
+				<br>The data collected will be kept confidential. No personal details of individuals such as name will be revealed, and all data in the final project report will only be group data. Raw data for this study will be collected primarily through a simple assessment of HOTS which consists of TWO (2) sections. It is hoped that the findings of the study will help the university students to know their level of HOTS. 
+				<br>Your participation in this study is entirely voluntary. You may choose to discontinue your participation in this study at any time during the data collection phase. If you agree to participate fully, however, kindly tick () the box in the consent section before answering the HOTS assessment questions. 
+				<br>Feel free to contact us if you need more clarification. We can be contacted via email as follows: 
 				<p>
-				Associate Professor Dr. Ow Siew Hock (Malaysia)<br>
+				<p>
+				Associate Professor Dr. Ow Siew Hock (Supervisor)<br>
 				Email	: show@um.edu.my<br>
-				Assistant Professor Dr. Chuang Huei Gau (Malaysia)<br>
-				Email	: chuanghg@utar.edu.my<br>
-				Assistant Professor Dr. Moses Glorino (Indonesia)<br>
-				Email	: moses.glorino@fib.unair.ac.id
+				
+				Wong Vee Yuan (Final year project student)<br>
+				Email	: veeyuan_0307@siswa.um.edu.my
+
               </p>
              <div class="form-check">
                 					       
 				<input style="margin-top:10px;"onclick="changeSelected()" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 				<label class="form-check-label" for="defaultCheck1">
-				I agree to participate in the research entitled &lsquo;Investigating Correlation between Critical Thinking Skills and Mitigation of the Spreading of COVID-19: A Pilot Study in Malaysia and Indonesia&rsquo;.
+				I agree to participate in the HOTS assessment study entitled &lsquo;Assessing Higher Order Thinking Skills (HOTS) and Academic Performance of University Students&rsquo;.
 				</label>
 			</div>	
 			</div>			     

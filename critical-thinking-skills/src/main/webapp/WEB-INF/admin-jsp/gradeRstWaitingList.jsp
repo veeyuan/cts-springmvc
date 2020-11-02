@@ -227,9 +227,9 @@ totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
 		                    </span>  	
 		                     <c:out value="${submission.testTakerName}" />		               
                   		</td>
-					      <td>${submission.categoryCd}</td>
-					      <td>${submission.disciplineCd}</td> 
-					      <td>${submission.languageCd}</td> 
+					      <td>${submission.categoryDscp}</td>
+					      <td>${submission.disciplineDscp}</td> 
+					      <td>${submission.languageDscp}</td> 
 					      <td>${submission.noReqManualGrading}</td>
 					      <td>${submission.submitDt}</td>
    					 </tr>	                 

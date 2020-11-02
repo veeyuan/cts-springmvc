@@ -18,6 +18,7 @@ public class Question {
 	private String sampleAns;
 	private int del;
 	private String languageCd;
+	private String languageDscp;
 	private int analysisScore;
 	private int logicScore;
 	private int judgementScore;
@@ -271,6 +272,18 @@ public class Question {
 	 */
 	public void setTimeLimitMin(int timeLimitMin) {
 		this.timeLimitMin = timeLimitMin;
+	}
+	/**
+	 * @return the languageDscp
+	 */
+	public String getLanguageDscp() {
+		return languageDscp;
+	}
+	/**
+	 * @param languageDscp the languageDscp to set
+	 */
+	public void setLanguageDscp(String languageDscp) {
+		this.languageDscp = languageDscp;
 	}
 	
 }

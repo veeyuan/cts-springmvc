@@ -15,7 +15,7 @@ public class HotsComponentDao {
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
 	public List<HotsComponent> getHotsComponentList() {
-	    String sqlStmt = "select * from tbl_hots_components order by component_cd" ;
+	    String sqlStmt = "select * from tbl_hots_components where del=0 order by component_cd" ;
 	    List<HotsComponent> list = getList(sqlStmt);
 	    return list;
 	  }

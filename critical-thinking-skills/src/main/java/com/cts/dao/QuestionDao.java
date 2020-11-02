@@ -96,7 +96,7 @@ public class QuestionDao {
 			}
 			
 		}
-		stmt.executeQuery(query);
+		stmt.executeUpdate(query);
 	}
 	
 	public Question getQuestionDet(String questionID) throws IOException  {
@@ -105,11 +105,9 @@ public class QuestionDao {
 		Connection connection;
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_DISPLAY_QUESTION_DET(?,?)}");
-	        cs.setString(1, questionID);
-	        cs.registerOutParameter(2, OracleTypes.CURSOR); 
-	        cs.execute();
-	        resultSet = (ResultSet) cs.getObject(2);
+			CallableStatement cs = connection.prepareCall("{call SP_DISPLAY_QUESTION_DET(?)}");
+	        cs.setString(1, questionID);      
+	        resultSet =  cs.executeQuery();
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
 		        	question.setId(resultSet.getString("id"));

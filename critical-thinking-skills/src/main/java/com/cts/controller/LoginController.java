@@ -82,12 +82,11 @@ public class LoginController {
 	 
 	 @RequestMapping(value = "/registerProcess", method = RequestMethod.POST)
 	  public ModelAndView   registerProcess(@RequestParam("registerUserName") String username,@RequestParam("registerPswd") String pswd,
-			  @RequestParam("emailaddr") String emailAddr,@RequestParam("fullname") String fullName,@RequestParam("matricNum") String matricNum, HttpServletRequest req,HttpServletResponse res, ModelAndView model) {
+			  @RequestParam("emailaddr") String emailAddr,@RequestParam("fullname") String fullName, HttpServletRequest req,HttpServletResponse res, ModelAndView model) {
 	     model = new ModelAndView("redirect:/");
 		 User user = new User(username,pswd,"TEST-TAKER");
 	    user.setFullname(fullName);
 	    user.setEmail(emailAddr);
-	    user.setMatricNum(matricNum);
 	    try {
 			userDao.createTestTaker(user);
 		} catch (SQLException e) {

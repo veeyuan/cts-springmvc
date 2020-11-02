@@ -39,7 +39,7 @@ public class SubmissionListDao {
 		Connection connection;
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_FILTER_SUBMISSION(?,?,?,?,?,?,?,?)}");
+			CallableStatement cs = connection.prepareCall("{call SP_FILTER_SUBMISSION(?,?,?,?,?,?,?)}");
 			cs.setString(1, null);
 	        cs.setString(2, null);
 	        cs.setString(3, null);
@@ -47,9 +47,8 @@ public class SubmissionListDao {
 	        cs.setDate(5, null);
 	        cs.setInt(6, startRow);
 	        cs.setInt(7, endRow);
-	        cs.registerOutParameter(8, OracleTypes.CURSOR); 
-	        cs.execute();
-	        resultSet = (ResultSet) cs.getObject(8);
+	       
+	        resultSet =  cs.executeQuery();
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
 		        	Submission submission = new Submission();
@@ -59,6 +58,9 @@ public class SubmissionListDao {
 		        	submission.setDisciplineCd(resultSet.getString("DISCIPLINE_CD"));
 		        	submission.setCategoryCd(resultSet.getString("CATEGORY_CD"));
 		        	submission.setLanguageCd(resultSet.getString("LANGUAGE_CD"));
+		        	submission.setDisciplineDscp(resultSet.getString("DISCIPLINE_DSCP"));
+		        	submission.setCategoryDscp(resultSet.getString("CATEGORY_DSCP"));
+		        	submission.setLanguageDscp(resultSet.getString("LANGUAGE_DSCP"));
 		        	submission.setTestTakerName(resultSet.getString("FULLNAME"));
 		        	submissionLst.add(submission);
 		        }
@@ -84,9 +86,9 @@ public class SubmissionListDao {
 		Connection connection;
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_FILTER_SUBMISSION(?,?,?,?,?,?,?,?)}");
+			CallableStatement cs = connection.prepareCall("{call SP_FILTER_SUBMISSION(?,?,?,?,?,?,?)}");
 			cs.setString(1, checkIsAll(filterSubmission.getTestTakerName()));
-	        cs.setString(2, checkIsAll(filterSubmission.getDisciplineCd()));
+	        cs.setString(2, null);
 	        cs.setString(3, checkIsAll(filterSubmission.getCategoryCd()));
 	        cs.setString(4, checkIsAll(filterSubmission.getLanguageCd()));
 	        if (filterSubmission.getSubmitDt()==null) {
@@ -96,9 +98,8 @@ public class SubmissionListDao {
 	        }
 	        cs.setInt(6, startRow);
 	        cs.setInt(7, endRow);
-	        cs.registerOutParameter(8, OracleTypes.CURSOR); 
 	        cs.execute();
-	        resultSet = (ResultSet) cs.getObject(8);
+	        resultSet =  cs.executeQuery();
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
 		        	Submission submission = new Submission();
@@ -108,6 +109,9 @@ public class SubmissionListDao {
 		        	submission.setDisciplineCd(resultSet.getString("DISCIPLINE_CD"));
 		        	submission.setCategoryCd(resultSet.getString("CATEGORY_CD"));
 		        	submission.setLanguageCd(resultSet.getString("LANGUAGE_CD"));
+		        	submission.setDisciplineDscp(resultSet.getString("DISCIPLINE_DSCP"));
+		        	submission.setCategoryDscp(resultSet.getString("CATEGORY_DSCP"));
+		        	submission.setLanguageDscp(resultSet.getString("LANGUAGE_DSCP"));
 		        	submission.setTestTakerName(resultSet.getString("FULLNAME"));
 		        	submissionLst.add(submission);
 		        }
@@ -136,11 +140,10 @@ public class SubmissionListDao {
 		Connection connection;
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_GET_ANSWERS_FOR_GRADING(?,?)}");
+			CallableStatement cs = connection.prepareCall("{call SP_GET_ANSWERS_FOR_GRADING(?)}");
 			cs.setString(1, submissionId);
-			cs.registerOutParameter(2, OracleTypes.CURSOR); 
-	        cs.execute();
-	        resultSet = (ResultSet) cs.getObject(2);
+	        
+	        resultSet = cs.executeQuery();
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
 		        	Question question = new Question();	        	
@@ -286,11 +289,9 @@ public class SubmissionListDao {
 		List<GradedScores> scoreLst=new ArrayList<GradedScores>();
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_RETRIEVE_RESULTS(?,?)}");
-	        cs.setString(1, submission.getSubmissionId());
-	        cs.registerOutParameter(2, OracleTypes.CURSOR); 
-	        cs.execute();
-	        resultSet = (ResultSet) cs.getObject(2);
+			CallableStatement cs = connection.prepareCall("{call SP_RETRIEVE_RESULTS(?)}");
+	        cs.setString(1, submission.getSubmissionId());        
+	        resultSet = cs.executeQuery();
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
 		        	GradedScores scores = new GradedScores();
@@ -330,13 +331,10 @@ public class SubmissionListDao {
 		List<Submission> submittedSubmissionList =new ArrayList<Submission>();
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_RETRIEVE_GRADED_SUBMISSION(?,?,?,?)}");
-	        cs.setString(1, userId);
-	        cs.setString(2, null);
-	        cs.setString(3, null);
-	        cs.registerOutParameter(4, OracleTypes.CURSOR); 
-	        cs.execute();
-	        resultSet = (ResultSet) cs.getObject(4);
+			CallableStatement cs = connection.prepareCall("{call SP_RETRIEVE_GRADED_SUBMISSION(?)}");
+	        cs.setString(1, userId);	       
+	        
+	        resultSet = cs.executeQuery();
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
 		        	Submission submission = new Submission();		    

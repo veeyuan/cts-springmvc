@@ -14,7 +14,7 @@ public class DisciplineDao {
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
 	public List<Discipline> getDisciplineList() {
-	    String sqlStmt = "select * from tbl_discipline" ;
+	    String sqlStmt = "select * from tbl_discipline where del=0" ;
 	    List<Discipline> list = getList(sqlStmt);
 	    return list;
 	  }
@@ -24,7 +24,7 @@ public class DisciplineDao {
 			public Discipline mapRow(ResultSet rs, int row) throws SQLException{
 				Discipline discipline = new Discipline();
 				discipline.setCode(rs.getString("discipline_cd"));	
-				discipline.setName(rs.getString("discipline_name"));	
+				discipline.setName(rs.getString("discipline_dscp"));	
 			    return discipline;
 			}
 		});

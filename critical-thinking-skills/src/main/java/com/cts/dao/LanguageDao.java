@@ -14,7 +14,7 @@ public class LanguageDao {
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
 	public List<Language> getLanguageList() {
-	    String sqlStmt = "select * from tbl_language" ;
+	    String sqlStmt = "select * from tbl_language where del=0" ;
 	    List<Language> list = getList(sqlStmt);
 	    return list;
 	  }

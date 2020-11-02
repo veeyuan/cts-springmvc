@@ -15,7 +15,7 @@ public class NationalityDao {
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
 	public List<Nationality> getNationList() {
-	    String sqlStmt = "select * from tbl_nationality" ;
+	    String sqlStmt = "select * from tbl_nationality where del=0" ;
 	    List<Nationality> list = getList(sqlStmt);
 	    return list;
 	  }

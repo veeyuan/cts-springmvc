@@ -1,6 +1,7 @@
 package com.cts.ind;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,10 +10,11 @@ import java.sql.Statement;
 public class UserNameChecker {
 	Connection conn;                                         // The database connection object.
 
-    public String getUsernameList() throws SQLException {
+    public String getUsernameList() throws SQLException, ClassNotFoundException {
     	String query="SELECT user_name from tbl_user where role_cd = 'TEST-TAKER'" ;
-    	OracleConn oracleConn=new OracleConn();
-        conn = oracleConn.getConn();
+    	Class.forName("com.mysql.jdbc.Driver");  
+		Connection conn=DriverManager.getConnection( "jdbc:mysql://localhost:3306/cts?useTimezone=true&serverTimezone=UTC&useSSL=false","root","sysadmin");  
+		
         String rstString="";
         Statement stmt = conn.createStatement();
         ResultSet rset = stmt.executeQuery(query);
@@ -32,10 +34,11 @@ public class UserNameChecker {
     
     
     
-    public String getEmailList() throws SQLException {
+    public String getEmailList() throws SQLException, ClassNotFoundException {
     	String query="SELECT EMAIL from tbl_user_det" ;
-    	OracleConn oracleConn=new OracleConn();
-        conn = oracleConn.getConn();
+    	Class.forName("com.mysql.jdbc.Driver");  
+		Connection conn=DriverManager.getConnection( "jdbc:mysql://localhost:3306/cts?useTimezone=true&serverTimezone=UTC&useSSL=false","root","sysadmin");  
+		
         String rstString="";
         Statement stmt = conn.createStatement();
         ResultSet rset = stmt.executeQuery(query);

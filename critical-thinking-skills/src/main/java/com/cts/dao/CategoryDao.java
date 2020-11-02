@@ -14,7 +14,7 @@ public class CategoryDao {
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
 	public List<Category> getCategoryList() {
-	    String sqlStmt = "select * from tbl_category" ;
+	    String sqlStmt = "select * from tbl_category where del=0" ;
 	    List<Category> list = getList(sqlStmt);
 	    return list;
 	  }

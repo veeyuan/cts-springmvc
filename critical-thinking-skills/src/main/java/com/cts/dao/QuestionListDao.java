@@ -58,7 +58,7 @@ public class QuestionListDao {
 		Connection connection;
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_FILTER_QUESTION(?,?,?,?,?,?,?,?,?)}");
+			CallableStatement cs = connection.prepareCall("{call SP_FILTER_QUESTION(?,?,?,?,?,?,?,?)}");
 	        cs.setString(1, questionType.getQuestionDscp());
 	        cs.setString(2, null);
 	        cs.setString(3, null);
@@ -67,16 +67,15 @@ public class QuestionListDao {
 	        cs.setInt(6, endRow);
 	        cs.setString(7, checkIsAll(questionType.getHotsComponentCd()));
 	        cs.setString(8, questionType.getStrIsSelectedToAsk());
-	        cs.registerOutParameter(9, OracleTypes.CURSOR); 
-	        cs.execute();
-	        resultSet = (ResultSet) cs.getObject(9);
+	       
+	        resultSet =  cs.executeQuery();
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
 		        	Question question = new Question();
 		        	question.setId(resultSet.getString("id"));
 		        	question.setDisciplineCd(resultSet.getString("DISCIPLINE_CD"));
 		        	question.setCategoryCd(resultSet.getString("CATEGORY_CD"));
-		        	question.setLanguageCd(resultSet.getString("LANGUAGE_CD"));
+		        	question.setLanguageDscp(resultSet.getString("LANGUAGE_DSCP"));
 		        	question.setHotsComponentCd(resultSet.getString("HOTS_COMPONENT"));
 		        	question.setHotsDSCP(resultSet.getString("COMPONENT_NAME"));		        	
 		        	question.setStrIsSelectedToAsk(resultSet.getString("SELECTED_TO_ASK"));

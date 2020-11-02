@@ -208,7 +208,7 @@ setTimeout("preventBack()", 0);
               <!-- /.card-header -->
               <div class="card-body">
               
-              <p id="instruction">You have completed the test. You may view your results in <a href="viewResult.html">View Result</a> once it is ready. <p>
+              <p id="instruction">You have completed the test. You may view your results in <a href="viewResultList.html">View Result</a> once it is ready. <p>
               
               </div>
               <!-- /.card-body -->

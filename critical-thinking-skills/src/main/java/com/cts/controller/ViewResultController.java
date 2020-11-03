@@ -20,7 +20,6 @@ import com.cts.dao.SubmissionListDao;
 import com.cts.model.Category;
 import com.cts.model.Discipline;
 import com.cts.model.Language;
-import com.cts.model.Question;
 import com.cts.model.Submission;
 
 @Controller  

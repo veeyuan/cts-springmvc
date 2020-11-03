@@ -35,6 +35,10 @@
    background-color: transparent;
     color: #6c757d;
 }
+#manageOptLink{
+	background-color: transparent;
+    color: #6c757d;
+}
 </style>
 <script>
 /* function setDiscipline(selected){ //if it is discipline-specific

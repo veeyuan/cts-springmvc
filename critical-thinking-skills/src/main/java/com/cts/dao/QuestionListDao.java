@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.cts.model.Question;
 
-import oracle.jdbc.OracleTypes;
 
 public class QuestionListDao {
 	JdbcTemplate jdbcTemplate;
@@ -53,7 +52,7 @@ public class QuestionListDao {
 		
 	
 	public List<Question> filterQuestionList(Question questionType,int startRow, int endRow) throws IOException  {		
-		List<Question> questionList = new ArrayList() ;
+		List<Question> questionList = new ArrayList<Question>() ;
 		ResultSet resultSet = null;
 		Connection connection;
 		try {

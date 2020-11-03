@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.mysql.cj.xdevapi.Statement;
 
 
 

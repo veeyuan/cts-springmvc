@@ -1,11 +1,7 @@
 package com.cts.controller;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;

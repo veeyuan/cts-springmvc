@@ -64,6 +64,20 @@
         <put-attribute name="body" value="/WEB-INF/admin-jsp/dashboard.jsp" />  
     </definition>
     
+    <definition name="manageOption" extends="base-admin.definition">  
+        <put-attribute name="title" value="manageOption" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/manageOption.jsp" />  
+    </definition>
+    
+    <definition name="manageOptionDet" extends="base-admin.definition">  
+        <put-attribute name="title" value="manageOptionDet" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/manageOptionDet.jsp" />  
+    </definition>
+    
+    <definition name="addOptionFail" extends="base-admin.definition">  
+        <put-attribute name="title" value="addOptionFail" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/addOptionFail.jsp" />  
+    </definition>    
     
     <definition name="base-test-taker.definition"  
         template="/WEB-INF/test-taker-jsp/layout.jsp">  

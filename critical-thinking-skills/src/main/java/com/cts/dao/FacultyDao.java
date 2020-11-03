@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.cts.model.Department;
-import com.cts.model.Ethnic;
 import com.cts.model.Faculty;
 
 public class FacultyDao {

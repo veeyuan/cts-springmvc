@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,7 +15,6 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,7 +55,6 @@ public class ManageQuestionController {
 	public ModelAndView  directToManageQuestion() throws IOException  
 	{  
 		ModelAndView model = new ModelAndView("manageQuestion"); 
-		int numPerPg=5; 
 		Question question = new Question();
 		List<Question> listQuestion =   questionListDao.filterQuestionList(question,1,5);
 		List<Question> allQuestionList =   questionListDao.filterQuestionList(question,0,0);

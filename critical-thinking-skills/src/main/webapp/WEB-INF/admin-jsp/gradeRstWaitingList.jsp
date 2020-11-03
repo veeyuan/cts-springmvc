@@ -52,7 +52,10 @@
    background-color: transparent;
     color: #6c757d;
 }
-
+#manageOptLink{
+	background-color: transparent;
+    color: #6c757d;
+}
 a {
   color: inherit; /* blue colors for links too */
   text-decoration: inherit; /* no underline */

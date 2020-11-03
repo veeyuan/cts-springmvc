@@ -7,19 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.cts.model.Answer;
-import com.cts.model.Category;
+
 import com.cts.model.Question;
-import com.cts.model.Submission;
 import com.cts.model.SurveyForm;
 import com.cts.model.User;
 
-import oracle.jdbc.OracleTypes;
 
 public class SurveyDao {
 	JdbcTemplate jdbcTemplate;
@@ -27,7 +23,7 @@ public class SurveyDao {
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
 	public List<SurveyForm> getSurveyList(String userid,int languageCd){
-		List<SurveyForm> formList = new ArrayList() ;
+		List<SurveyForm> formList = new ArrayList<SurveyForm>() ;
 	    ResultSet resultSet = null;
 		Connection connection;
 		try {

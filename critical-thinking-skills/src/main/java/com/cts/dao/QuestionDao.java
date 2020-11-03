@@ -17,7 +17,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.cts.model.AttachmentFile;
 import com.cts.model.Question;
-import oracle.jdbc.OracleTypes;
 
 public class QuestionDao {
 	JdbcTemplate jdbcTemplate;

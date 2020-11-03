@@ -37,7 +37,10 @@
     color: #fff;
    
 }
-
+#manageOptLink{
+	background-color: transparent;
+    color: #6c757d;
+}
 #success{
   border-style: solid;
   border-color: green;

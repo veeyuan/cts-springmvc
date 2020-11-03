@@ -31,7 +31,6 @@ C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\m
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\model\ProgrammingResults.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\model\Login.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\model\User.java
-C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\ind\OracleConn.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\dao\ChartDao.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\model\Language.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\model\Question.java
@@ -42,10 +41,10 @@ C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\c
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\model\AttachmentFile.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\dao\QuestionDao.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\model\Answer.java
+C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\controller\ManageOptionController.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\controller\AddQuestionController.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\controller\TakeTestController.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\model\ResultRange.java
-C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\controller\MenuController.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\dao\EthnicDao.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\model\Option.java
 C:\Users\User\git\cts-springmvc\critical-thinking-skills\src\main\java\com\cts\dao\HotsComponentDao.java

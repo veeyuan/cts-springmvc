@@ -30,7 +30,6 @@ com\cts\dao\DisciplineDao$1.class
 com\cts\dao\ReportDao.class
 com\cts\dao\UserDao$1.class
 com\cts\model\Option.class
-com\cts\ind\OracleConn.class
 com\cts\dao\FacultyDao.class
 com\cts\dao\NationalityDao.class
 com\cts\model\Category.class
@@ -54,6 +53,7 @@ com\cts\model\Section.class
 com\cts\model\SubmissionByFaculty.class
 com\cts\dao\TestDao.class
 com\cts\dao\HotsComponentDao.class
+com\cts\controller\ManageOptionController.class
 com\cts\model\Ethnic.class
 com\cts\controller\DashboardController.class
 com\cts\controller\ViewResultController.class
@@ -63,6 +63,5 @@ com\cts\dao\FileDao$1.class
 com\cts\dao\LanguageDao.class
 com\cts\dao\EthnicDao$1.class
 com\cts\dao\FacultyDao$2.class
-com\cts\controller\MenuController.class
 com\cts\dao\ProgrammingRstDao$1.class
 com\cts\model\Nationality.class

@@ -36,7 +36,10 @@
 	background-color: #FED136;
     color: #fff;s
 }
-
+#manageOptLink{
+	background-color: transparent;
+    color: #6c757d;
+}
 #btn-addquestionset-back{
 	margin-right:10px;
 }

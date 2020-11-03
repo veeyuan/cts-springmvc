@@ -1,7 +1,6 @@
 package com.cts.controller;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,11 +23,8 @@ import com.cts.dao.DisciplineDao;
 import com.cts.dao.LanguageDao;
 import com.cts.dao.SubmissionListDao;
 import com.cts.model.Category;
-import com.cts.model.Discipline;
 import com.cts.model.Language;
-import com.cts.model.Question;
 import com.cts.model.Submission;
-import com.cts.model.User;
 
 @Controller  
 public class GradeResultController {

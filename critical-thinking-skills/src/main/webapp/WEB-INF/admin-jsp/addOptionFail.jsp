@@ -17,9 +17,14 @@
 	margin-left:30px;
  	padding: 25px;
 }
-#addLink{
+#manageOptLink{
 	background-color: #FED136;
     color: #fff;
+}
+
+#manageLink{
+	background-color: transparent;
+    color: #6c757d;
 }
 
 #dashboardLink{
@@ -27,19 +32,20 @@
     color: #6c757d;
 }
 
-#gradeLink{
-   background-color: transparent;
-    color: #6c757d;
-}
-#manageOptLink{
-	background-color: transparent;
-    color: #6c757d;
-}
-#manageLink{
+#addLink{
    background-color: transparent;
     color: #6c757d;
 }
 
+#gradeLink{
+   background-color: transparent;
+    color: #6c757d;
+}
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
 #success{
   border-style: solid;
   border-color: green;
@@ -95,7 +101,7 @@ a {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 id="title" class="m-0 text-dark">Add Question</h1>
+            <h1 id="title" class="m-0 text-dark">Manage Option</h1>
           </div><!-- /.col -->
           
         </div><!-- /.row -->
@@ -108,23 +114,16 @@ a {
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
-                  Add Question
+                  Add Option
                 </h3>
                 </div>
                 <div class="card-tools">
-                 	<% if ("Y".equals(request.getAttribute("success"))){ %>
-               		<div id="success">               		
-               		<i id="success-icon" class="fa fa-check-circle fa-2x"> </i>               		
-               		<p>Successfully added!</p>
-               	 	<p id="smallMsg">You may make change on the question in Manage Question.</p>
-               		</div>
-               		<%}else{ %>
-               		<div id="failure"> 
+                 	<div id="failure"> 
                		<i id="failure-icon" class="fa fa-times-circle fa-2x"> </i>
                		<p>Failed to add</p>
-               	 	<p id="smallMsg">Please make sure all fields are filled. You may go back to previous page to submit request again.</p>
+               	 	<p id="smallMsg">Duplicate entry detected. Please make sure the new option is not inside the list.
+               	 	You may go back to previous page to submit request again.</p>
                		</div>
-               		<%} %>
 				
 					</div>
 	                                    
@@ -132,10 +131,8 @@ a {
               
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-              <button id="btn-addquestionset"  class="btn btn-info float-right"><a href="addQuestion.html"><i id="btn-icon" class="fas fa-plus"></i> Create New</a></button> 
-              	<% if (!"Y".equals(request.getAttribute("success"))){ %>
-              	<button onclick="history.back(-1)"  id="btn-addquestionset-back"  class="btn btn-info float-right"><i id="btn-icon" class="fas fa fa-arrow-left"></i>Back</button>
-              	<%} %>
+              <button onclick="history.back(-1)"  id="btn-addquestionset-back"  class="btn btn-info float-right"><i id="btn-icon" class="fas fa fa-arrow-left"></i>Back</button>
+
               </div>
             </div>
             <!-- /.card -->

@@ -89,6 +89,9 @@
 <bean id="reportDao" class="com.cts.dao.ReportDao">
 <property name="jdbcTemplate" ref="jt"></property>
 </bean>
+<bean id="optionDao" class="com.cts.dao.OptionDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     <property name="maxUploadSize" value="20848820" />
 </bean>

@@ -14,17 +14,14 @@ import java.util.Base64;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 import com.cts.model.Answer;
 import com.cts.model.AttachmentFile;
 import com.cts.model.HotsComponent;
 import com.cts.model.Question;
 import com.cts.model.Section;
-import com.cts.model.Submission;
 import com.cts.model.User;
 
-import oracle.jdbc.OracleTypes;
 
 public class TestDao {
 	JdbcTemplate jdbcTemplate;

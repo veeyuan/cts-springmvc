@@ -64,6 +64,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a id="manageOptLink" href="manageOption.html" class="nav-link">
+               <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Manage Options
+              </p>
+            </a>
+          </li>
            <li class="nav-item">
             <a id="logoutLink" href="logout.html" class="nav-link">
                <i class="nav-icon fas fa-door-open"></i>

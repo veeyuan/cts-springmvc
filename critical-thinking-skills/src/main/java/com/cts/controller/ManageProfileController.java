@@ -1,6 +1,5 @@
 package com.cts.controller;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -34,9 +33,7 @@ import com.cts.model.Faculty;
 import com.cts.model.Language;
 import com.cts.model.Nationality;
 import com.cts.model.ProgrammingResults;
-import com.cts.model.Question;
 import com.cts.model.ResultRange;
-import com.cts.model.Submission;
 import com.cts.model.SurveyForm;
 import com.cts.model.User;
 

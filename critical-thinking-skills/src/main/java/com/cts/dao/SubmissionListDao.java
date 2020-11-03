@@ -1,23 +1,19 @@
 package com.cts.dao;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 import com.cts.model.Answer;
 import com.cts.model.AttachmentFile;
@@ -25,7 +21,6 @@ import com.cts.model.GradedScores;
 import com.cts.model.Question;
 import com.cts.model.Submission;
 
-import oracle.jdbc.OracleTypes;
 
 
 public class SubmissionListDao {
@@ -34,7 +29,7 @@ public class SubmissionListDao {
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
 	public List<Submission> getSubmissionList(int startRow, int endRow) {
-	    List<Submission> submissionLst = new ArrayList() ;
+	    List<Submission> submissionLst = new ArrayList<Submission>() ;
 	    ResultSet resultSet = null;
 		Connection connection;
 		try {
@@ -81,7 +76,7 @@ public class SubmissionListDao {
 	
 	public List<Submission> getSubmissionList(Submission filterSubmission,int startRow, int endRow) {
 
-	    List<Submission> submissionLst = new ArrayList() ;
+	    List<Submission> submissionLst = new ArrayList<Submission>() ;
 	    ResultSet resultSet = null;
 		Connection connection;
 		try {

@@ -87,64 +87,58 @@ function getQuestions(){
 	document.getElementById('questionForm').submit();
 } 
 
-function setInit(){
-	//setUserName
-	var analysisScore = ${submission.scoresLst[0].analysisScore}+"%";
-	if ( analysisScore == "0%"){
-		 $('.analysisScore').width("3%");
-		 $(".analysisScore").css("color","black");
-		 $(".analysisScore").css("background-color","#ddd");
-
-	}else{
-		$('.analysisScore').width(analysisScore);
-	}
-	
-
-	var logicScore = ${submission.scoresLst[0].logicScore}+"%";
-	if ( logicScore == "0%"){
-		$('.logicScore').width("3%");
-		 $(".logicScore").css("color","black");
-		 $(".logicScore").css("background-color","#ddd");
-	}else{
-		$('.logicScore').width(logicScore);
-	}
-	var judgementScore = ${submission.scoresLst[0].judgementScore}+"%";
-	if ( judgementScore == "0%"){
-		$('.judgementScore').width("3%");
-		 $(".judgementScore").css("color","black");
-		 $(".judgementScore").css("background-color","#ddd");
-	}else{
-		$('.judgementScore').width(judgementScore);
-	}
-	var probSolveScore = ${submission.scoresLst[0].probSolveScore}+"%";
-	if ( probSolveScore == "0%"){
-		$('.probSolveScore').width("3%");
-		 $(".probSolveScore").css("color","black");
-		 $(".probSolveScore").css("background-color","#ddd");
-	}else{
-		$('.probSolveScore').width(probSolveScore);
-	}
-	var creativeScore = ${submission.scoresLst[0].creativeScore}+"%";
-	if ( creativeScore == "0%"){
-		$('.creativeScore').width("3%");
-		 $(".creativeScore").css("color","black");
-		 $(".creativeScore").css("background-color","#ddd");
-	}else{
-		$('.creativeScore').width(creativeScore);
-	}
-	var username = document.getElementById("username").value;
-	$('#usernameDisplay').html(username);
+function setCd(){
 	var discipline = document.getElementById("discipline").value;
 	$('#disciplineCd').val(discipline).change();
 	var category = document.getElementById("category").value;
 	$('#categoryCd').val(category).change();
 	var language = document.getElementById("language").value;
-	$('#languageCd').val(language).change(); 
-}
-
-
-addLoadEvent(setInit); 
-
+	$('#languageCd').val(language).change();
+	}
+	
+ function loadChart() {
+	 
+	var dps = [[]];
+	var chart = new CanvasJS.Chart("chartContainer", {
+		theme: "light1", // "light1", "light2", "dark1"
+		animationEnabled: true,
+		title: {
+			text: "Thinking Skills Analysis"
+		},
+		axisY: {
+			title: "",
+			includeZero: true,
+			prefix: "",
+			suffix: "",
+			maximum: 100
+		},
+		data: [{
+			type: "bar",
+			yValueFormatString: "#,##0.0#\"%\"",
+			indexLabel: "{y}",
+			dataPoints: dps[0]
+		}]
+	});
+	 
+	var yValue;
+	var label;
+	 
+	<c:forEach items="${dataPointsList}" var="dataPoints" varStatus="loop">	
+		<c:forEach items="${dataPoints}" var="dataPoint">
+			yValue = parseFloat("${dataPoint.y}");
+			label = "${dataPoint.label}";
+			dps[parseInt("${loop.index}")].push({
+				label : label,
+				y : yValue
+			});		
+		</c:forEach>	
+	</c:forEach> 
+	 
+	chart.render();
+	 
+	}
+addLoadEvent(loadChart); 
+addLoadEvent(setCd);
    
 
 
@@ -184,7 +178,7 @@ addLoadEvent(setInit);
               <!-- /.card-header -->
               <div class="card-body">
               <div class="form-row">
-              	 <div class="form-group col-md-7">
+              	 <div class="form-group col-md-8">
 				    <label >Full Name</label>
 				    <input type="text" class="form-control" value="${submission.testTakerName}" readonly/>
 				 </div>
@@ -200,7 +194,7 @@ addLoadEvent(setInit);
 				              </c:forEach>
 	                       </select>
 	                   </div>
-	                <div class="form-group col-md-2">
+	                <div class="form-group col-md-3">
 					      <label >Suitable Category</label>
 					      <input type="hidden" id="category" value="${submission.categoryCd}"> 
 					      <select  id="categoryCd" class="form-control" >
@@ -224,38 +218,24 @@ addLoadEvent(setInit);
 				    <label >Submitted Date</label>
 				    <input type="text" class="form-control" value="${submission.submitDt}" readonly/>
 				 </div>
+				 <div class="form-group col-md-2">
+				    <label >Participated in Survey</label>
+				    <%if (submission.isJoinSurvey()){ %>
+				    <input type="text" class="form-control" value="Yes" readonly/>
+				    <%}else{ %>
+				    <input type="text" class="form-control" value="No" readonly/>
+				    
+				    <%} %>
+				 </div>
 				  </div> 
 				  <br>
-				  <div class="form-row">
-					   <div class="form-group col-md-3">
-		              <label >Thinking Skills Analysis Chart</label>
-		              </div>
-              		</div>
+				  <br>
               	  
-              		<p>Analysis &  Evaluation</p>
-					<div class="container">
-					  <div class="skills analysisScore" style="background-color: red"> ${submission.scoresLst[0].analysisScore} &#37;</div>
-					</div>
-					
-					<p>Logic & Reasoning</p>
-					<div class="container">
-					  <div class="skills logicScore" style="background-color: orange"> ${submission.scoresLst[0].logicScore} &#37;</div>
-					</div>
-					
-					<p>Judgement</p>
-					<div class="container">
-					  <div class="skills judgementScore" style="background-color: #4CAF50"> ${submission.scoresLst[0].judgementScore} &#37;</div>
-					</div>
-					
-					<p>Problem Solving</p>
-					<div class="container">
-					  <div class="skills probSolveScore" style="background-color: #2196F3"> ${submission.scoresLst[0].probSolveScore} &#37;</div>
-					</div>
               		
-              		<p>Creative Thinking</p>
-					<div class="container">
-					  <div class="skills creativeScore" style="background-color: purple"> ${submission.scoresLst[0].creativeScore}&#37;</div>
-					</div>
+					
+					
+						<div id="chartContainer" style="height: 450px; width: 80%; display: block; "></div>
+						<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
               	
               		
               </div>

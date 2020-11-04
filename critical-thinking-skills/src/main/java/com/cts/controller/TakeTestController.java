@@ -56,7 +56,7 @@ public class TakeTestController {
     		if (userDet.isReadyToTakeTest()) {  
     			if (userDao.hasStartedTest(id)) {
     				model = new ModelAndView("testSection"); 	
-    				List<HotsComponent> listHotsComponent =   hotsComponentDao.getHotsComponentList();
+    				List<HotsComponent> listHotsComponent =   hotsComponentDao.getAllHotsComponentList();
     				List<Section> listSection = testDao.getSections(userDet,listHotsComponent);
     				model.addObject("listSection",listSection);
     				if (isAllComplete(listSection) && testDao.getSubmissionId(id)!=null ) {

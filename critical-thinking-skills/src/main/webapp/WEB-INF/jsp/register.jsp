@@ -313,11 +313,16 @@ function submitRegisterForm(){
                                              <div style="display:none;text-align: left;}" id="confpswd-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.confirmpswd",langCd) %></div>
                                             <div style="display:none;text-align: left;}" id="confpswd-error-inv-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.inv.confirmpswd",langCd) %></div>
                                         </div>
-                                        
+                                        <div class="form-group">
+                                         <input class="form-check-input" type="checkbox" value="" id="isUmStudent" name="isUmStudent" checked>
+										  <label class="form-check-label" for="isUmStudent">
+										    Is UM Student
+										  </label>
+                                    	</div>
+                                       <button class="btnRegister" onclick="submitRegisterForm()" ><%=dictionaryManager.getTerm("index.authentication.register",langCd) %></button>
                                     
                                     </div>
                                     </form>
-                                     <button class="btnRegister" onclick="submitRegisterForm()" ><%=dictionaryManager.getTerm("index.authentication.register",langCd) %></button>
                                     
                                 </div>
                             </div>

@@ -25,6 +25,7 @@ public class User extends Login{
 	private ResultRange gpa;
 	private ResultRange cgpa;
 	private String ethnicCd;
+	private boolean joinSurvey;
 
 	public User(String username, String password, String roleCd) {
 		super(username, password, roleCd);
@@ -274,6 +275,20 @@ public class User extends Login{
 	 */
 	public void setEthnicCd(String ethnicCd) {
 		this.ethnicCd = ethnicCd;
+	}
+
+	/**
+	 * @return the joinSurvey
+	 */
+	public boolean isJoinSurvey() {
+		return joinSurvey;
+	}
+
+	/**
+	 * @param joinSurvey the joinSurvey to set
+	 */
+	public void setJoinSurvey(boolean joinSurvey) {
+		this.joinSurvey = joinSurvey;
 	}
 
 	

@@ -20,6 +20,12 @@ public class HotsComponentDao {
 	    return list;
 	  }
 	
+	public List<HotsComponent> getAllHotsComponentList() {
+	    String sqlStmt = "select * from tbl_hots_components order by component_cd" ;
+	    List<HotsComponent> list = getList(sqlStmt);
+	    return list;
+	  }
+	
 	public List<HotsComponent> getList( String sqlStmt){
 		return jdbcTemplate.query(sqlStmt, new RowMapper<HotsComponent>() {
 			public HotsComponent mapRow(ResultSet rs, int row) throws SQLException{

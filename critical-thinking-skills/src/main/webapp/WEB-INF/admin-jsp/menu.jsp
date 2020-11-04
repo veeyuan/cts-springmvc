@@ -36,7 +36,7 @@
           </li>
           <li class="nav-item">
             <a id="gradeLink" href="gradeRstWaitingList.html" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon fa fa-trophy"></i>
               <p>
                 Grade Results
                 <% 
@@ -66,7 +66,7 @@
           
           <li class="nav-item">
             <a id="manageOptLink" href="manageOption.html" class="nav-link">
-               <i class="nav-icon fas fa-edit"></i>
+               <i class="nav-icon fa fa-tasks"></i>
               <p>
                 Manage Options
               </p>
@@ -75,7 +75,7 @@
           <% if (request.getSession().getAttribute("rolecd").toString().equalsIgnoreCase("superadmin")){ %>
           <li class="nav-item">
             <a id="manageAdminLink" href="manageAdmin.html" class="nav-link">
-               <i class="nav-icon fas fa-edit"></i>
+               <i class="nav-icon fas fa-user-lock"></i>
               <p>
                 Manage Admin
               </p>

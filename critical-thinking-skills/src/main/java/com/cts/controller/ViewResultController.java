@@ -3,6 +3,7 @@ package com.cts.controller;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,6 +62,9 @@ public class ViewResultController {
 		submission.setSubmissionId(submissionId);
 		try {
 			submission = submissionListDao.getScoresAnalysis(submission);
+			List<List<Map<Object, Object>>> submissionDataList = submissionListDao.getScoresAnalysisMap(submission);
+			model.addObject("dataPointsList",submissionDataList);
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,7 +75,6 @@ public class ViewResultController {
 		model.addObject("listCategory",listCategory);
 		List<Language> listLanguage =   languageDao.getLanguageList();
 		model.addObject("listLanguage",listLanguage);
-		
 		model.addObject("submission", submission);
 		
 	    return model;

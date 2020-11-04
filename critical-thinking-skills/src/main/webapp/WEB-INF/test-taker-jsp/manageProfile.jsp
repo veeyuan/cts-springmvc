@@ -117,12 +117,12 @@ function submitConsent(){
     <!-- /.content-header -->
     <section class="content">
 	<div class="container-fluid">
-          
-            
+           <%User user = (User)request.getAttribute("user"); %>
+            <%if (user.isJoinSurvey()){ %>
               <div class="card">
               
               <!-- /.card-header -->
-              <%User user = (User)request.getAttribute("user"); %>
+             
               <%if (user.isConsentGrantedToSurvey()){ %>
               <div class="card-header">
                 <h3 class="card-title">
@@ -178,7 +178,49 @@ function submitConsent(){
               <!-- /.card-body -->
              
             </div>
-             <%if (user.isCompleteSurvey()){ %>
+             
+	          <%}else{ %>      
+	          <div class="card-header">
+                <h3 class="card-title">
+                  <i class="ion ion-clipboard mr-1"></i>
+                  Consent of Participation
+                </h3>
+               
+              </div>
+	          <div class="card-body">
+             <form:form id="consentForm" action ="manageProfile.html" method="post"  >
+             <input type="hidden" id="consentToTakeSurvey" name="consentToTakeSurvey" value="N">		
+             <div style="margin-left:5%;margin-right:5%;text-align: justify;line-height: 2;">
+             <p> Dear UM Students,  </p>
+			 <p> I am a final year student from the Department of Software Engineering, Faculty of Computer Science & Information Technology, University of Malaya. Currently, I am working on a research project under the supervision of Associate Prof. Dr. Ow Siew Hock, for my final year project. The title of my project is: &lsquo;Assessing Higher Order Thinking Skills (HOTS) and Academic Performance of University Students&rsquo;. I would like to invite you to participate in this study by answering the HOTS assessment questions which will take 25 to 30 minutes.
+				<br>The data collected will be kept confidential. No personal details of individuals such as name will be revealed, and all data in the final project report will only be group data. Raw data for this study will be collected primarily through a simple assessment of HOTS which consists of TWO (2) sections. It is hoped that the findings of the study will help the university students to know their level of HOTS. 
+				<br>Your participation in this study is entirely voluntary. You may choose to discontinue your participation in this study at any time during the data collection phase. If you agree to participate fully, however, kindly tick () the box in the consent section before answering the HOTS assessment questions. 
+				<br>Feel free to contact us if you need more clarification. We can be contacted via email as follows: 
+				<p>
+				<p>
+				Associate Professor Dr. Ow Siew Hock (Supervisor)<br>
+				Email	: show@um.edu.my<br>
+				
+				Wong Vee Yuan (Final year project student)<br>
+				Email	: veeyuan_0307@siswa.um.edu.my
+
+              </p>
+             <div class="form-check">
+                					       
+				<input style="margin-top:10px;"onclick="changeSelected()" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+				<label class="form-check-label" for="defaultCheck1">
+				I agree to participate in the HOTS assessment study entitled &lsquo;Assessing Higher Order Thinking Skills (HOTS) and Academic Performance of University Students&rsquo;.
+				</label>
+			</div>	
+			</div>			     
+             </form:form>
+             </div>
+             <div class="card-footer clearfix">
+                <button onclick="submitConsent()" class="btn btn-info float-right"><i id="btn-icon" class="fas fa-check"></i> Submit Consent Form</button>             
+              </div>
+	          <%}} %>  
+	          
+	          <%if (user.isCompleteSurvey()||!user.isJoinSurvey()){ %>
              <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
@@ -237,46 +279,7 @@ function submitConsent(){
                <%} %>
               </div>
             </div>
-	          <%}}else{ %>      
-	          <div class="card-header">
-                <h3 class="card-title">
-                  <i class="ion ion-clipboard mr-1"></i>
-                  Consent of Participation
-                </h3>
-               
-              </div>
-	          <div class="card-body">
-             <form:form id="consentForm" action ="manageProfile.html" method="post"  >
-             <input type="hidden" id="consentToTakeSurvey" name="consentToTakeSurvey" value="N">		
-             <div style="margin-left:5%;margin-right:5%;text-align: justify;line-height: 2;">
-             <p> Dear UM Students,  </p>
-			 <p> I am a final year student from the Department of Software Engineering, Faculty of Computer Science & Information Technology, University of Malaya. Currently, I am working on a research project under the supervision of Associate Prof. Dr. Ow Siew Hock, for my final year project. The title of my project is: &lsquo;Assessing Higher Order Thinking Skills (HOTS) and Academic Performance of University Students&rsquo;. I would like to invite you to participate in this study by answering the HOTS assessment questions which will take 25 to 30 minutes.
-				<br>The data collected will be kept confidential. No personal details of individuals such as name will be revealed, and all data in the final project report will only be group data. Raw data for this study will be collected primarily through a simple assessment of HOTS which consists of TWO (2) sections. It is hoped that the findings of the study will help the university students to know their level of HOTS. 
-				<br>Your participation in this study is entirely voluntary. You may choose to discontinue your participation in this study at any time during the data collection phase. If you agree to participate fully, however, kindly tick () the box in the consent section before answering the HOTS assessment questions. 
-				<br>Feel free to contact us if you need more clarification. We can be contacted via email as follows: 
-				<p>
-				<p>
-				Associate Professor Dr. Ow Siew Hock (Supervisor)<br>
-				Email	: show@um.edu.my<br>
-				
-				Wong Vee Yuan (Final year project student)<br>
-				Email	: veeyuan_0307@siswa.um.edu.my
-
-              </p>
-             <div class="form-check">
-                					       
-				<input style="margin-top:10px;"onclick="changeSelected()" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-				<label class="form-check-label" for="defaultCheck1">
-				I agree to participate in the HOTS assessment study entitled &lsquo;Assessing Higher Order Thinking Skills (HOTS) and Academic Performance of University Students&rsquo;.
-				</label>
-			</div>	
-			</div>			     
-             </form:form>
-             </div>
-             <div class="card-footer clearfix">
-                <button onclick="submitConsent()" class="btn btn-info float-right"><i id="btn-icon" class="fas fa-check"></i> Submit Consent Form</button>             
-              </div>
-	          <%} %>       
+            <%} %>     
 				 
             <!-- /.card -->
             </section>

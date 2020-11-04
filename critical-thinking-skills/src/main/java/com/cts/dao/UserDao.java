@@ -74,6 +74,11 @@ public class UserDao {
 				}else {
 					user.setConsentGrantedToSurvey(false);
 				}
+				if ("Y".equalsIgnoreCase(rs.getString("join_survey"))) {
+					user.setJoinSurvey(true);
+				}else {
+					user.setJoinSurvey(false);
+				}
 				
 			}
 			rs.close();
@@ -103,15 +108,16 @@ public class UserDao {
 
 	}
 	
-	public void createTestTaker(User user) throws SQLException {
+	public void createTestTaker(User user, String isUMStudent) throws SQLException {
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-        CallableStatement cs = connection.prepareCall("{call SP_CREATE_TESTTAKER(?,?,?,?,?)}");
+        CallableStatement cs = connection.prepareCall("{call SP_CREATE_TESTTAKER(?,?,?,?,?,?)}");
        
         cs.setString(1, user.getUsername());
         cs.setString(2,user.getPassword());
         cs.setString(3, user.getRoleCd());
         cs.setString(4,user.getEmail());
         cs.setString(5, user.getFullname());
+        cs.setString(6, isUMStudent);
         cs.execute();
     	 cs.close();
 	}

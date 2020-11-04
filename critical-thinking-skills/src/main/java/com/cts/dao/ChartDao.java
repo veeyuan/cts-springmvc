@@ -39,7 +39,7 @@ public class ChartDao {
 	}
 	
 	public List<List<Map<Object,Object>>> getFacultySubmissionMapList(){
-	    String sqlStmt = "SELECT count(*) as amount,faculty.FACULTY_DSCP FROM TBL_SUBMISSION submission INNER JOIN TBL_USER_DET userdet ON userdet.USER_ID = submission.USER_ID LEFT JOIN TBL_FACULTY faculty ON userdet.FACULTY_CD = faculty.FACULTY_CD WHERE submission.SUBMITTED_DT IS NOT NULL GROUP BY faculty.FACULTY_CD" ;
+	    String sqlStmt = "SELECT count(*) as amount,faculty.FACULTY_DSCP FROM TBL_SUBMISSION submission INNER JOIN TBL_USER_DET userdet ON userdet.USER_ID = submission.USER_ID LEFT JOIN TBL_FACULTY faculty ON userdet.FACULTY_CD = faculty.FACULTY_CD WHERE submission.SUBMITTED_DT IS NOT NULL AND submission.JOIN_SURVEY='Y' GROUP BY faculty.FACULTY_CD" ;
 		List<List<Map<Object,Object>>> list = new ArrayList<List<Map<Object,Object>>>();
 		List<Map<Object,Object>> dataPoints = new ArrayList<Map<Object,Object>>();
 		Map<Object,Object> map = null;
@@ -75,7 +75,7 @@ public class ChartDao {
 	}
 	
 	public List<SubmissionByFaculty> getFacultySubmissionSummary(){
-	    String sqlStmt = "SELECT count(*) as amount,faculty.FACULTY_DSCP FROM TBL_SUBMISSION submission INNER JOIN TBL_USER_DET userdet ON userdet.USER_ID = submission.USER_ID LEFT JOIN TBL_FACULTY faculty ON userdet.FACULTY_CD = faculty.FACULTY_CD WHERE submission.SUBMITTED_DT IS NOT NULL GROUP BY faculty.FACULTY_CD" ;
+	    String sqlStmt = "SELECT count(*) as amount,faculty.FACULTY_DSCP FROM TBL_SUBMISSION submission INNER JOIN TBL_USER_DET userdet ON userdet.USER_ID = submission.USER_ID LEFT JOIN TBL_FACULTY faculty ON userdet.FACULTY_CD = faculty.FACULTY_CD WHERE submission.SUBMITTED_DT IS NOT NULL AND submission.JOIN_SURVEY='Y' GROUP BY faculty.FACULTY_CD" ;
 	    List<SubmissionByFaculty> list=new ArrayList<>();
 		ResultSet resultSet = null;
 		Connection connection;
@@ -108,28 +108,28 @@ public class ChartDao {
 	
 	
 	public double getTotalSubmissionCount() {
-		String sqlStmt = "SELECT COUNT(*) FROM TBL_SUBMISSION";
+		String sqlStmt = "SELECT COUNT(*) FROM TBL_SUBMISSION WHERE JOIN_SURVEY='Y'";
 		int submissionCount=(Integer) jdbcTemplate.queryForObject(
 				 sqlStmt, new Object[] {}, Integer.class);		
 		return submissionCount;
 	}
 	
 	public double getGradedSubmission() {
-		String sqlStmt = "SELECT COUNT(ID) FROM TBL_SUBMISSION WHERE READY_TO_RELEASE_RST='Y'";
+		String sqlStmt = "SELECT COUNT(ID) FROM TBL_SUBMISSION WHERE READY_TO_RELEASE_RST='Y' AND JOIN_SURVEY='Y'";
 		int submissionCount=(Integer) jdbcTemplate.queryForObject(
 				 sqlStmt, new Object[] {}, Integer.class);		
 		return submissionCount;
 	}
 	
 	public double getOpenSubmission() {
-		String sqlStmt = "SELECT COUNT(ID) FROM TBL_SUBMISSION WHERE submitted_dt IS NULL";
+		String sqlStmt = "SELECT COUNT(ID) FROM TBL_SUBMISSION WHERE submitted_dt IS NULL AND JOIN_SURVEY='Y'";
 		int submissionCount=(Integer) jdbcTemplate.queryForObject(
 				 sqlStmt, new Object[] {}, Integer.class);		
 		return submissionCount;
 	}
 	
 	public double getCloseSubmission() {
-		String sqlStmt = "SELECT COUNT(ID) FROM TBL_SUBMISSION WHERE submitted_dt IS NOT NULL AND READY_TO_RELEASE_RST='N'";
+		String sqlStmt = "SELECT COUNT(ID) FROM TBL_SUBMISSION WHERE submitted_dt IS NOT NULL AND READY_TO_RELEASE_RST='N' AND JOIN_SURVEY='Y'";
 		int submissionCount=(Integer) jdbcTemplate.queryForObject(
 				 sqlStmt, new Object[] {}, Integer.class);	
 		return submissionCount;

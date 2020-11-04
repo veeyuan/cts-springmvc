@@ -11,7 +11,9 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -302,6 +304,11 @@ public class SubmissionListDao {
 		        	submission.setDisciplineCd(resultSet.getString("DISCIPLINE_CD"));
 		        	submission.setLanguageCd(resultSet.getString("LANGUAGE_CD"));
 		        	submission.setTestTakerName(resultSet.getString("FULLNAME"));
+		        	if (resultSet.getString("JOIN_SURVEY").equalsIgnoreCase("Y")) {
+		        		submission.setJoinSurvey(true);
+		        	}else {
+		        		submission.setJoinSurvey(false);		        		
+		        	}
 		        	
 		        }
 	        }
@@ -318,6 +325,34 @@ public class SubmissionListDao {
 		}
         
 		return submission;
+	}
+	
+	public List<List<Map<Object,Object>>> getScoresAnalysisMap(Submission submission ) throws ParseException{
+		List<List<Map<Object,Object>>> list = new ArrayList<List<Map<Object,Object>>>();
+		List<Map<Object,Object>> dataPoints = new ArrayList<Map<Object,Object>>();
+		Map<Object,Object> map = null;
+		map = new HashMap<Object,Object>(); 
+		map.put("label", "Analysis & Evaluation"); 
+		map.put("y", submission.getScoresLst().get(0).getAnalysisScore());
+		dataPoints.add(map);
+		map = new HashMap<Object,Object>(); 
+		map.put("label", "Logic & Reasoning"); 
+		map.put("y", submission.getScoresLst().get(0).getLogicScore());
+		dataPoints.add(map);
+		map = new HashMap<Object,Object>(); 
+		map.put("label", "Judgement"); 
+		map.put("y",submission.getScoresLst().get(0).getJudgementScore());
+		dataPoints.add(map);
+		map = new HashMap<Object,Object>(); 
+		map.put("label", "Problem Solving"); 
+		map.put("y",submission.getScoresLst().get(0).getProbSolveScore());
+		dataPoints.add(map);
+		map = new HashMap<Object,Object>(); 
+		map.put("label", "Creative Thinking"); 
+		map.put("y",submission.getScoresLst().get(0).getCreativeScore());
+		dataPoints.add(map);
+		list.add(dataPoints);
+		return list;		
 	}
 	
 	public List<Submission> getSubmittedSubmissionList(String userId){

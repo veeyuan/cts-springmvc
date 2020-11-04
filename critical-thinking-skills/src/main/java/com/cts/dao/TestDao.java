@@ -164,7 +164,10 @@ public class TestDao {
 				}
 			}
 			section.setQuestionList(listQuestion);
-			sectionList.add(section);
+			if (section.getQuestionList().size()>0) {
+				sectionList.add(section);
+			}
+			
 			
 			
 		}
@@ -190,6 +193,9 @@ public class TestDao {
 
 	public void startTest(User user) {
 		String sql = "INSERT INTO  tbl_submission (USER_ID,DISCIPLINE_CD,CATEGORY_CD,LANGUAGE_CD) VALUES (?,?,?,?)";
+		if (!user.isJoinSurvey()) {
+			sql = "INSERT INTO  tbl_submission (USER_ID,DISCIPLINE_CD,CATEGORY_CD,LANGUAGE_CD,join_survey) VALUES (?,?,?,?,'N')";
+		}		
 		jdbcTemplate.update(sql,user.getId(),user.getDisciplineCd(),user.getCategoryCd(),user.getLanguageCd());
 	}
 	

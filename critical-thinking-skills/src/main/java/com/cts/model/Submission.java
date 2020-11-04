@@ -22,6 +22,7 @@ public class Submission {
 	
 	private boolean hasTakenTest;
 	private boolean isRstReady;
+	private boolean joinSurvey;
 	
 	/**
 	 * @return the questionLst
@@ -225,6 +226,18 @@ public class Submission {
 	 */
 	public void setCategoryDscp(String categoryDscp) {
 		this.categoryDscp = categoryDscp;
+	}
+	/**
+	 * @return the joinSurvey
+	 */
+	public boolean isJoinSurvey() {
+		return joinSurvey;
+	}
+	/**
+	 * @param joinSurvey the joinSurvey to set
+	 */
+	public void setJoinSurvey(boolean joinSurvey) {
+		this.joinSurvey = joinSurvey;
 	}
 
 }

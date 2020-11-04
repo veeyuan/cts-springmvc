@@ -43,6 +43,14 @@
 	background-color: transparent;
     color: #6c757d;
 }
+#manageAdminLink{
+	background-color: transparent;
+    color: #6c757d;
+}
+#changePswdLink{
+	background-color: transparent;
+    color: #6c757d;
+}
 #instruction{
 	line-height: 2.5;
 }
@@ -55,7 +63,7 @@ a {
 </style>
 
 <script>
-window.onload = function() {
+function setInit() {
 	
 	var dps = [[]];
 	var chart = new CanvasJS.Chart("chartContainer", {
@@ -129,6 +137,7 @@ window.onload = function() {
 	
 	 
 	}
+addLoadEvent(setInit); 
 
 </script>  
 </head>    

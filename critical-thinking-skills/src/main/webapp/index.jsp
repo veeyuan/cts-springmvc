@@ -24,9 +24,11 @@
     
     <%
     DictionaryManager dictionaryManager = new DictionaryManager();
-    String strLang="ENG";
+    int langCd=1;
+    String langDscp =  "ENG";
     if ("BM".equals(request.getParameter("language"))){
-    	strLang="BM";
+    	langCd=2;
+    	langDscp =  "BM";
     }
    
     %>
@@ -80,19 +82,19 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/navbar-logo.svg" /></a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i class="fas fa-bars ml-1"></i></button>
+                <!-- <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/index/idea-icon.png" /></a> --><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i class="fas fa-bars ml-1"></i></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ml-auto">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio"><%=dictionaryManager.getTerm("index.constructs.title",strLang) %></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about"><%=dictionaryManager.getTerm("index.nav.importance",strLang) %></a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio"><%=dictionaryManager.getTerm("index.constructs.title",langCd) %></a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about"><%=dictionaryManager.getTerm("index.nav.importance",langCd) %></a></li>
                       <li class="nav-item"><a class="nav-link portfolio-link" data-toggle="modal" href="#registerModal">Register / Login</a></li>
                         <li class="nav-item">
                         	<div class="dropdown">
-							  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="global" src="assets/img/index/global-icon-lang.png" /> <%=strLang %></button>
+							  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="global" src="assets/img/index/global-icon-lang.png" /> <%=langDscp %></button>
 							  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							    <button  onclick="changeLang('ENG')" class="dropdown-item" href="#">English</button>
-							    <button  onclick="changeLang('BM')" class="dropdown-item" href="#">Bahasa Melayu</button>
-							  </div>
+<!-- 							    <button  onclick="changeLang('BM')" class="dropdown-item" href="#">Bahasa Melayu</button>
+ -->							  </div>
 							  <form id="langForm" method="post" action="/critical-thinking-skills/"><input type="hidden" name="language" id="language"></form>
 							</div> 
 						</li>
@@ -104,8 +106,8 @@
         <header class="masthead">
             <div class="container">
                  <div class="masthead-subheading">Assess your thinking critically!</div>
-                 <div class="masthead-heading text-uppercase"><%=dictionaryManager.getTerm("index.main.cts.title",strLang) %></div>
-                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#portfolio"><%=dictionaryManager.getTerm("index.main.cts.tellmemore",strLang) %></a>
+                 <div class="masthead-heading text-uppercase"><%=dictionaryManager.getTerm("index.main.cts.title",langCd) %></div>
+                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#portfolio"><%=dictionaryManager.getTerm("index.main.cts.tellmemore",langCd) %></a>
             </div>
         </header>
       
@@ -113,8 +115,8 @@
         <section class="page-section bg-light" id="portfolio">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase"><%=dictionaryManager.getTerm("index.constructs.title",strLang) %></h2>
-                    <h3 class="section-subheading text-muted"><%=dictionaryManager.getTerm("index.constructs.title.dscp",strLang) %></h3>
+                    <h2 class="section-heading text-uppercase"><%=dictionaryManager.getTerm("index.constructs.title",langCd) %></h2>
+                    <h3 class="section-subheading text-muted"><%=dictionaryManager.getTerm("index.constructs.title.dscp",langCd) %></h3>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
@@ -126,7 +128,7 @@
                                 <img class="img-fluid-constructs" src="assets/img/index/analysis.jpg" alt=""
                             /></a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading"><%=dictionaryManager.getTerm("index.constructs.ana.title",strLang) %></div>
+                                <div class="portfolio-caption-heading"><%=dictionaryManager.getTerm("index.constructs.ana.title",langCd) %></div>
                              <!--    <div class="portfolio-caption-subheading text-muted">Illustration</div> -->
                             </div>
                         </div>
@@ -140,7 +142,7 @@
                                 <img class="img-fluid-constructs" src="assets/img/index/sudoku.jpg" alt=""
                             /></a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading"><%=dictionaryManager.getTerm("index.constructs.log.title",strLang) %></div>
+                                <div class="portfolio-caption-heading"><%=dictionaryManager.getTerm("index.constructs.log.title",langCd) %></div>
                             </div>
                         </div>
                     </div>
@@ -153,7 +155,7 @@
                                 <img class="img-fluid-constructs" src="assets/img/index/judgement.jpg" alt=""
                             /></a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading"><%=dictionaryManager.getTerm("index.constructs.judgement.title",strLang) %></div>
+                                <div class="portfolio-caption-heading"><%=dictionaryManager.getTerm("index.constructs.judgement.title",langCd) %></div>
                             </div>
                         </div>
                     </div>
@@ -167,7 +169,7 @@
                                 <img class="img-fluid-constructs" src="assets/img/index/solution.jpg" alt=""
                             /></a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading"><%=dictionaryManager.getTerm("index.constructs.probsolve.title",strLang) %></div>
+                                <div class="portfolio-caption-heading"><%=dictionaryManager.getTerm("index.constructs.probsolve.title",langCd) %></div>
                             </div>
                         </div>
                     </div>
@@ -180,7 +182,7 @@
                                 <img class="img-fluid-constructs" src="assets/img/index/explore.jpg" alt=""
                             /></a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading"><%=dictionaryManager.getTerm("index.constructs.creative.title",strLang) %></div>
+                                <div class="portfolio-caption-heading"><%=dictionaryManager.getTerm("index.constructs.creative.title",langCd) %></div>
                             </div>
                         </div>
                     </div>
@@ -191,8 +193,8 @@
         <section class="page-section" id="about">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase"><%=dictionaryManager.getTerm("index.importance.title",strLang) %></h2>
-                    <h3 class="section-subheading text-muted"><%=dictionaryManager.getTerm("index.importance.subtitle",strLang) %></h3>
+                    <h2 class="section-heading text-uppercase"><%=dictionaryManager.getTerm("index.importance.title",langCd) %></h2>
+                    <h3 class="section-subheading text-muted"><%=dictionaryManager.getTerm("index.importance.subtitle",langCd) %></h3>
                 </div>
                 <ul class="timeline">
                 
@@ -200,10 +202,10 @@
                         <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/index/child.jpg" alt="" /></div>
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                            <h6><%=dictionaryManager.getTerm("index.importance.constructivism.subtitle",strLang) %></h6>
-                                 <h4 class="subheading"><%=dictionaryManager.getTerm("index.importance.constructivism",strLang) %></h4>
+                            <h6><%=dictionaryManager.getTerm("index.importance.constructivism.subtitle",langCd) %></h6>
+                                 <h4 class="subheading"><%=dictionaryManager.getTerm("index.importance.constructivism",langCd) %></h4>
                             </div>
-                            <div class="timeline-body"><p class="text-muted"><%=dictionaryManager.getTerm("index.importance.constructivism.dscp",strLang) %>
+                            <div class="timeline-body"><p class="text-muted"><%=dictionaryManager.getTerm("index.importance.constructivism.dscp",langCd) %>
                             </p></div>
                         </div>
                     </li>
@@ -212,10 +214,10 @@
                         <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/index/exam.jpg" alt="" /></div>
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                               <h6><%=dictionaryManager.getTerm("index.importance.academic.subtitle",strLang) %></h6>
-                               <h4 class="subheading"><%=dictionaryManager.getTerm("index.importance.academic",strLang) %></h4>
+                               <h6><%=dictionaryManager.getTerm("index.importance.academic.subtitle",langCd) %></h6>
+                               <h4 class="subheading"><%=dictionaryManager.getTerm("index.importance.academic",langCd) %></h4>
                             </div>
-                            <div class="timeline-body"><p class="text-muted"><%=dictionaryManager.getTerm("index.importance.academic.dscp",strLang) %>
+                            <div class="timeline-body"><p class="text-muted"><%=dictionaryManager.getTerm("index.importance.academic.dscp",langCd) %>
                             </p></div>
                         </div>
                     </li>
@@ -224,10 +226,10 @@
                         <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/index/grow.jpg" alt="" /></div>
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                            <h6><%=dictionaryManager.getTerm("index.importance.maturity.subtitle",strLang) %></h6>
-                                <h4 class="subheading"><%=dictionaryManager.getTerm("index.importance.maturity",strLang) %></h4>
+                            <h6><%=dictionaryManager.getTerm("index.importance.maturity.subtitle",langCd) %></h6>
+                                <h4 class="subheading"><%=dictionaryManager.getTerm("index.importance.maturity",langCd) %></h4>
                             </div>
-                            <div class="timeline-body"><p class="text-muted"><%=dictionaryManager.getTerm("index.importance.maturity.dscp",strLang) %>
+                            <div class="timeline-body"><p class="text-muted"><%=dictionaryManager.getTerm("index.importance.maturity.dscp",langCd) %>
                             </p></div>
                         </div>
                     </li>
@@ -235,10 +237,10 @@
                         <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/index/goal.jpg" alt="" /></div>
                         <div class="timeline-panel">
                             <div class="timeline-heading">
-                                <h6><%=dictionaryManager.getTerm("index.importance.personalities.subtitle",strLang) %></h6> 
-                                <h4 class="subheading"><%=dictionaryManager.getTerm("index.importance.personalities",strLang) %></h4>
+                                <h6><%=dictionaryManager.getTerm("index.importance.personalities.subtitle",langCd) %></h6> 
+                                <h4 class="subheading"><%=dictionaryManager.getTerm("index.importance.personalities",langCd) %></h4>
                             </div>
-                            <div class="timeline-body"><p class="text-muted"><%=dictionaryManager.getTerm("index.importance.personalities.dscp",strLang) %>
+                            <div class="timeline-body"><p class="text-muted"><%=dictionaryManager.getTerm("index.importance.personalities.dscp",langCd) %>
                             </p></div>
                         </div>
                     </li>
@@ -260,9 +262,9 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 <div class="modal-body">
-                                    <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.ana.title",strLang) %></h2>
-                                    <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.ana.subtitle",strLang) %></p>
-                                    <p> <%=dictionaryManager.getTerm("index.constructs.ana.dscp",strLang) %></p>
+                                    <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.ana.title",langCd) %></h2>
+                                    <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.ana.subtitle",langCd) %></p>
+                                    <p> <%=dictionaryManager.getTerm("index.constructs.ana.dscp",langCd) %></p>
                                 </div>
                             </div>
                         </div>
@@ -280,9 +282,9 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 <div class="modal-body">
-                                    <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.log.title",strLang)%></h2>
-                                    <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.log.subtitle",strLang) %></p>
-                                    <p> <%=dictionaryManager.getTerm("index.constructs.log.dscp",strLang) %></p>
+                                    <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.log.title",langCd)%></h2>
+                                    <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.log.subtitle",langCd) %></p>
+                                    <p> <%=dictionaryManager.getTerm("index.constructs.log.dscp",langCd) %></p>
                                 </div>
                             </div>
                         </div>
@@ -300,9 +302,9 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 <div class="modal-body">
-                                    <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.judgement.title",strLang)%></h2>
-                                    <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.judgement.subtitle",strLang) %></p>
-                                    <p> <%=dictionaryManager.getTerm("index.constructs.judgement.dscp",strLang) %></p>
+                                    <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.judgement.title",langCd)%></h2>
+                                    <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.judgement.subtitle",langCd) %></p>
+                                    <p> <%=dictionaryManager.getTerm("index.constructs.judgement.dscp",langCd) %></p>
                                 </div>
                             </div>
                         </div>
@@ -320,9 +322,9 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 <div class="modal-body">
-                                    <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.probsolve.title",strLang)%></h2>
-                                    <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.probsolve.subtitle",strLang) %></p>
-                                    <p> <%=dictionaryManager.getTerm("index.constructs.probsolve.dscp",strLang) %></p>
+                                    <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.probsolve.title",langCd)%></h2>
+                                    <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.probsolve.subtitle",langCd) %></p>
+                                    <p> <%=dictionaryManager.getTerm("index.constructs.probsolve.dscp",langCd) %></p>
                                 </div>
                             </div>
                         </div>
@@ -340,9 +342,9 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 <div class="modal-body" >
-                                    <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.creative.title",strLang)%></h2>
-                                    <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.creative.subtitle",strLang) %></p>
-                                    <p> <%=dictionaryManager.getTerm("index.constructs.creative.dscp",strLang) %></p>
+                                    <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.creative.title",langCd)%></h2>
+                                    <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.creative.subtitle",langCd) %></p>
+                                    <p> <%=dictionaryManager.getTerm("index.constructs.creative.dscp",langCd) %></p>
                                 </div>
                             </div>
                         </div>

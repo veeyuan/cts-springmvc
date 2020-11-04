@@ -32,9 +32,9 @@
 </head>
 <%
     DictionaryManager dictionaryManager = new DictionaryManager();
-    String strLang="ENG";
+    int langCd=1;
     if ("BM".equals(request.getParameter("language"))){
-    	strLang="BM";
+    	langCd=2;
     }
     UserNameChecker userNameChecker = new UserNameChecker();
     String usernameList = userNameChecker.getUsernameList();
@@ -221,33 +221,33 @@ function submitRegisterForm(){
                 <div class="row">
                     <div class="col-md-3 register-left">
                         <img style="width:80px; height:80px" src="assets/img/index/idea-icon.png" alt=""/>
-                        <h3><%=dictionaryManager.getTerm("index.authentication.title",strLang) %></h3>
-                        <p><%=dictionaryManager.getTerm("index.authentication.dscp",strLang) %>
+                        <h3><%=dictionaryManager.getTerm("index.authentication.title",langCd) %></h3>
+                        <p><%=dictionaryManager.getTerm("index.authentication.dscp",langCd) %>
                         <br> - Thomas A. Edison -</p>
                        
                     </div>
                     <div class="col-md-9 register-right">
                         <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#login" role="tab" aria-controls="home" aria-selected="true"><%=dictionaryManager.getTerm("index.authentication.login",strLang) %></a>
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#login" role="tab" aria-controls="home" aria-selected="true"><%=dictionaryManager.getTerm("index.authentication.login",langCd) %></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#register" role="tab" aria-controls="profile" aria-selected="false"><%=dictionaryManager.getTerm("index.authentication.register",strLang) %></a>
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#register" role="tab" aria-controls="profile" aria-selected="false"><%=dictionaryManager.getTerm("index.authentication.register",langCd) %></a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="home-tab">
-                                <h3 class="register-heading"><%=dictionaryManager.getTerm("index.authentication.login",strLang) %></h3>
+                                <h3 class="register-heading"><%=dictionaryManager.getTerm("index.authentication.login",langCd) %></h3>
                                 <div class="row register-form">
                                     <div class="">
                                      <form id="loginForm" action="loginProcess.html" method="post">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="<%=dictionaryManager.getTerm("index.authentication.username",strLang) %> " value="" id="login-usernm" onchange="loginUserNm()" name="username"/>
-                                            <div style="display:none;text-align: left;}" id="login-usernm-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.usernm",strLang) %></div>
+                                            <input type="text" class="form-control" placeholder="<%=dictionaryManager.getTerm("index.authentication.username",langCd) %> " value="" id="login-usernm" onchange="loginUserNm()" name="username"/>
+                                            <div style="display:none;text-align: left;}" id="login-usernm-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.usernm",langCd) %></div>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control" placeholder=<%=dictionaryManager.getTerm("index.authentication.pswd",strLang) %> value=""  id="login-pswd" onchange="loginPswd()" name="password"/>
-                                            <div style="display:none;text-align: left;}" id="login-pswd-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.pswd",strLang) %></div>
+                                            <input type="password" class="form-control" placeholder=<%=dictionaryManager.getTerm("index.authentication.pswd",langCd) %> value=""  id="login-pswd" onchange="loginPswd()" name="password"/>
+                                            <div style="display:none;text-align: left;}" id="login-pswd-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.pswd",langCd) %></div>
                                         </div>
                                         <div class="form-group">	
                                     	<div class="custom-control custom-radio custom-control-inline">
@@ -259,29 +259,29 @@ function submitRegisterForm(){
 										  <label class="custom-control-label" for="customRadio1">Admin</label>
 										</div>
  										</div>
-									     <input type="submit" class="btnRegister"  value="<%=dictionaryManager.getTerm("index.authentication.login",strLang) %> "/>
+									     <input type="submit" class="btnRegister"  value="<%=dictionaryManager.getTerm("index.authentication.login",langCd) %> "/>
 									 </form>
 									 </div>
 									
                                 </div>
                             </div>
                             <div class="tab-pane fade show" id="register" role="tabpanel" aria-labelledby="profile-tab">
-                                <h3  class="register-heading"><%=dictionaryManager.getTerm("index.authentication.register",strLang) %></h3>
+                                <h3  class="register-heading"><%=dictionaryManager.getTerm("index.authentication.register",langCd) %></h3>
                                 <div class="row register-form">
                                 <form id="registerForm" action="registerProcess.html" method="post">
                                     <div class="col-md-10">
                                     	
                                         <div class="form-group">
-                                            <input type="text" name="fullname" class="form-control" id="fullname" placeholder="<%=dictionaryManager.getTerm("index.authentication.fullname",strLang) %>"   />
-<%--                                             <div style="display:none;text-align: left;}" id="name-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.nm",strLang) %></div>
+                                            <input type="text" name="fullname" class="form-control" id="fullname" placeholder="<%=dictionaryManager.getTerm("index.authentication.fullname",langCd) %>"   />
+<%--                                             <div style="display:none;text-align: left;}" id="name-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.nm",langCd) %></div>
  --%>                                        </div>
                                         
                                        
                                         <div class="form-group">
                                             <input type="hidden" id="emaillist" value=<%=emailList%> />                                   	                                        
-                                            <input type="text" class="form-control" id="emailaddr" name="emailaddr" onchange="checkEmail()"placeholder="<%=dictionaryManager.getTerm("index.authentication.email",strLang) %> *" value=""  />
-                                            <div style="display:none;text-align: left;}" id="email-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.email",strLang) %></div>
-                                            <div style="display:none;text-align: left;}" id="email-error-inv-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.inv.email",strLang) %></div>
+                                            <input type="text" class="form-control" id="emailaddr" name="emailaddr" onchange="checkEmail()"placeholder="<%=dictionaryManager.getTerm("index.authentication.email",langCd) %> *" value=""  />
+                                            <div style="display:none;text-align: left;}" id="email-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.email",langCd) %></div>
+                                            <div style="display:none;text-align: left;}" id="email-error-inv-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.inv.email",langCd) %></div>
                                             <div style="display:none;text-align: left;}" id="email-used-msg" class="invalid-feedback">This email has been registered</div>
                                             
                                         </div>
@@ -298,26 +298,26 @@ function submitRegisterForm(){
 											
                                     	<div class="form-group">
                                     	     <input type="hidden" id="usernmlist" value=<%=usernameList%> />                                   	
-                                            <input type="text" onchange="checkUserNm();" name="registerUserName" maxlength="10" minlength="3" class="form-control" placeholder="<%=dictionaryManager.getTerm("index.authentication.username",strLang) %>  *" value="" id="usernm" onchange="isUnique()"/>
-                                            <div style="display:none;text-align: left;}" id="usernm-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.usernm",strLang) %></div>
+                                            <input type="text" onchange="checkUserNm();" name="registerUserName" maxlength="10" minlength="3" class="form-control" placeholder="<%=dictionaryManager.getTerm("index.authentication.username",langCd) %>  *" value="" id="usernm" onchange="isUnique()"/>
+                                            <div style="display:none;text-align: left;}" id="usernm-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.usernm",langCd) %></div>
                                             <div style="display:none;text-align: left;}" id="usernm-used-msg" class="invalid-feedback">This username has been used</div>
                                             
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="registerPswd" maxlength="10" class="form-control" placeholder="<%=dictionaryManager.getTerm("index.authentication.pswd",strLang) %>  *" value="" id="pswd" onchange="checkPswd()"/>
-                                            <div style="display:none;text-align: left;}" id="pswd-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.pswd",strLang) %></div>
-                                            <div style="display:none;text-align: left;}" id="pswd-error-inv-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.inv.specialChar",strLang) %></div>
+                                            <input type="password" name="registerPswd" maxlength="10" class="form-control" placeholder="<%=dictionaryManager.getTerm("index.authentication.pswd",langCd) %>  *" value="" id="pswd" onchange="checkPswd()"/>
+                                            <div style="display:none;text-align: left;}" id="pswd-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.pswd",langCd) %></div>
+                                            <div style="display:none;text-align: left;}" id="pswd-error-inv-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.inv.specialChar",langCd) %></div>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="confPswd" class="form-control" placeholder="<%=dictionaryManager.getTerm("index.authentication.confirmpswd",strLang) %>  *" value="" id="confpswd" onchange="checkConfPswd()"/>
-                                             <div style="display:none;text-align: left;}" id="confpswd-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.confirmpswd",strLang) %></div>
-                                            <div style="display:none;text-align: left;}" id="confpswd-error-inv-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.inv.confirmpswd",strLang) %></div>
+                                            <input type="password" name="confPswd" class="form-control" placeholder="<%=dictionaryManager.getTerm("index.authentication.confirmpswd",langCd) %>  *" value="" id="confpswd" onchange="checkConfPswd()"/>
+                                             <div style="display:none;text-align: left;}" id="confpswd-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.confirmpswd",langCd) %></div>
+                                            <div style="display:none;text-align: left;}" id="confpswd-error-inv-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.inv.confirmpswd",langCd) %></div>
                                         </div>
                                         
                                     
                                     </div>
                                     </form>
-                                     <button class="btnRegister" onclick="submitRegisterForm()" ><%=dictionaryManager.getTerm("index.authentication.register",strLang) %></button>
+                                     <button class="btnRegister" onclick="submitRegisterForm()" ><%=dictionaryManager.getTerm("index.authentication.register",langCd) %></button>
                                     
                                 </div>
                             </div>

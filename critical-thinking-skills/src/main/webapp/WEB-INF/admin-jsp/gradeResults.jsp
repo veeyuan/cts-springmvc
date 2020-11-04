@@ -17,7 +17,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     
  <style>
-
+#manageAdminLink{
+	background-color: transparent;
+    color: #6c757d;
+}
 #gradeLink{
 	background-color: #FED136;
     color: #fff;
@@ -38,6 +41,10 @@
     color: #6c757d;
 }
 #manageOptLink{
+	background-color: transparent;
+    color: #6c757d;
+}
+#changePswdLink{
 	background-color: transparent;
     color: #6c757d;
 }

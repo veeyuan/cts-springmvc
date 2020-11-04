@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import com.cts.model.Login;
@@ -21,8 +22,14 @@ public class UserDao {
 	} 
 	  
 	public List<User> validateUser(Login login) {
-	    String sqlStmt = "select * from tbl_user where user_name='" + login.getUsername() + "' and login_pswd='" + login.getPassword() 
-	    + "' and role_cd='" + login.getRoleCd()   + "'";
+		String sqlStmt = "select * from tbl_user where del=0 and user_name='" + login.getUsername() + "' and login_pswd='" + login.getPassword() 
+	    + "' and role_cd";
+		if (login.getRoleCd().equalsIgnoreCase("ADMIN")){
+			sqlStmt+=" IN ('ADMIN','SUPERADMIN')";
+		}else {
+			sqlStmt+=" = 'TEST-TAKER'";
+		}
+	    
 	    List<User> userLst = getUser(sqlStmt,login);
 	    return userLst;
 	  }
@@ -145,4 +152,20 @@ public class UserDao {
 		return lastTakeTestDt.toString();
 	}
 	
+	public boolean changePassword(String userid,String oldpswd, String newpswd) {
+		String sqlStmt = "SELECT COUNT(ID) FROM TBL_USER WHERE ID=? AND login_pswd=?";
+		int numOfRecord=(int) jdbcTemplate.queryForObject(
+				 sqlStmt, new Object[] {userid,oldpswd}, Integer.class);
+		if (numOfRecord==1) {
+			try {
+			String sql = "UPDATE TBL_USER SET login_pswd=? WHERE ID=?";
+			jdbcTemplate.update(sql,newpswd,userid);
+			}catch (Exception e) {
+				return false;
+			}finally {
+				return true;
+			}
+		}
+		return false;
+	}
 }

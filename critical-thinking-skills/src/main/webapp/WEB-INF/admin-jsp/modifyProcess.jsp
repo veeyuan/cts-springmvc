@@ -22,7 +22,10 @@
      background-color: transparent;
     color: #6c757d;
 }
-
+#manageAdminLink{
+	background-color: transparent;
+    color: #6c757d;
+}
 #dashboardLink{
     background-color: transparent;
     color: #6c757d;
@@ -39,6 +42,10 @@
 #manageLink{
   background-color: #FED136;
     color: #fff;
+}
+#changePswdLink{
+	background-color: transparent;
+    color: #6c757d;
 }
 
 #success{

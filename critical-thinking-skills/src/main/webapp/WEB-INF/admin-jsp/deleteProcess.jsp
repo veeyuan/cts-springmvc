@@ -41,6 +41,14 @@
 	background-color: transparent;
     color: #6c757d;
 }
+#changePswdLink{
+	background-color: transparent;
+    color: #6c757d;
+}
+#manageAdminLink{
+	background-color: transparent;
+    color: #6c757d;
+}
 #success{
   border-style: solid;
   border-color: green;

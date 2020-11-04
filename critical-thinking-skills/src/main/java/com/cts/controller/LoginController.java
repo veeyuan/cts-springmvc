@@ -21,6 +21,7 @@ import com.cts.dao.LanguageDao;
 import com.cts.dao.SubmissionListDao;
 import com.cts.dao.UserDao;
 import com.cts.model.Login;
+import com.cts.model.Submission;
 import com.cts.model.User;
 
 @Controller
@@ -43,19 +44,15 @@ public class LoginController {
 	    List<User> userLst = userDao.validateUser(login);
 	    if (!userLst.isEmpty()) {
 	    	User user = userLst.get(0);
-	    	if (("admin").equalsIgnoreCase(user.getRoleCd())) {
-	    		mav = new ModelAndView("gradeRstWaitingList");
-	    		request.getSession().setAttribute("userid", user.getId());
-	    		request.getSession().setAttribute("username", user.getUsername());
-	    		return new ModelAndView("redirect:/gradeRstWaitingList.html");
-	    		
-	    	}
-	    	if (("TEST-TAKER").equalsIgnoreCase(user.getRoleCd())) {
-	    		mav = new ModelAndView("takeTest");
-	    		request.getSession().setAttribute("userid", user.getId());
-	    		request.getSession().setAttribute("username", user.getUsername());
-	    		return new ModelAndView("redirect:/takeTest.html");
-			
+	    	request.getSession().setAttribute("userid", user.getId());
+    		request.getSession().setAttribute("username", user.getUsername());
+    		request.getSession().setAttribute("rolecd", user.getRoleCd());
+	    	if (("admin").equalsIgnoreCase(user.getRoleCd())|| ("superadmin").equalsIgnoreCase(user.getRoleCd())) {	
+	    		List<Submission> allSubmissionList =   submissionListDao.getSubmissionList(0,0);
+	    		request.getSession().setAttribute("waitingtogradeNum", allSubmissionList.size());
+	    		return new ModelAndView("redirect:/dashboard.html");	    		
+	    	}else if (("TEST-TAKER").equalsIgnoreCase(user.getRoleCd())) {	    		
+	    		return new ModelAndView("redirect:/takeTest.html");			
 	    	}
 	    
 	    } else {

@@ -92,6 +92,9 @@
 <bean id="optionDao" class="com.cts.dao.OptionDao">
 <property name="jdbcTemplate" ref="jt"></property>
 </bean>
+<bean id="adminDao" class="com.cts.dao.AdminDao">
+<property name="jdbcTemplate" ref="jt"></property>
+</bean>
 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     <property name="maxUploadSize" value="20848820" />
 </bean>

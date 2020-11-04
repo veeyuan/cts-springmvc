@@ -18,7 +18,7 @@ public class DictionaryManager {
 	
 	
 
-    public String getTerm(String wordCd,String language) throws SQLException {
+    public String getTerm(String wordCd,int languageCd) throws SQLException {
         String rstString="";
 
     	try{  
@@ -28,7 +28,7 @@ public class DictionaryManager {
     		String query="select dscp from tbl_dictionary where word_cd=? and language_cd=? and del=0";
     		PreparedStatement ps = connection.prepareStatement(query);
     		ps.setString(1, wordCd);
-    		ps.setInt(2, 1);
+    		ps.setInt(2,languageCd); //only english
     		ResultSet rs=ps.executeQuery();  
     		while(rs.next())  {
         		rstString = rs.getString("dscp");

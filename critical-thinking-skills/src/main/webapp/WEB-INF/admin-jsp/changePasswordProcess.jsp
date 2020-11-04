@@ -1,7 +1,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ page import="com.cts.model.Question" %>
+<%@ page import="com.cts.model.Admin" %>
 <%@ page import="java.util.List" %>
+<%@ page import="org.apache.commons.lang3.StringUtils" %>
+
 
 <html>    
 <head>    
@@ -20,8 +22,8 @@
 	
 }
 #manageOptLink{
-	background-color: #FED136;
-    color: #fff;
+	background-color: transparent;
+    color: #6c757d;
 }
 
 #manageLink{
@@ -33,14 +35,7 @@
     background-color: transparent;
     color: #6c757d;
 }
-#manageAdminLink{
-	background-color: transparent;
-    color: #6c757d;
-}
-#changePswdLink{
-	background-color: transparent;
-    color: #6c757d;
-}
+
 #addLink{
    background-color: transparent;
     color: #6c757d;
@@ -49,6 +44,16 @@
 #gradeLink{
    background-color: transparent;
     color: #6c757d;
+}
+
+#manageAdminLink{
+	background-color: transparent;
+    color: #6c757d;
+}
+
+#changePswdLink{
+	background-color: #FED136;
+    color: #fff;
 }
 
 a {
@@ -76,13 +81,52 @@ a {
 	width: 20px; 
     height: 20px; 
 }
-</style>
-<script>
-function getOptionDetails(group){
-	document.getElementById('group').value=group;
-	document.getElementById('optionDetForm').submit();
+#checkboxCol{
+	width: 30px;
+  	overflow: hidden;
 }
-</script>  
+
+button{
+	margin-right:5px;
+}
+
+.card-body{
+	margin-left:3%;
+}
+
+
+#success{
+  border-style: solid;
+  border-color: green;
+  color:green;
+  font-size:3rem;
+  padding:30px;'
+}
+
+#success-icon{
+	float: left;	
+	margin-right:20px;
+}
+
+#failure{
+  border-style: solid;
+  border-color: #B90101;
+  color:#B90101;
+  font-size:3rem;
+  padding:30px;'
+}
+
+#failure-icon{
+	float: left;	
+	margin-right:20px;
+}
+
+#smallMsg{
+	font-size:1rem;
+	color: #495057;
+}
+</style>
+ 
 </head>    
 <body> 
 
@@ -91,7 +135,7 @@ function getOptionDetails(group){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 id="title" class="m-0 text-dark">Manage Option</h1>
+            <h1 id="title" class="m-0 text-dark">Change Password</h1>
           </div>
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -99,40 +143,36 @@ function getOptionDetails(group){
     <!-- /.content-header -->
     <section class="content">
 	<div class="container-fluid">
-           <div class="card">
+           
+             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
-                  Option Category
+                 Change Password
                 </h3>
-			   
-			   
 
               </div>
               <!-- /.card-header -->
-              <div class="card-body">
-               <form id="optionDetForm" method="post" action="listOption.html"> 
-			   <input type="hidden" name="group" id="group"/>
-                
-              <table class="table table-hover">
-				  <thead>
-				    <tr>
-				      <th scope="col">Option Group</th>
-				     
-				    </tr>
-				  </thead>
-				  <tbody> 
-				  	 <tr><td  onclick="getOptionDetails(this.innerHTML)" >Discipline (Test Specification) </td></tr>	
-				  	 <tr><td  onclick="getOptionDetails(this.innerHTML)" >Category (Test Specification) </td></tr>				     				  	 			     
-					 <tr><td  onclick="getOptionDetails(this.innerHTML)" >High Order Thinking Skills Component</td></tr>
-					 <tr><td  onclick="getOptionDetails(this.innerHTML)" >Faculty</td></tr>	
-					 <tr><td  onclick="getOptionDetails(this.innerHTML)" >Department </td></tr>	 
-					 <tr><td  onclick="getOptionDetails(this.innerHTML)" >Programming Course </td></tr>	                 
-                 </tbody>
-				</table>
-			 </form> 
-			 		 
-              </div>
+             
+              
+			 	 <div class="card-body"> 
+			 	 	<% if ("Y".equals(request.getAttribute("success"))){ %>
+               		<div id="success">               		
+               		<i id="success-icon" class="fa fa-check-circle fa-2x"> </i>               		
+               		<p>Successfully changed!</p>
+               	 	<p id="smallMsg">You may login using new password now.</p>
+               		</div>
+               		<%}else{ %>
+               		<div id="failure"> 
+               		<i id="failure-icon" class="fa fa-times-circle fa-2x"> </i>
+               		<p>Failed to change</p>
+               	 	<p id="smallMsg">The old password is incorrect. Please try again.</p>
+               		</div>
+               		<%} %>
+				    </div>
+				    
+              
+              
               <!-- /.card-body -->
               
             </div>

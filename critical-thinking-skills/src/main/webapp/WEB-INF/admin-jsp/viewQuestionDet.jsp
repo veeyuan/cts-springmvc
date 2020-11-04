@@ -41,10 +41,17 @@
 	background-color: transparent;
     color: #6c757d;
 }
+#changePswdLink{
+	background-color: transparent;
+    color: #6c757d;
+}
 #btn-addquestionset-back{
 	margin-right:10px;
 }
-
+#manageAdminLink{
+	background-color: transparent;
+    color: #6c757d;
+}
 #btn-icon{
 	margin-right:5px;
 }

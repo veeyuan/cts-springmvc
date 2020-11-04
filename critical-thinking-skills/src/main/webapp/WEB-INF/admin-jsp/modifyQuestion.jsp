@@ -26,7 +26,10 @@
     background-color: transparent;
     color: #6c757d;
 }
-
+#manageAdminLink{
+	background-color: transparent;
+    color: #6c757d;
+}
 #gradeLink{
    background-color: transparent;
     color: #6c757d;
@@ -37,6 +40,10 @@
     color: #fff;s
 }
 #manageOptLink{
+	background-color: transparent;
+    color: #6c757d;
+}
+#changePswdLink{
 	background-color: transparent;
     color: #6c757d;
 }

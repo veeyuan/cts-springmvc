@@ -37,7 +37,10 @@
 	background-color: #FED136;
     color: #fff;
 }
-
+#manageAdminLink{
+	background-color: transparent;
+    color: #6c757d;
+}
 #dashboardLink{
     background-color: transparent;
     color: #6c757d;
@@ -53,6 +56,10 @@
     color: #6c757d;
 }
 #manageOptLink{
+	background-color: transparent;
+    color: #6c757d;
+}
+#changePswdLink{
 	background-color: transparent;
     color: #6c757d;
 }

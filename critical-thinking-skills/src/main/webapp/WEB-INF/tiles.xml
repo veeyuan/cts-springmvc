@@ -79,6 +79,21 @@
         <put-attribute name="body" value="/WEB-INF/admin-jsp/addOptionFail.jsp" />  
     </definition>    
     
+    <definition name="manageAdmin" extends="base-admin.definition">  
+        <put-attribute name="title" value="manageAdmin" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/manageAdmin.jsp" />  
+    </definition> 
+    
+    <definition name="changePassword" extends="base-admin.definition">  
+        <put-attribute name="title" value="changePassword" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/changePassword.jsp" />  
+    </definition>    
+    
+    <definition name="changePasswordProcess" extends="base-admin.definition">  
+        <put-attribute name="title" value="changePasswordProcess" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/changePasswordProcess.jsp" />  
+    </definition>       
+    
     <definition name="base-test-taker.definition"  
         template="/WEB-INF/test-taker-jsp/layout.jsp">  
         <put-attribute name="title" value="" />  

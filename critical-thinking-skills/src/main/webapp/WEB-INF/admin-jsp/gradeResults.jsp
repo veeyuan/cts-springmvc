@@ -23,7 +23,7 @@
 }
 #gradeLink{
 	background-color: #FED136;
-    color: #fff;
+    color:#14171a;
 }
 
 #dashboardLink{
@@ -328,7 +328,7 @@ int totalQuestionNum = submission.getQuestionLst().size();
 					 <form:hidden path = "answerLst[${status.index}].submittedAnsId"  />
 					<div class="form-row align-items-center">
 					 <% if (question.getAnalysisScore()>0){   %>
-					   <div class="col-sm-2 my-1">
+					   <div class="col-sm-3 my-1">
 					 <div class="input-group mb-3">
 					  <div class="input-group-prepend">
 					    <label class="input-group-text" for="inputGroupSelect01">Analysis &  Evaluation</label>
@@ -342,7 +342,7 @@ int totalQuestionNum = submission.getQuestionLst().size();
 					 </div>
 					 <%} %>
 					  <% if (question.getLogicScore()>0){   %>
-					   <div class="col-sm-2 my-1">
+					   <div class="col-sm-3 my-1">
 					 <div class="input-group mb-3">
 					  <div class="input-group-prepend">
 					    <label class="input-group-text" for="inputGroupSelect02">Logic & Reasoning</label>
@@ -356,7 +356,7 @@ int totalQuestionNum = submission.getQuestionLst().size();
 					 </div>
 					 <%} %>
 					  <% if (question.getJudgementScore()>0){   %>
-					   <div class="col-sm-2 my-1">
+					   <div class="col-sm-3 my-1">
 					 <div class="input-group mb-3">
 					  <div class="input-group-prepend">
 					    <label class="input-group-text" for="inputGroupSelect03">Judgement</label>
@@ -370,7 +370,7 @@ int totalQuestionNum = submission.getQuestionLst().size();
 					 </div>
 					 <%} %>
 					 <% if (question.getProbSolveScore()>0){   %>
-					   <div class="col-sm-2 my-1">
+					   <div class="col-sm-3 my-1">
 					 <div class="input-group mb-3">
 					  <div class="input-group-prepend">
 					    <label class="input-group-text" for="inputGroupSelect04">Problem Solving</label>
@@ -384,7 +384,7 @@ int totalQuestionNum = submission.getQuestionLst().size();
 					 </div>
 					 <%} %>
 					 <% if (question.getCreativeScore()>0){   %>
-					   <div class="col-sm-2 my-1">
+					   <div class="col-sm-3 my-1">
 					 <div class="input-group mb-3">
 					  <div class="input-group-prepend">
 					    <label class="input-group-text" for="inputGroupSelect05">Creative Thinking</label>

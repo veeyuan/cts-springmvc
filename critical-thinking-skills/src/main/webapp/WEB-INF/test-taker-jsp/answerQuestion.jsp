@@ -21,7 +21,7 @@
 
 #testLink{
 	background-color: #FED136;
-    color: #fff;
+    color: #14171a;
 }
 
 #dashboardLink{
@@ -183,13 +183,21 @@ function startTimer(duration, display) {
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
         display.textContent = minutes + ":" + seconds; 
-
+		
         if (diff <= 0) {
-        	checkTextareaFilled();
+        	var ismcq = document.getElementById("ismcq").value;
+        	/* if (ismcq == 'n'){
+            	checkTextareaFilled();
+        	} */
 			alert("Time's Up! It's time to submit.");
 			document.getElementById("answerForm").submit();
             start = Date.now() + 1000;
         }
+        if (diff<60){
+        	$("#time").css({ 'color': 'red', 'font-size': '150%' });
+
+        }
+      
     };
     // we don't want to wait a full second before the timer starts
     timer();
@@ -227,7 +235,7 @@ function startTimer(duration, display) {
                   Section - ${question.hotsDSCP}
                 </h3>
                <div id="testdet">
-              	<p id="showTimeLeft" style="display:none">You have <span id="time"></span> minutes left.</p>
+              	<p>Questions that have been answered: </p>
                 <% 
                 int totalQuestionNum = (Integer)request.getAttribute("totalquestionNum");
                 for (int i=1;i<=totalQuestionNum;i++){ %>
@@ -239,7 +247,7 @@ function startTimer(duration, display) {
 					<%if (i %10==0){ %>
 					<br>				
 					<%}} %>
-                
+                <br><br><p id="showTimeLeft" style="display:none">You have <span id="time"></span> minutes left.</p>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -260,7 +268,8 @@ function startTimer(duration, display) {
             	<input type="hidden" id="timelimit" value="<%=Integer.toString(question.getTimeLimitMin())%>"/>	
 			    <p>${question.questionDscp}</p>
 			     <%if (question.isMcq()){ %>
-			      <div class="form-check">
+			     <input type="hidden" id="ismcq" value="y"/>	
+			      <%-- <div class="form-check">
 				  <input onclick="checkFilledMCQ(this);" class="form-check-input" type="radio" name="radio" id="exampleRadios1" value="1" >
 				  <label class="form-check-label" for="exampleRadios1">
 				    <%=question.getOption1()%>
@@ -295,8 +304,19 @@ function startTimer(duration, display) {
 								</div>
 							<%} %>
 						<%} %>
-					<%} %>
+					<%} %> --%>
+					
+				    <c:forEach var="optionArr" items="${question.optionArr}" varStatus="status">
+				    <div class="form-check">
+				  <input onclick="checkFilledMCQ(this);" class="form-check-input" type="radio" name="radio" id="exampleRadios${status.index+1}" value="${status.index+1}" >
+				  <label class="form-check-label" for="exampleRadios${status.index+1}">
+    				<c:out value="${optionArr}"/> 
+				  </label>
+				</div>
+					</c:forEach>
             	<%}else{ %>
+            	<input type="hidden" id="ismcq" value="n"/>	
+            	
             	<div class="form-row">
 			         <div class="form-group col-md-8">
 					    <label for="exampleFormControlTextarea1">Answer</label>

@@ -13,7 +13,7 @@ public class UserNameChecker {
     public String getUsernameList() throws SQLException, ClassNotFoundException {
     	String query="SELECT user_name from tbl_user where role_cd = 'TEST-TAKER'" ;
     	Class.forName("com.mysql.jdbc.Driver");  
-		Connection conn=DriverManager.getConnection( "jdbc:mysql://localhost:3306/cts?useTimezone=true&serverTimezone=UTC&useSSL=false","root","sysadmin");  
+		Connection conn=DriverManager.getConnection( "jdbc:mysql://localhost:3306/cts_db?useTimezone=true&serverTimezone=UTC&useSSL=false","root","sysadmin");  
 		
         String rstString="";
         Statement stmt = conn.createStatement();
@@ -37,7 +37,7 @@ public class UserNameChecker {
     public String getEmailList() throws SQLException, ClassNotFoundException {
     	String query="SELECT EMAIL from tbl_user_det" ;
     	Class.forName("com.mysql.jdbc.Driver");  
-		Connection conn=DriverManager.getConnection( "jdbc:mysql://localhost:3306/cts?useTimezone=true&serverTimezone=UTC&useSSL=false","root","sysadmin");  
+		Connection conn=DriverManager.getConnection( "jdbc:mysql://localhost:3306/cts_db?useTimezone=true&serverTimezone=UTC&useSSL=false","root","sysadmin");  
 		
         String rstString="";
         Statement stmt = conn.createStatement();

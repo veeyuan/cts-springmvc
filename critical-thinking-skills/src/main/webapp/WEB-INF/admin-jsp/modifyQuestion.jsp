@@ -37,7 +37,7 @@
 
 #manageLink{
 	background-color: #FED136;
-    color: #fff;s
+    color: #14171a;
 }
 #manageOptLink{
 	background-color: transparent;
@@ -64,80 +64,28 @@ a {
   font-size:13px;
   color:red;
 }
+
+.hideOption{
+	display:none;
+}
 </style>
 <script>
 
 function setOption(selected){ //set number of options
 	var x=selected.value;
-	if (x=="2"){
-		document.getElementById("opt3").value="";
-		document.getElementById("opt4").value="";
-		document.getElementById("opt5").value="";
-		document.getElementById("opt3").disabled  =true;
-		document.getElementById("opt4").disabled = true;
-		document.getElementById("opt5").disabled = true;
-	}else if (x=="3"){
-		document.getElementById("opt3").disabled  =false;
-		document.getElementById("opt4").value="";
-		document.getElementById("opt5").value="";
-		document.getElementById("opt4").disabled = true;
-		document.getElementById("opt5").disabled = true;
-	}else if (x=="4"){
-		document.getElementById("opt3").disabled  = false;
-		document.getElementById("opt4").disabled = false;
-		document.getElementById("opt5").value="";
-		document.getElementById("opt5").disabled = true;
-	}else if (x=="5"){
-		document.getElementById("opt3").disabled  = false;
-		document.getElementById("opt4").disabled = false;
-		document.getElementById("opt5").disabled = false;
-	}
-	else{
-		document.getElementById("opt3").value="";
-		document.getElementById("opt4").value="";
-		document.getElementById("opt5").value="";
-		document.getElementById("opt3").disabled  = false;
-		document.getElementById("opt4").disabled = false;
-		document.getElementById("opt5").disabled = false;
-	}
+	 for (var i = 10; i > x ; i--) {
+		 var id = "opt"+i;
+		  document.getElementById(id).value="";
+	      document.getElementById(id).disabled  =true;
+	    }
+	 for (var i = 1; i <= x ; i++) {
+		 var id = "opt"+i;
+	      document.getElementById(id).disabled = false;
+	 }
+	 
+	
 } 
 
-function setInitOption(selected){ //set number of options
-	var x=selected;
-	document.getElementById("optionNum").value=x;
-	if (x=="2"){
-		document.getElementById("opt3").value="";
-		document.getElementById("opt4").value="";
-		document.getElementById("opt5").value="";
-		document.getElementById("opt3").disabled  =true;
-		document.getElementById("opt4").disabled = true;
-		document.getElementById("opt5").disabled = true;
-	}else if (x=="3"){
-		document.getElementById("opt3").disabled  =false;
-		document.getElementById("opt4").value="";
-		document.getElementById("opt5").value="";
-		document.getElementById("opt4").disabled = true;
-		document.getElementById("opt5").disabled = true;
-	}else if (x=="4"){
-		document.getElementById("opt3").disabled  = false;
-		document.getElementById("opt4").disabled = false;
-		document.getElementById("opt5").value="";
-		document.getElementById("opt5").disabled = true;
-	}else if (x=="5"){
-		document.getElementById("opt3").disabled  = false;
-		document.getElementById("opt4").disabled = false;
-		document.getElementById("opt5").disabled = false;
-	}
-	else{
-		document.getElementById("opt3").value="";
-		document.getElementById("opt4").value="";
-		document.getElementById("opt5").value="";
-		document.getElementById("opt3").disabled  = false;
-		document.getElementById("opt4").disabled = false;
-		document.getElementById("opt5").disabled = false;
-	}
-}
-	
 function setMCQ(selected){ //if it is discipline-specific
 	var x=selected.value;
 	if (x=="yes"){
@@ -150,7 +98,8 @@ function setMCQ(selected){ //if it is discipline-specific
 }
 
 function setInit(){
-	
+	var optionArrSize = document.getElementById("optionArrSize");
+	setOption(optionArrSize);
 	var discipline = document.getElementById("discipline").value;
 	$('#disciplineCd').val(discipline).change();
 	var category = document.getElementById("category").value;
@@ -163,10 +112,6 @@ function setInit(){
 		document.getElementById("mcq2").checked = false;
 		document.getElementById("mcqDiv").style.display = "block";
 		document.getElementById("structuredDiv").style.display = "none";
-		var num = <%=request.getAttribute("numberOfOptions")%>;
-		if (num !== undefined){
-			setInitOption(num);			
-		}
 		var mcqans = document.getElementById("mcqanswer").value;
 		document.getElementById("numChoice").value = mcqans;
 	}else{
@@ -208,7 +153,7 @@ function submitChange(){
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
-                  Modify Question
+                  Modify Question - ${question.id}
                 </h3>
                 </div>
                 <form:form id="questionForm" action ="modifyProcess.html"  method="post" modelAttribute="question" enctype="multipart/form-data">                			 
@@ -308,12 +253,12 @@ function submitChange(){
 					 <div class="form-row">					
 					    <div  class="form-group col-md-3" >
 	                   		<label >Number of Choices</label>
-							<select onchange="setOption(this)" class="form-control" id="optionNum" >
-							<option value="2">2</option>
-					      	<option value="3">3</option>
-	                        <option value="4">4</option>
-	                        <option value="5">5</option>
-	                       </select>	                   </div>
+							<form:select path="optionArrSize" class="form-control" onchange="setOption(this)" id="optionArrSize" >
+							<%for (int i=2;i<=10;i++){ %>
+							<form:option value="<%=i%>"><%=i%></form:option>					      
+	                        <%} %>
+	                       </form:select>	
+	                       </div>
 	                   <div  class="form-group col-md-2" >
 	                   		<label >Answer</label>
 	                   		<input type="hidden" id="mcqanswer" value="${question.sampleAns}">
@@ -322,37 +267,23 @@ function submitChange(){
 					 </div>
 					 
 					
-					 <div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 1</label>
+				<c:forEach var="optionArr" items="${question.optionArr}" varStatus="status">
+				   <div class="form-group row">
+					    <label class="col-sm-1 col-form-label">Option ${status.index+1}</label>
 					    <div class="col-sm-9">
-    					 	<form:textarea path="option1" class="form-control" id="opt1" rows="1" placeholder="Option 1" />
+    					 	<form:textarea path="optionArr[${status.index}]"  class="form-control" id="opt${status.index+1}" rows="1" placeholder="-"  />
 				   		</div>
 				  </div>
-					<div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 2</label>
+				  </c:forEach>
+				  <c:forEach begin="${question.optionArrSize}" end="9" varStatus="status">
+			    	<div class="form-group row">
+					    <label class="col-sm-1 col-form-label">Option ${status.index+1}</label>
 					    <div class="col-sm-9">
-    					 	<form:textarea path="option2"  class="form-control" id="opt2" rows="1" placeholder="Option 2"  />
+    					 	<form:textarea path="optionArr[${status.index}]"  class="form-control" id="opt${status.index+1}" rows="1" placeholder="-"  value="" />
 				   		</div>
 				  </div>
-					<div  class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 3</label>
-					    <div class="col-sm-9">
-    					 	<form:textarea path="option3"  class="form-control" id="opt3" rows="1" placeholder="Option 3"  />
-				   		</div>
-				  </div>
-				  <div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 4</label>
-					    <div class="col-sm-9">
-    					 	<form:textarea path="option4"  class="form-control" id="opt4" rows="1" placeholder="Option 4" />
-				   		</div>
-				  </div>
-				  <div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 5</label>
-					    <div class="col-sm-9">
-    					 	<form:textarea path="option5"  class="form-control" id="opt5" rows="1" placeholder="Option 5"   />
-				   		</div>
-				  </div>
-				  
+			</c:forEach>
+					  
 				  </div>
 				  <div id="structuredDiv" style="display:none">
 				   <div class="form-row">

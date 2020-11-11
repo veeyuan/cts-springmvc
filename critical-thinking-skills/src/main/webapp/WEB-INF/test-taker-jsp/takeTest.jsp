@@ -40,7 +40,7 @@
 }
 #testLink{
 	background-color: #FED136;
-    color: #fff;
+    color: #14171a;
 }
 
 #dashboardLink{
@@ -195,7 +195,7 @@ if (!"noRecords".equalsIgnoreCase(lastTestDate)){
             <%}else{ %>
             <div class="card-body">
             <p id="instruction">You have just completed your test on <%=lastTestDate %>.    
-              <br>You can only test yourself again six months after your last test.  <p>
+              <br>You are allowed to answer one time only. You may view the results once it has been graded. Thank you for your participation.  <p>
             </div>
             
             <%} %>

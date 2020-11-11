@@ -1,6 +1,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page import="com.cts.model.Submission" %>
+<%@ page import="java.util.*" %>
+
 
 <html>    
 <head>
@@ -48,7 +50,7 @@
 
 #viewRstLink{
   background-color: #FED136;
-    color: #fff;
+    color:#14171a;
 }
 
 #manageProfileLink{
@@ -80,6 +82,10 @@
   color: white;
 }
 
+
+#instruction{
+	line-height: 2.5;
+}
 </style>
 <script>
 
@@ -236,8 +242,55 @@ addLoadEvent(setCd);
 					
 						<div id="chartContainer" style="height: 450px; width: 80%; display: block; "></div>
 						<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-              	
-              		
+              	<% Submission submissionDataList = (Submission)request.getAttribute("submissionRst");  
+                 HashMap<String, Integer> scores = new HashMap<String, Integer>();
+				scores.put("Analysis & Evaluation",submission.getScoresLst().get(0).getAnalysisScore());
+				scores.put("Logical Thinking",submission.getScoresLst().get(0).getLogicScore());
+				scores.put("Judgement",submission.getScoresLst().get(0).getJudgementScore());
+				scores.put("Problem Solving",submission.getScoresLst().get(0).getProbSolveScore());
+				scores.put("Creative Thinking",submission.getScoresLst().get(0).getCreativeScore());
+				ArrayList<String> highest = new ArrayList<>();			
+				int maxValueInMap=(Collections.max(scores.values()));  // This will return max value in the Hashmap
+		        for (Map.Entry<String, Integer> entry : scores.entrySet()) {  // Itrate through hashmap
+		            if (entry.getValue()==maxValueInMap) {
+		            	highest.add(entry.getKey());
+		            }
+		        } 
+				
+		        ArrayList<String> lowest = new ArrayList<>();			
+				int minValueInMap=(Collections.min(scores.values()));  // This will return max value in the Hashmap
+		        for (Map.Entry<String, Integer> entry : scores.entrySet()) {  // Itrate through hashmap
+		            if (entry.getValue()==minValueInMap) {
+		            	lowest.add(entry.getKey());
+		            }
+		        }              	
+                %>
+                      <div style="margin-top: 70px;margin-left:50px;" class="form-row">    
+	                <div class="form-group col-md-10">
+	  				  <label >Comments</label><br>
+	  				  <p id="instruction">
+	  				  <%if (highest.size()==5){ %>
+	  				  		Your thinking skills are developed averagely. Boost them to gain higher achievements.
+	  				  <%}else{ %>
+              		 <%=highest.get(0)%>
+              		 <%for (int i =1;i<highest.size();i++){ %>
+              			<% if (i==highest.size()-1){ %>
+              			and <%= highest.get(i)%> 
+              			<%}else{ %>
+              		    , <%=highest.get(i)%>
+              		 <%}}%>
+              		 is/are your strength(s). Utilise the thinking skills will make you go further.
+              		 <br>You are encouraged to put more efforts to improve the thinking skills especially <%=lowest.get(0)%>
+              		 <%for (int i =1;i<lowest.size();i++){ 
+              		 	if (i==lowest.size()-1){%>
+              		  and <%=lowest.get(i)%>
+              		 <%}else{ %>
+              			, <%=lowest.get(i)%>
+              		 <%}}%>.
+              		 <%} %>
+              		 </p>
+              		 </div>
+              		 </div>
               </div>
               <!-- /.card-body -->
                <div class="card-footer clearfix">

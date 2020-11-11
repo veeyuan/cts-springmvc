@@ -11,7 +11,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.UUID;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -26,61 +28,54 @@ public class QuestionDao {
 
 	public void addQuestion(Question question) throws SQLException, IOException {
 		 Connection connection = jdbcTemplate.getDataSource().getConnection();
-         CallableStatement cs = connection.prepareCall("{call SP_CREATE_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-        
+         CallableStatement cs = connection.prepareCall("{call SP_CREATE_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+         UUID questionid = UUID.randomUUID();
          cs.setString(1, question.getQuestionDscp());
          cs.setString(2, question.getDisciplineCd());
      	 cs.setString(3, question.getCategoryCd());
      	 cs.setString(4, question.getLanguageCd());
      	 if (question.isMcq()) {
          	 cs.setString(5,"Y");
-         	 cs.setString(6, question.getOption1());
-        	 cs.setString(7, question.getOption2());
-        	 cs.setString(8, question.getOption3());
-        	 cs.setString(9, question.getOption4());
-        	 cs.setString(10, question.getOption5());
-        	 cs.setString(11, question.getMcqAns());
+        	 cs.setString(6, question.getMcqAns());
      	 }else {
          	 cs.setString(5,"N");
-         	 cs.setString(6, null);
-	       	 cs.setString(7, null);
-	       	 cs.setString(8, null);
-	       	 cs.setString(9, null);
-	       	 cs.setString(10,null);
-         	 cs.setString(11, question.getSampleAns());
+         	 cs.setString(6, question.getSampleAns());
      	 }
  
-     	 cs.setInt(12, question.getAnalysisScore());
-     	 cs.setInt(13, question.getLogicScore());
-     	 cs.setInt(14, question.getJudgementScore());
-     	 cs.setInt(15, question.getProbSolveScore());
-     	 cs.setInt(16, question.getCreativeScore());
+     	 cs.setInt(7, question.getAnalysisScore());
+     	 cs.setInt(8, question.getLogicScore());
+     	 cs.setInt(9, question.getJudgementScore());
+     	 cs.setInt(10, question.getProbSolveScore());
+     	 cs.setInt(11, question.getCreativeScore());
 
      	 if (question.getQuestionAttachment()!=null) {
      		 AttachmentFile questionFile = question.getQuestionAttachment();
-         	 cs.setBlob(17,new ByteArrayInputStream(questionFile.getAttachmentFile().getBytes()));
-         	 cs.setString(19,questionFile.getFileName());
-        	 cs.setString(21,questionFile.getFormat());
+         	 cs.setBlob(12,new ByteArrayInputStream(questionFile.getAttachmentFile().getBytes()));
+         	 cs.setString(14,questionFile.getFileName());
+        	 cs.setString(16,questionFile.getFormat());
      	 }else {
-     		 cs.setBlob(17,(Blob)null);
-     		 cs.setString(19,null);
-     		 cs.setString(21, null);
+     		 cs.setBlob(12,(Blob)null);
+     		 cs.setString(14,null);
+     		 cs.setString(16, null);
      	 }
      	 if (question.getSampleAnsAttachment()!=null) {
      		 AttachmentFile answerFile = question.getSampleAnsAttachment();
-         	 cs.setBlob(18,new ByteArrayInputStream(answerFile.getAttachmentFile().getBytes()));    
-         	 cs.setString(20,answerFile.getFileName());
-         	 cs.setString(22,answerFile.getFormat());
+         	 cs.setBlob(13,new ByteArrayInputStream(answerFile.getAttachmentFile().getBytes()));    
+         	 cs.setString(15,answerFile.getFileName());
+         	 cs.setString(17,answerFile.getFormat());
      	 }else {
-     		 cs.setBlob(18,(Blob)null);
-     		 cs.setString(20,null);
-        	 cs.setString(22,null);
+     		 cs.setBlob(13,(Blob)null);
+     		 cs.setString(15,null);
+        	 cs.setString(17,null);
      	 }
-     	 cs.setString(23,question.getHotsComponentCd());
-     	 cs.setString(24,question.getStrIsSelectedToAsk());
-     	 cs.setInt(25,question.getTimeLimitMin());
+     	 cs.setString(18,question.getHotsComponentCd());
+     	 cs.setString(19,question.getStrIsSelectedToAsk());
+     	 cs.setInt(20,question.getTimeLimitMin());
+     	 cs.setString(21,questionid.toString());
      	 cs.execute();
      	 cs.close();
+     	insertOption(question.getOptionArr(),questionid.toString());
+     	 
 	}
 	
 	public void deleteQuestion(String[] delQuestionList) throws SQLException {
@@ -128,11 +123,8 @@ public class QuestionDao {
 		        		question.setMcq(false);
 		        	}
 		        	if (question.isMcq()) {
-		            	question.setOption1(resultSet.getString("option1"));
-		            	question.setOption2(resultSet.getString("option2"));
-		            	question.setOption3(resultSet.getString("option3"));
-		            	question.setOption4(resultSet.getString("option4"));                	
-		            	question.setOption5(resultSet.getString("option5"));
+		        		question.setOptionArrSize(resultSet.getInt("total_option"));
+		        		question.setOptionArr(getQuestionOptions(question.getId(),question.getOptionArrSize()));
 		        	}else {
 		        		if(resultSet.getBlob("answer_filedata")!=null) {
 		        			AttachmentFile answerFileObj = new AttachmentFile();
@@ -171,88 +163,103 @@ public class QuestionDao {
         		return question;
 	}
 	
+	public ArrayList<String> getQuestionOptions (String questionId,int totalOption) {
+		ArrayList<String> options = new ArrayList<>();
+		for (int i=1;i<=totalOption;i++) {
+			String sqlStmt = "SELECT option_dscp from tbl_question_option where option_no ='"+i+"' and question_id = '"+questionId+"'";
+			String dscp=(String) jdbcTemplate.queryForObject(
+					 sqlStmt, new Object[] {}, String.class);
+			options.add(dscp);			
+		}
+		
+		return options;
+	}
+	
 	public void modifyQuestion( Question question) throws SQLException, IOException {
 		 Connection connection = jdbcTemplate.getDataSource().getConnection();
-         CallableStatement cs = connection.prepareCall("{call SP_MODIFY_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+         CallableStatement cs = connection.prepareCall("{call SP_MODIFY_QUESTION(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         
          cs.setString(1, question.getQuestionDscp());
          cs.setString(2, question.getDisciplineCd());
      	 cs.setString(3, question.getCategoryCd());
      	 cs.setString(4, question.getLanguageCd());
      	 if (question.isMcq()) {
-         	 cs.setString(5,"Y");
-         	 cs.setString(6, question.getOption1());
-        	 cs.setString(7, question.getOption2());
-        	 cs.setString(8, question.getOption3());
-        	 cs.setString(9, question.getOption4());
-        	 cs.setString(10, question.getOption5());
-        	 cs.setString(11, question.getMcqAns());
+         	 cs.setString(5,"Y");   	 
+        	 cs.setString(6, question.getMcqAns());
      	 }else {
          	 cs.setString(5,"N");
-         	 cs.setString(6, null);
-	       	 cs.setString(7, null);
-	       	 cs.setString(8, null);
-	       	 cs.setString(9, null);
-	       	 cs.setString(10,null);
-         	 cs.setString(11, question.getSampleAns());
+         	 cs.setString(6, question.getSampleAns());
      	 }
  
-     	 cs.setInt(12, question.getAnalysisScore());
-     	 cs.setInt(13, question.getLogicScore());
-     	 cs.setInt(14, question.getJudgementScore());
-     	 cs.setInt(15, question.getProbSolveScore());
-     	 cs.setInt(16, question.getCreativeScore());
+     	 cs.setInt(7, question.getAnalysisScore());
+     	 cs.setInt(8, question.getLogicScore());
+     	 cs.setInt(9, question.getJudgementScore());
+     	 cs.setInt(10, question.getProbSolveScore());
+     	 cs.setInt(11, question.getCreativeScore());
 
      	 if (question.getQuestionAttachment()!=null) { //has either alternative or ori file
         	 if (question.getQuestionAttachment().getId() == null ) {	//has alternative file
         		 AttachmentFile questionFile = question.getQuestionAttachment();
-             	 cs.setBlob(17,new ByteArrayInputStream(questionFile.getAttachmentFile().getBytes()));
-             	 cs.setString(19,questionFile.getFileName());
-            	 cs.setString(21,questionFile.getFormat());
-            	 cs.setString(24,null);
+             	 cs.setBlob(12,new ByteArrayInputStream(questionFile.getAttachmentFile().getBytes()));
+             	 cs.setString(14,questionFile.getFileName());
+            	 cs.setString(16,questionFile.getFormat());
+            	 cs.setString(19,null);
             	  
 
         	 }else {												//has ori file
          		 
-            	 cs.setString(24,question.getQuestionAttachment().getId());
-            	 cs.setBlob(17,(Blob)null);
-         		 cs.setString(19,null);
-         		 cs.setString(21, null);
+            	 cs.setString(19,question.getQuestionAttachment().getId());
+            	 cs.setBlob(12,(Blob)null);
+         		 cs.setString(14,null);
+         		 cs.setString(16, null);
         	 }
      	 }else {
-     		 cs.setBlob(17,(Blob)null);
-     		 cs.setString(19,null);
-     		 cs.setString(21,null);
-        	 cs.setString(24,null);
+     		 cs.setBlob(12,(Blob)null);
+     		 cs.setString(14,null);
+     		 cs.setString(16,null);
+        	 cs.setString(19,null);
      	 }
      	 
      	 if (question.getSampleAnsAttachment()!=null) {
      		 
          	if (question.getSampleAnsAttachment().getId()==null) {
          		 AttachmentFile answerFile = question.getSampleAnsAttachment();
-	         	 cs.setBlob(18,new ByteArrayInputStream(answerFile.getAttachmentFile().getBytes()));    
-	         	 cs.setString(20,answerFile.getFileName());
-	         	 cs.setString(22,answerFile.getFormat());
-	           	 cs.setString(25,null);          	 
+	         	 cs.setBlob(13,new ByteArrayInputStream(answerFile.getAttachmentFile().getBytes()));    
+	         	 cs.setString(15,answerFile.getFileName());
+	         	 cs.setString(17,answerFile.getFormat());
+	           	 cs.setString(20,null);          	 
 	       	 }else {
-	       		cs.setString(25,question.getSampleAnsAttachment().getId());
-	           	 cs.setBlob(18,(Blob)null);
-	    		 cs.setString(20,null);
-	    		 cs.setString(22,null);
+	       		cs.setString(20,question.getSampleAnsAttachment().getId());
+	           	 cs.setBlob(13,(Blob)null);
+	    		 cs.setString(15,null);
+	    		 cs.setString(17,null);
 	       	 }
      	 }else {
-     		 cs.setBlob(18,(Blob)null);
-     		 cs.setString(20,null);
-        	 cs.setString(22,null);
-           	 cs.setString(25,null);
+     		 cs.setBlob(13,(Blob)null);
+     		 cs.setString(15,null);
+        	 cs.setString(17,null);
+           	 cs.setString(20,null);
      	 }
      	 
-     	 cs.setString(23,question.getId());
-     	 cs.setString(26,question.getHotsComponentCd());
-     	 cs.setString(27,question.getStrIsSelectedToAsk());
-     	 cs.setInt(28, question.getTimeLimitMin());
+     	 cs.setString(18,question.getId());
+     	 cs.setString(21,question.getHotsComponentCd());
+     	 cs.setString(22,question.getStrIsSelectedToAsk());
+     	 cs.setInt(23, question.getTimeLimitMin());
      	 cs.execute();
      	 cs.close();
+	}
+	
+	public void insertOption(ArrayList<String> arr,String questionId) throws SQLException {		
+		for (int i=1;i<=arr.size();i++) {
+		   	 String sql = "INSERT INTO TBL_QUESTION_OPTION (question_id,option_no,option_dscp) VALUES (?,?,?)";
+		     jdbcTemplate.update(sql, questionId,i,arr.get(i-1));
+		}
+	}
+	
+	public int deleteOption(String questionId) {
+		String deleteSql = "DELETE 	FROM TBL_QUESTION_OPTION WHERE QUESTION_ID = ?";
+	     int row = jdbcTemplate.update(deleteSql, questionId);
+	     return row;
 	}
 	
 	public String getBase64Image(Blob blob) throws SQLException, IOException {

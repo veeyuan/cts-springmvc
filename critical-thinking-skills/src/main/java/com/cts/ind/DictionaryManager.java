@@ -16,14 +16,33 @@ public class DictionaryManager {
 		this.jdbcTemplate = jdbcTemplate;  
 	} 
 	
-	
+	public int getLanguageCd(String language) {
+		 int language_cd=0;
+
+	    	try{  
+	    		Class.forName("com.mysql.jdbc.Driver");  
+	    		Connection connection=DriverManager.getConnection( "jdbc:mysql://localhost:3306/cts_db?useTimezone=true&serverTimezone=UTC&useSSL=false","root","sysadmin");  
+	    		//Connection connection = jdbcTemplate.getDataSource().getConnection();
+	    		String query="select language_cd from tbl_language where language_dscp=? and del=0";
+	    		PreparedStatement ps = connection.prepareStatement(query);
+	    		ps.setString(1, language);
+	    		ResultSet rs=ps.executeQuery();  
+	    		while(rs.next())  {
+	    			language_cd = rs.getInt("language_cd");
+	    		}
+	    		connection.close();  
+	    		}catch(Exception e){ System.out.println(e);}  
+	    		
+			
+	        return language_cd;
+	}
 
     public String getTerm(String wordCd,int languageCd) throws SQLException {
         String rstString="";
 
     	try{  
     		Class.forName("com.mysql.jdbc.Driver");  
-    		Connection connection=DriverManager.getConnection( "jdbc:mysql://localhost:3306/cts?useTimezone=true&serverTimezone=UTC&useSSL=false","root","sysadmin");  
+    		Connection connection=DriverManager.getConnection( "jdbc:mysql://localhost:3306/cts_db?useTimezone=true&serverTimezone=UTC&useSSL=false","root","sysadmin");  
     		//Connection connection = jdbcTemplate.getDataSource().getConnection();
     		String query="select dscp from tbl_dictionary where word_cd=? and language_cd=? and del=0";
     		PreparedStatement ps = connection.prepareStatement(query);

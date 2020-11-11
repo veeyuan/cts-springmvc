@@ -18,8 +18,10 @@ public class Submission {
 	private String languageDscp;
 	private String disciplineDscp;
 	private String categoryDscp;
+
 	private String testTakerName;
-	
+	private Faculty faculty;
+	private Department department;
 	private boolean hasTakenTest;
 	private boolean isRstReady;
 	private boolean joinSurvey;
@@ -238,6 +240,18 @@ public class Submission {
 	 */
 	public void setJoinSurvey(boolean joinSurvey) {
 		this.joinSurvey = joinSurvey;
+	}
+	public Department getDepartment() {
+		return department;
+	}
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+	public Faculty getFaculty() {
+		return faculty;
+	}
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
 	}
 
 }

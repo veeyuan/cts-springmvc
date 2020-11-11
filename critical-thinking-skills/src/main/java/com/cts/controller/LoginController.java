@@ -71,7 +71,7 @@ public class LoginController {
 	 
 	 
 	 @RequestMapping(value = "/registerProcess", method = RequestMethod.POST)
-	  public ModelAndView   registerProcess(@RequestParam(value = "isUmStudent", required = false) String isUmStudent, @RequestParam("registerUserName") String username,@RequestParam("registerPswd") String pswd,
+	  public ModelAndView   registerProcess(@RequestParam(value = "isGuest", required = false) String isGuest, @RequestParam("registerUserName") String username,@RequestParam("registerPswd") String pswd,
 			  @RequestParam("emailaddr") String emailAddr,@RequestParam("fullname") String fullName, HttpServletRequest req,HttpServletResponse res, ModelAndView model) {
 	     model = new ModelAndView("redirect:/");
 		 User user = new User(username,pswd,"TEST-TAKER");
@@ -79,11 +79,11 @@ public class LoginController {
 	    user.setEmail(emailAddr);
 	    
 	    try {
-	    	if(isUmStudent != null)
+	    	if(isGuest != null)
 	    	  {
-	    		userDao.createTestTaker(user,"Y");
+	    		userDao.createTestTaker(user,"N");
 	    	  }else {
-	    		 userDao.createTestTaker(user,"N");
+	    		 userDao.createTestTaker(user,"Y");
 	    	  }
 			
 		} catch (SQLException e) {

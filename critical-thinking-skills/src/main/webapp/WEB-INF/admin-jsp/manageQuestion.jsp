@@ -21,7 +21,7 @@
 }
 #manageLink{
 	background-color: #FED136;
-    color: #fff;
+    color: #14171a;
 }
 #manageOptLink{
 	background-color: transparent;

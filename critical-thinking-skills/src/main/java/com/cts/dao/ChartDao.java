@@ -53,7 +53,11 @@ public class ChartDao {
 		        while (resultSet.next()) {
 		        	if (resultSet.getInt("amount")>0) {
 		        		map = new HashMap<Object,Object>(); 
-			    		map.put("label",resultSet.getString("FACULTY_DSCP") ); 
+		        		if (resultSet.getString("FACULTY_DSCP")==null) {
+		        			map.put("label","Others" ); 
+		        		}else {
+		        			map.put("label",resultSet.getString("FACULTY_DSCP") ); 
+		        		}	    		
 			    		map.put("y",resultSet.getInt("amount")/(getCloseSubmission()+getGradedSubmission())*100 );
 			    		dataPoints.add(map);
 		        	}	        	
@@ -75,7 +79,7 @@ public class ChartDao {
 	}
 	
 	public List<SubmissionByFaculty> getFacultySubmissionSummary(){
-	    String sqlStmt = "SELECT count(*) as amount,faculty.FACULTY_DSCP FROM TBL_SUBMISSION submission INNER JOIN TBL_USER_DET userdet ON userdet.USER_ID = submission.USER_ID LEFT JOIN TBL_FACULTY faculty ON userdet.FACULTY_CD = faculty.FACULTY_CD WHERE submission.SUBMITTED_DT IS NOT NULL AND submission.JOIN_SURVEY='Y' GROUP BY faculty.FACULTY_CD" ;
+	    String sqlStmt = "SELECT count(*) as amount,faculty.FACULTY_DSCP FROM TBL_SUBMISSION submission INNER JOIN TBL_USER_DET userdet ON userdet.USER_ID = submission.USER_ID LEFT JOIN TBL_FACULTY faculty ON userdet.FACULTY_CD = faculty.FACULTY_CD WHERE submission.SUBMITTED_DT IS NOT NULL AND submission.JOIN_SURVEY='Y' GROUP BY faculty.FACULTY_CD order by faculty.FACULTY_DSCP ASC" ;
 	    List<SubmissionByFaculty> list=new ArrayList<>();
 		ResultSet resultSet = null;
 		Connection connection;

@@ -118,19 +118,34 @@ public class ReportDao {
         headerCell.setCellValue("WIA1002");
         
         headerCell = headerRow.createCell(13);
-        headerCell.setCellValue("Analysis & Evaluation");
+        headerCell.setCellValue("Analysis & Evaluation (%)");
         
         headerCell = headerRow.createCell(14);
-        headerCell.setCellValue("Logic & Reasoning");
+        headerCell.setCellValue("Logic & Reasoning (%)");
         
         headerCell = headerRow.createCell(15);
-        headerCell.setCellValue("Judgement");
+        headerCell.setCellValue("Judgement (%)");
         
         headerCell = headerRow.createCell(16);
-        headerCell.setCellValue("Problem Solving");
+        headerCell.setCellValue("Problem Solving (%)");
         
         headerCell = headerRow.createCell(17);
-        headerCell.setCellValue("Creative Thinking");
+        headerCell.setCellValue("Creative Thinking (%)");
+        
+        headerCell = headerRow.createCell(18);
+        headerCell.setCellValue("Critical Thinking Scores");
+        
+        headerCell = headerRow.createCell(19);
+        headerCell.setCellValue("Creativity Scores");
+        
+        headerCell = headerRow.createCell(20);
+        headerCell.setCellValue("Metacognition Scores");
+        
+        headerCell = headerRow.createCell(21);
+        headerCell.setCellValue("Total Scores");
+        
+        headerCell = headerRow.createCell(22);
+        headerCell.setCellValue("Total Scores Percentage (%)");
     }
  
     private void writeDataLines(ResultSet result, XSSFWorkbook workbook,
@@ -192,9 +207,24 @@ public class ReportDao {
  
             cell = row.createCell(columnCount++);         
             cell.setCellValue(result.getInt("percentage_problem_solving"));
- 
+            
             cell = row.createCell(columnCount++);
             cell.setCellValue(result.getInt("percentage_creative"));
+            
+            cell = row.createCell(columnCount++);         
+            cell.setCellValue(result.getInt("critical_thinking_scores"));
+ 
+            cell = row.createCell(columnCount++);
+            cell.setCellValue(result.getInt("creativity_scores"));
+            
+            cell = row.createCell(columnCount++);         
+            cell.setCellValue(result.getInt("metacognition_scores"));         
+            
+            cell = row.createCell(columnCount++);         
+            cell.setCellValue(result.getInt("obtained_scores"));
+ 
+            cell = row.createCell(columnCount++);
+            cell.setCellValue(result.getInt("scores_percentage"));
  
         }
     }

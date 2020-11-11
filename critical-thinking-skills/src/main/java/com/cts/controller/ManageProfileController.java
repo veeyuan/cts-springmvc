@@ -36,6 +36,7 @@ import com.cts.model.ProgrammingResults;
 import com.cts.model.ResultRange;
 import com.cts.model.SurveyForm;
 import com.cts.model.User;
+import com.cts.ind.*;
 
 @Controller
 public class ManageProfileController {
@@ -73,9 +74,8 @@ public class ManageProfileController {
 		List<Category> listCategory =   categoryDao.getCategoryList();
 		model.addObject("listCategory",listCategory);
 		List<Language> listLanguage =   languageDao.getLanguageList();
-		model.addObject("listLanguage",listLanguage);
-		
-		List<SurveyForm> listForm = surveyDao.getSurveyList(id, 1);
+		model.addObject("listLanguage",listLanguage);	
+		List<SurveyForm> listForm = surveyDao.getSurveyList(id, new DictionaryManager().getLanguageCd("English"));
 		model.addObject("listForm",listForm);
 		request.setAttribute("formLst",listForm );
 
@@ -99,8 +99,7 @@ public class ManageProfileController {
 		model.addObject("listCategory",listCategory);
 		List<Language> listLanguage =   languageDao.getLanguageList();
 		model.addObject("listLanguage",listLanguage);
-		
-		List<SurveyForm> listForm = surveyDao.getSurveyList(id, 1);
+		List<SurveyForm> listForm = surveyDao.getSurveyList(id, new DictionaryManager().getLanguageCd("English"));
 		model.addObject("listForm",listForm);
 		request.setAttribute("formLst",listForm );
 		return model;
@@ -133,7 +132,7 @@ public class ManageProfileController {
 		List<ResultRange> listRstRange = resultRangeDao.getRstRangeList();
 		model.addObject("listRstRange",listRstRange);
 		model.addObject("user",new User());
-		
+
 		model.addObject("form",survey);
 		return model;
 		

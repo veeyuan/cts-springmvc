@@ -1,5 +1,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.cts.model.Faculty" %>
+<%@ page import="com.cts.model.Department" %>
 <html>    
 <head>
 <!--  jQuery -->
@@ -35,7 +39,7 @@
 }
 #gradeLink{
 	background-color: #FED136;
-    color: #fff;
+    color:#14171a;
 }
 #manageAdminLink{
 	background-color: transparent;
@@ -67,6 +71,10 @@ a {
   color: inherit; /* blue colors for links too */
   text-decoration: inherit; /* no underline */
 }
+
+.hidden{
+    display:none;
+}
 </style>
 <script>
 
@@ -95,6 +103,20 @@ function changeDate(){
 	var date = document.getElementById('datepick').value;
 	document.getElementById('submitDt').value=date;
 }
+
+
+
+$(function(){
+	$("#facCd").on("change", function(){
+        var $target = $("#deptCd").val("all"),facCd = $(this).val();
+        $target
+            .toggleClass("hidden", facCd === "")
+            .find("option:gt(0)").addClass("hidden")
+        	.siblings().filter("[data-type="+facCd+"]").removeClass("hidden"); 
+    });
+});
+
+
 </script> 
 </head>    
 <body>    
@@ -111,6 +133,7 @@ if ("POST".equalsIgnoreCase(request.getMethod())) {
 	currentPage=1;
 }
 totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
+List<Faculty> facultyList = (List<Faculty>) request.getAttribute("listFaculty"); 
 
                   	 
 %>
@@ -144,13 +167,33 @@ totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
 			      <form:form id="filterForm" action ="gradeRstWaitingList.html"  method="post" modelAttribute="filterSubmission" >
 			      <input type="hidden" name="targetPage" id="targetPage" value="1"/>
 			         <div class="form-row">
-			         <div class="form-group col-md-4">
+			         <div class="form-group col-md-3">
 			         		<form:input path="testTakerName" id="search"  class="form-control"  placeholder="Search test-taker's name..." />	
 			         			         
 			         </div>
+			         <div class="form-group col-md-3">
+	                     <form:select path="faculty.code"  class="form-control" id="facCd" >
+	                     <form:option value = "all" label="All"/>
+	                       <c:forEach items="${listFaculty}" var="listFaculty">
+					      	  <form:option value ="${listFaculty.code}" label="${listFaculty.name}" />
+				              </c:forEach>
+	                       </form:select>
+					  </div>
+					  
+					   <div class="form-group col-md-2">
+	                     <form:select path="department.code"  class="form-control" id="deptCd" >
+	                      <form:option value = "all" label="All"/>
+	                     <% for (int i=0;i<facultyList.size();i++){ 
+	                     	List<Department> deptList = facultyList.get(i).getDepartmentList();
+	                     	for (int j=0;j<deptList.size();j++){
+	                     	%>
+	                     	 <form:option value ="<%=deptList.get(j).getCode()%>" data-type="<%=facultyList.get(i).getCode() %>" label="<%=deptList.get(j).getName()%>" />
+	                     <%}} %>
+	                     
+	                       </form:select>
+					  </div>
 			        
-			        
-	               <div class="form-group col-md-2">
+	               <%-- <div class="form-group col-md-2">
 	                        <form:select path="categoryCd" class="form-control" >
 	                        <form:option value = "all" label="All"/>
 					      	<c:forEach items="${listCategory}" var="category">
@@ -166,7 +209,7 @@ totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
 					      	  <form:option value ="${language.code}" label="${language.name}"/>
 				              </c:forEach>
 	                       </form:select>
-					  </div>
+					  </div> --%>
 					 <div class="form-group col-md-2">
 					 <% if ((String)request.getAttribute("filterSubmitDt")!=null){ %>
 					 <input onchange="changeDate()" id="datepick"  class="form-control"  placeholder="Submitted By" value="<%=(String)request.getAttribute("filterSubmitDt")%>"/>	
@@ -219,9 +262,8 @@ totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
 				  <thead>
 				    <tr>
 				      <th scope="col">Name</th>
-				      <th scope="col">Category</th>
-				      <th scope="col">Discipline</th> 
-				      <th scope="col">Language</th>
+				      <th scope="col">Faculty</th>
+				      <th scope="col">Department</th> 
 				      <th scope="col">Require Marking</th>
 				      <th scope="col">Submitted Date</th>
 				    </tr>
@@ -237,9 +279,8 @@ totalPage = Integer.parseInt((String)request.getAttribute("totalPages"));
 		                    </span>  	
 		                     <c:out value="${submission.testTakerName}" />		               
                   		</td>
-					      <td>${submission.categoryDscp}</td>
-					      <td>${submission.disciplineDscp}</td> 
-					      <td>${submission.languageDscp}</td> 
+					      <td>${submission.faculty.name}</td>
+					      <td>${submission.department.name}</td> 
 					      <td>${submission.noReqManualGrading}</td>
 					      <td>${submission.submitDt}</td>
    					 </tr>	                 

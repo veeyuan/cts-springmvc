@@ -52,7 +52,7 @@
 
 #manageAdminLink{
 	background-color: #FED136;
-    color: #fff;
+    color:#14171a;
 }
 a {
   color: inherit; /* blue colors for links too */

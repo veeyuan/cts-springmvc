@@ -142,19 +142,7 @@ public class ManageQuestionController {
 		Question question = questionDao.getQuestionDet(questionID);
 
 		if (question !=null) {
-			int numberOfOptions = 0;
-			if (question.isMcq()) {
-				if (question.getOption3()==null) {
-					numberOfOptions=2;
-				}else if (question.getOption4()==null) {
-					numberOfOptions=3;
-				}else if (question.getOption5()==null) {
-					numberOfOptions=4;
-				}else {
-					numberOfOptions=5;
-				}
-				model.getModelMap().addAttribute("numberOfOptions",numberOfOptions);				
-			}
+			
 			if (question.getQuestionAttachment()==null) {
 				model.getModelMap().addAttribute("hasQuestionAttachment","N");
 			}else {
@@ -221,19 +209,9 @@ public class ManageQuestionController {
 			model.addObject("listLanguage",listLanguage);
 			List<HotsComponent> listHotsComponent =   hotsComponentDao.getHotsComponentList();
 			model.addObject("listHotsComponent",listHotsComponent);
-			int numberOfOptions = 0;
 			if (question.isMcq()) {
 				model.getModelMap().addAttribute("isMcq","Y");
-				if (question.getOption3()==null) {
-					numberOfOptions=2;
-				}else if (question.getOption4()==null) {
-					numberOfOptions=3;
-				}else if (question.getOption5()==null) {
-					numberOfOptions=4;
-				}else {
-					numberOfOptions=5;
-				}
-				model.getModelMap().addAttribute("numberOfOptions",numberOfOptions);				
+				model.getModelMap().addAttribute("numberOfOptions",question.getOptionArrSize());				
 			}else {
 				model.getModelMap().addAttribute("isMcq","N");
 			}
@@ -270,7 +248,7 @@ public class ManageQuestionController {
 		      BindingResult result, ModelMap model) throws IOException {
 		try {
 			question.setId(questionId);
-			
+			int deleted = questionDao.deleteOption(question.getId());
 			if ("Yes".equalsIgnoreCase(strMCQ)) {
 				question.setMcq(true);
 			}else {
@@ -303,10 +281,13 @@ public class ManageQuestionController {
 					question.setSampleAnsAttachment(answerFileObj);
 				}
 			}
-			
 			questionDao.modifyQuestion(question);
+			if (question.getOptionArrSize()>0) {
+				questionDao.insertOption(question.getOptionArr(),questionId);
+			}
+
 		} catch (SQLException e) {
-			System.out.println("Failed to modiffy >>>");
+			System.out.println("Failed to modify >>>");
 			model.addAttribute("success","N");
 			e.printStackTrace();
 			return "modifyProcess";

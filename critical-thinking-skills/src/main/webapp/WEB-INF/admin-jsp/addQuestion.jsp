@@ -18,7 +18,7 @@
 }
 #addLink{
 	background-color: #FED136;
-    color: #fff;
+    color:#14171a;
 }
 
 #dashboardLink{
@@ -73,39 +73,17 @@ function changeDiscipline(selected){ //if discipline not in the list
 
 function setOption(selected){ //set number of options
 	var x=selected.value;
-	if (x=="2"){
-		document.getElementById("opt3").value="";
-		document.getElementById("opt4").value="";
-		document.getElementById("opt5").value="";
-		document.getElementById("opt3").disabled  =true;
-		document.getElementById("opt4").disabled = true;
-		document.getElementById("opt5").disabled = true;
-	}else if (x=="3"){
-		document.getElementById("opt3").disabled  =false;
-		document.getElementById("opt4").value="";
-		document.getElementById("opt5").value="";
-		document.getElementById("opt4").disabled = true;
-		document.getElementById("opt5").disabled = true;
-	}else if (x=="4"){
-		document.getElementById("opt3").disabled  = false;
-		document.getElementById("opt4").disabled = false;
-		document.getElementById("opt5").value="";
-		document.getElementById("opt5").disabled = true;
-	}else if (x=="5"){
-		document.getElementById("opt3").disabled  = false;
-		document.getElementById("opt4").disabled = false;
-		document.getElementById("opt5").disabled = false;
-	}
-	else{
-		document.getElementById("opt3").value="";
-		document.getElementById("opt4").value="";
-		document.getElementById("opt5").value="";
-		document.getElementById("opt3").disabled  = false;
-		document.getElementById("opt4").disabled = false;
-		document.getElementById("opt5").disabled = false;
-	}
-}
-	
+	 for (var i = 10; i > x ; i--) {
+		 var id = "opt"+i;
+		  document.getElementById(id).value="";
+	      document.getElementById(id).disabled  =true;
+	    }
+	 for (var i = 1; i <= x ; i++) {
+		 var id = "opt"+i;
+	      document.getElementById(id).disabled = false;
+	 }
+	 	
+} 
 function setMCQ(selected){ //if it is discipline-specific
 	var x=selected.value;
 	if (x=="yes"){
@@ -119,6 +97,16 @@ function setMCQ(selected){ //if it is discipline-specific
 	}
 }
 
+function setInit(){
+	 for (var i = 1; i <=10 ; i++) {
+		 var id = "opt"+i;
+		  document.getElementById(id).value="";
+	      document.getElementById(id).disabled  =true;
+	    }
+	 document.getElementById("opt1").disabled = false;
+	 document.getElementById("opt2").disabled = false;
+}
+addLoadEvent(setInit); 
 
 </script>  
 </head>    
@@ -232,47 +220,24 @@ function setMCQ(selected){ //if it is discipline-specific
 					 			
 					    <div  class="form-group col-md-3" >
 	                   		<label >Number of Choices</label>
-							<select onchange="setOption(this)" class="form-control" name="">
-							<option value="2">2</option>
-					      	<option value="3">3</option>
-	                        <option value="4">4</option>
-	                        <option value="5">5</option>
-	                       </select>	                   </div>
+							<form:select path="optionArrSize" class="form-control" onchange="setOption(this)" id="optionArrSize" >
+							<%for (int i=2;i<=10;i++){ %>
+							<form:option value="<%=i%>"><%=i%></form:option>					      
+	                        <%} %>
+	                       </form:select>                 </div>
 	                   <div  class="form-group col-md-2" >
 	                   		<label >Answer</label>
 	                   		<form:input path="mcqAns" class="form-control" id="numChoice" placeholder="Option Number (eg. 1)" value="" />                			               		
 	                   </div>			 
 					 </div>
-					 <div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 1</label>
+					<c:forEach begin="0" end="9" varStatus="status">
+			    	<div class="form-group row">
+					    <label class="col-sm-1 col-form-label">Option ${status.index+1}</label>
 					    <div class="col-sm-9">
-    					 	<form:textarea path="option1" class="form-control" id="opt1" rows="1" placeholder="Option 1"  />
+    					 	<form:textarea path="optionArr[${status.index}]"  class="form-control" id="opt${status.index+1}" rows="1" placeholder="-"  value="" />
 				   		</div>
 				  </div>
-					<div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 2</label>
-					    <div class="col-sm-9">
-    					 	<form:textarea path="option2"  class="form-control" id="opt2" rows="1" placeholder="Option 2"  />
-				   		</div>
-				  </div>
-					<div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 3</label>
-					    <div class="col-sm-9">
-    					 	<form:textarea path="option3"  class="form-control" id="opt3" rows="1" placeholder="Option 3" disabled="true" />
-				   		</div>
-				  </div>
-				  <div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 4</label>
-					    <div class="col-sm-9">
-    					 	<form:textarea path="option4"  class="form-control" id="opt4" rows="1" placeholder="Option 4" disabled="true" />
-				   		</div>
-				  </div>
-				  <div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 5</label>
-					    <div class="col-sm-9">
-    					 	<form:textarea path="option5"  class="form-control" id="opt5" rows="1" placeholder="Option 5"  disabled="true" />
-				   		</div>
-				  </div>
+			</c:forEach>
 				  
 				  </div>
 				  <div id="structuredDiv" style="display:none">

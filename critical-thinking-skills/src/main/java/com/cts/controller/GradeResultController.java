@@ -1,9 +1,11 @@
 package com.cts.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +22,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cts.dao.CategoryDao;
 import com.cts.dao.DisciplineDao;
+import com.cts.dao.FacultyDao;
 import com.cts.dao.LanguageDao;
 import com.cts.dao.SubmissionListDao;
 import com.cts.model.Category;
+import com.cts.model.Faculty;
 import com.cts.model.Language;
 import com.cts.model.Submission;
+import com.cts.model.User;
 
 @Controller  
 public class GradeResultController {
@@ -36,7 +41,8 @@ public class GradeResultController {
 	CategoryDao categoryDao;
 	@Autowired  
 	LanguageDao languageDao;
-
+	@Autowired
+	FacultyDao facultyDao;
 	@RequestMapping("/gradeRstWaitingList")  
 	public ModelAndView  directToViewSubmission(HttpServletRequest request) throws IOException  
 	{  
@@ -57,6 +63,8 @@ public class GradeResultController {
 		model.addObject("listLanguage",listLanguage);
 		List<Category> listCategory =  categoryDao.getCategoryList();
 		model.addObject("listCategory",listCategory);
+		List<Faculty> listFaculty = facultyDao.getFacultyDeptList();
+		model.addObject("listFaculty",listFaculty);
 		model.addObject("filterSubmission",new Submission());
 	    return model;  
 	}  
@@ -68,15 +76,16 @@ public class GradeResultController {
 		if(!strDate.isEmpty()) {
 			try {
 				java.util.Date utilDate = new SimpleDateFormat("yyyy/MM/dd").parse(strDate);
-			    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());			
-				filterSubmission.setSubmitDt(sqlDate);
+
+			    Date sqlDate = new java.sql.Date(utilDate.getTime());	
+			    sqlDate = addDays(sqlDate,1);
+			    filterSubmission.setSubmitDt(sqlDate);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}  
 		}
 		
-		filterSubmission.setDisciplineCd("general");
 		int numPerPg=5;  
 		int startRow=1;
 		int targetPage = Integer.parseInt(strTargetPage);
@@ -87,6 +96,7 @@ public class GradeResultController {
         int endRow=startRow+numPerPg-1;
         ModelAndView model = new ModelAndView("gradeRstWaitingList"); 
 		List<Submission> allSubmissionList =   submissionListDao.getSubmissionList(filterSubmission,0,0);
+
 		int totalRecords = allSubmissionList.size();
 		int recordsPerPg = 5;
 		int totalPages = totalRecords/recordsPerPg;
@@ -102,10 +112,16 @@ public class GradeResultController {
 		model.addObject("listCategory",listCategory);
 		List<Language> listLanguage =   languageDao.getLanguageList();
 		model.addObject("listLanguage",listLanguage);
-		
+		List<Faculty> listFaculty = facultyDao.getFacultyDeptList();
+		model.addObject("listFaculty",listFaculty);
 	    return model;  
 	}  
-	
+	public static Date addDays(Date date, int days) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, days);
+        return new Date(c.getTimeInMillis());
+    }
 	@RequestMapping("/gradeResults")
 	public ModelAndView getSubmittedAnswers(@RequestParam("submissionID") String submissionID ,HttpServletRequest request) throws IOException{
 			ModelAndView model = new ModelAndView("gradeResults"); 	

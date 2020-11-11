@@ -24,11 +24,12 @@
     
     <%
     DictionaryManager dictionaryManager = new DictionaryManager();
-    int langCd=1;
+    int langCd=dictionaryManager.getLanguageCd("English");
+
     String langDscp =  "ENG";
     if ("BM".equals(request.getParameter("language"))){
-    	langCd=2;
-    	langDscp =  "BM";
+    	langCd=dictionaryManager.getLanguageCd("Bahasa Melayu");;
+    	langDscp ="BM";
     }
    
     %>
@@ -105,8 +106,9 @@
 
         <header class="masthead">
             <div class="container">
-                 <div class="masthead-subheading">Assess your thinking critically!</div>
-                 <div class="masthead-heading text-uppercase"><%=dictionaryManager.getTerm("index.main.cts.title",langCd) %></div>
+                 <div class="masthead-subheading"><span style="background-color: #fed136 ">Assess your thinking critically!</span></div>
+<%--                  <div class="masthead-heading text-uppercase"><%=dictionaryManager.getTerm("index.main.cts.title",langCd) %></div>
+ --%>                 <div class="masthead-heading text-uppercase"><span style="background-color: #fed136 ">High Order Thinking Skills </span></div>
                 <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#portfolio"><%=dictionaryManager.getTerm("index.main.cts.tellmemore",langCd) %></a>
             </div>
         </header>

@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +20,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.cts.model.Answer;
 import com.cts.model.AttachmentFile;
+import com.cts.model.Department;
+import com.cts.model.Faculty;
 import com.cts.model.GradedScores;
 import com.cts.model.Question;
 import com.cts.model.Submission;
+import com.cts.model.User;
 
 
 
@@ -36,7 +40,7 @@ public class SubmissionListDao {
 		Connection connection;
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_FILTER_SUBMISSION(?,?,?,?,?,?,?)}");
+			CallableStatement cs = connection.prepareCall("{call SP_FILTER_SUBMISSION(?,?,?,?,?,?,?,?,?)}");
 			cs.setString(1, null);
 	        cs.setString(2, null);
 	        cs.setString(3, null);
@@ -44,7 +48,8 @@ public class SubmissionListDao {
 	        cs.setDate(5, null);
 	        cs.setInt(6, startRow);
 	        cs.setInt(7, endRow);
-	       
+	        cs.setString(8, null);
+	        cs.setString(9, null);
 	        resultSet =  cs.executeQuery();
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
@@ -59,6 +64,12 @@ public class SubmissionListDao {
 		        	submission.setCategoryDscp(resultSet.getString("CATEGORY_DSCP"));
 		        	submission.setLanguageDscp(resultSet.getString("LANGUAGE_DSCP"));
 		        	submission.setTestTakerName(resultSet.getString("FULLNAME"));
+		        	Faculty fac = new Faculty();
+		        	fac.setName(resultSet.getString("faculty_dscp"));
+		        	submission.setFaculty(fac);
+		        	Department dept = new Department();
+		        	dept.setName(resultSet.getString("department_dscp"));
+		        	submission.setDepartment(dept);
 		        	submissionLst.add(submission);
 		        }
 	        }    
@@ -83,11 +94,11 @@ public class SubmissionListDao {
 		Connection connection;
 		try {
 			connection = jdbcTemplate.getDataSource().getConnection();
-			CallableStatement cs = connection.prepareCall("{call SP_FILTER_SUBMISSION(?,?,?,?,?,?,?)}");
+			CallableStatement cs = connection.prepareCall("{call SP_FILTER_SUBMISSION(?,?,?,?,?,?,?,?,?)}");
 			cs.setString(1, checkIsAll(filterSubmission.getTestTakerName()));
 	        cs.setString(2, null);
-	        cs.setString(3, checkIsAll(filterSubmission.getCategoryCd()));
-	        cs.setString(4, checkIsAll(filterSubmission.getLanguageCd()));
+	        cs.setString(3, null);
+	        cs.setString(4, null);
 	        if (filterSubmission.getSubmitDt()==null) {
 	        	 cs.setDate(5, null);
 	        }else {
@@ -95,6 +106,8 @@ public class SubmissionListDao {
 	        }
 	        cs.setInt(6, startRow);
 	        cs.setInt(7, endRow);
+	        cs.setString(8, checkIsAll(filterSubmission.getFaculty().getCode()));
+	        cs.setString(9, checkIsAll(filterSubmission.getDepartment().getCode()));
 	        cs.execute();
 	        resultSet =  cs.executeQuery();
 	        if (resultSet!=null) {
@@ -110,6 +123,12 @@ public class SubmissionListDao {
 		        	submission.setCategoryDscp(resultSet.getString("CATEGORY_DSCP"));
 		        	submission.setLanguageDscp(resultSet.getString("LANGUAGE_DSCP"));
 		        	submission.setTestTakerName(resultSet.getString("FULLNAME"));
+		        	Faculty fac = new Faculty();
+		        	fac.setName(resultSet.getString("faculty_dscp"));
+		        	submission.setFaculty(fac);
+		        	Department dept = new Department();
+		        	dept.setName(resultSet.getString("department_dscp"));
+		        	submission.setDepartment(dept);
 		        	submissionLst.add(submission);
 		        }
 	        }    
@@ -126,6 +145,7 @@ public class SubmissionListDao {
 		}
 	    return submissionLst;
 	  }
+	
 	
 	
 	public Submission getSubmission(String submissionId) throws IOException {

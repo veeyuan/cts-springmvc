@@ -2,6 +2,9 @@ package com.cts.model;
 
 public class SubmissionByFaculty {
 	public SubmissionByFaculty(String facultyDscp,int amount) {
+		if (facultyDscp == null) {
+			facultyDscp="Others";
+		}
 		this.facultyDscp =  facultyDscp;
 		this.amount = amount;
 	}

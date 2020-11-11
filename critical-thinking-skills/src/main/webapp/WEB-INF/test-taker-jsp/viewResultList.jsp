@@ -49,7 +49,7 @@
 
 #viewRstLink{
   background-color: #FED136;
-    color: #fff;
+    color: #14171a;
 }
 
 #manageProfileLink{

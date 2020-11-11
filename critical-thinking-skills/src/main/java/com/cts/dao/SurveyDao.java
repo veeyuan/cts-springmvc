@@ -30,7 +30,8 @@ public class SurveyDao {
 			connection = jdbcTemplate.getDataSource().getConnection();
 			CallableStatement cs = connection.prepareCall("{call SP_GET_SURVEY_SECTION_LIST(?,?)}");
 			cs.setString(1, userid);
-	        cs.setInt(2, languageCd);	      	        
+	        cs.setInt(2, languageCd);	 
+
 	        resultSet = cs.executeQuery();
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
@@ -87,8 +88,16 @@ public class SurveyDao {
         cs.setString(6, user.getGender());
     	cs.setInt(7, Integer.parseInt(user.getEthnicCd()));
     	cs.setInt(8,Integer.parseInt(user.getNationalityCd()));
-    	cs.setInt(9, Integer.parseInt(user.getFaculty().getCode()));
-    	cs.setInt(10,Integer.parseInt(user.getDepartment().getCode()));
+    	if (user.getFaculty()==null) {
+    		cs.setString(9, null);
+    	}else {
+        	cs.setInt(9, Integer.parseInt(user.getFaculty().getCode()));
+    	}
+    	if (user.getDepartment()==null) {
+    		cs.setString(10, null);
+    	}else {
+        	cs.setInt(10,Integer.parseInt(user.getDepartment().getCode()));
+    	}
     	cs.setInt(11, Integer.parseInt(user.getGpa().getCode()));
     	cs.setInt(12,Integer.parseInt(user.getCgpa().getCode()));
     	cs.setString(13, formid);

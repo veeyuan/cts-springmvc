@@ -64,6 +64,8 @@ public class ViewResultController {
 			submission = submissionListDao.getScoresAnalysis(submission);
 			List<List<Map<Object, Object>>> submissionDataList = submissionListDao.getScoresAnalysisMap(submission);
 			model.addObject("dataPointsList",submissionDataList);
+			model.addObject("analysisRst",submission);
+			
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

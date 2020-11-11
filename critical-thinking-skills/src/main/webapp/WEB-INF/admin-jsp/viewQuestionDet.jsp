@@ -1,6 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<% %>
+<%@ page import="java.util.ArrayList"%>
 <html>    
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">   
@@ -35,7 +35,7 @@
 
 #manageLink{
 	background-color: #FED136;
-    color: #fff;s
+    color: #14171a;
 }
 #manageOptLink{
 	background-color: transparent;
@@ -71,7 +71,7 @@ a {
 
 function setOption(selected){ //set number of options
 	var x=selected;
-	document.getElementById("optionNum").value=x;
+	document.getElementById("optionArrSize").value=x;
 	
 }
 	
@@ -101,10 +101,6 @@ function setInit(){
 		document.getElementById("mcq2").checked = false;
 		document.getElementById("mcqDiv").style.display = "block";
 		document.getElementById("structuredDiv").style.display = "none";
-		var num = <%=request.getAttribute("numberOfOptions")%>;
-		if (num !== undefined){
-			setOption(num);			
-		}
 		var mcqans = document.getElementById("mcqanswer").value;
 		document.getElementById("numChoice").value = mcqans;
 	}else{
@@ -145,7 +141,7 @@ addLoadEvent(setInit);
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
-                  View Question
+                  View Question 
                 </h3>
                 </div>
                  <form id="delQuestionForm" method="post" action="deleteProcess.html">
@@ -250,51 +246,29 @@ addLoadEvent(setInit);
 					 <div class="form-row">					
 					    <div  class="form-group col-md-3" >
 	                   		<label >Number of Choices</label>
-							<select onchange="setOption(this)" class="form-control" id="optionNum" disabled>
-							<option value="2">2</option>
-					      	<option value="3">3</option>
-	                        <option value="4">4</option>
-	                        <option value="5">5</option>
-	                       </select>	                   </div>
+							<form:select path="optionArrSize" class="form-control" onchange="setOption(this)" id="optionArrSize" disabled="true">
+							<%for (int i=2;i<=10;i++){ %>
+							<form:option value="<%=i%>"><%=i%></form:option>					      
+	                        <%} %>
+	                       </form:select>	            
+	                    </div>
 	                   <div  class="form-group col-md-2" >
 	                   		<label >Answer</label>
 	                   		<input type="hidden" id="mcqanswer" value="${question.sampleAns}">
 	                   		<form:input path="mcqAns" class="form-control" id="numChoice" placeholder="Option Number (eg. 1)" value="" readonly="true" />                			               		
 	                   </div>			 
 					 </div>
-					 
-					
-					 <div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 1</label>
+		
+
+				  <c:forEach var="optionArr" items="${question.optionArr}" varStatus="status">
+				   <div class="form-group row">
+					    <label class="col-sm-1 col-form-label">Option ${status.index+1}</label>
 					    <div class="col-sm-9">
-    					 	<form:textarea path="option1" class="form-control" id="opt1" rows="1" placeholder="-" readonly="true" />
+    					 	<form:textarea path="optionArr[${status.index}]"  class="form-control" id="opt${status.index+1}" rows="1" placeholder="-"   readonly="true" />
 				   		</div>
 				  </div>
-					<div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 2</label>
-					    <div class="col-sm-9">
-    					 	<form:textarea path="option2"  class="form-control" id="opt2" rows="1" placeholder="-" readonly="true" />
-				   		</div>
-				  </div>
-					<div  class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 3</label>
-					    <div class="col-sm-9">
-    					 	<form:textarea path="option3"  class="form-control" id="opt3" rows="1" placeholder="-"  readonly="true"/>
-				   		</div>
-				  </div>
-				  <div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 4</label>
-					    <div class="col-sm-9">
-    					 	<form:textarea path="option4"  class="form-control" id="opt4" rows="1" placeholder="-" readonly="true"/>
-				   		</div>
-				  </div>
-				  <div class="form-group row">
-					    <label class="col-sm-1 col-form-label">Option 5</label>
-					    <div class="col-sm-9">
-    					 	<form:textarea path="option5"  class="form-control" id="opt5" rows="1" placeholder="-"   readonly="true" />
-				   		</div>
-				  </div>
-				  
+				  </c:forEach>
+				
 				  </div>
 				  <div id="structuredDiv" style="display:none">
 				   <div class="form-row">

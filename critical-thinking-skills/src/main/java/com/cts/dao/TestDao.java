@@ -41,7 +41,7 @@ public class TestDao {
 	        cs.setString(3, user.getLanguageCd());
 	        cs.setString(4, hotsCd);
 	        cs.setString(5, user.getId());
-	       
+	
 	        resultSet =  cs.executeQuery();
 	        if (resultSet!=null) {
 		        while (resultSet.next()) {
@@ -62,12 +62,9 @@ public class TestDao {
 		        		question.setMcq(false);
 		        	}
 		        	if (question.isMcq()) {
-		            	question.setOption1(resultSet.getString("option1"));
-		            	question.setOption2(resultSet.getString("option2"));
-		            	question.setOption3(resultSet.getString("option3"));
-		            	question.setOption4(resultSet.getString("option4"));                	
-		            	question.setOption5(resultSet.getString("option5"));
-		        	}
+		        		question.setOptionArrSize(resultSet.getInt("total_option"));
+		        		question.setOptionArr(getQuestionOptions(question.getId(),question.getOptionArrSize()));		        	
+		        		}
 		        	
 		        	if ("Y".equalsIgnoreCase(resultSet.getString("IS_SUBMITTED"))) {
 		            	question.setSubmitted(true);
@@ -96,7 +93,17 @@ public class TestDao {
 
         		return questionLst;
 	}
-	
+	public ArrayList<String> getQuestionOptions (String questionId,int totalOption) {
+		ArrayList<String> options = new ArrayList<>();
+		for (int i=1;i<=totalOption;i++) {
+			String sqlStmt = "SELECT option_dscp from tbl_question_option where option_no ='"+i+"' and question_id = '"+questionId+"'";
+			String dscp=(String) jdbcTemplate.queryForObject(
+					 sqlStmt, new Object[] {}, String.class);
+			options.add(dscp);			
+		}
+		
+		return options;
+	}
 	
 	
 	public void insertAnswer(String submissionId,Answer answer) throws SQLException, IOException {
@@ -122,12 +129,7 @@ public class TestDao {
     	cs.close();
 	}
 	
-	public String getSysGuid() {
-		 String sqlStmt ="SELECT SYS_GUID() FROM DUAL";
-		 String id=(String) jdbcTemplate.queryForObject(
-				 sqlStmt, new Object[] {}, String.class);
-		 return id;		 
-	}
+	
 	
 	public String getBase64Image(Blob blob) throws SQLException, IOException {
 		InputStream inputStream = blob.getBinaryStream();
@@ -154,6 +156,7 @@ public class TestDao {
 		for (int i=0;i<listHotsComponents.size();i++) {
 			Section section = new Section(listHotsComponents.get(i));
 			List<Question> listQuestion = getQuestions(user,listHotsComponents.get(i).getCode());
+
 			section.setCompleted(true);
 			for (int j=0;j<listQuestion.size();j++) {
 				

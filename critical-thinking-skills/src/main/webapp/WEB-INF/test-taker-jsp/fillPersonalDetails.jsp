@@ -38,7 +38,7 @@
 #manageProfileLink{
    
     background-color: #FED136;
-    color: #fff;
+    color:#14171a;
 }
 
 #instruction{
@@ -188,7 +188,8 @@ $(function(){
 	           <div class="form-group col-md-3">
 	  				  <label >Faculty</label>
 	                     <form:select path="faculty.code"  class="form-control" id="facCd" >
-	                       <c:forEach items="${listFaculty}" var="listFaculty">
+	                        <form:option value="" disabled="true" selected="true">Select faculty (if relevant)</form:option>
+	                         <c:forEach items="${listFaculty}" var="listFaculty">
 					      	  <form:option value ="${listFaculty.code}" label="${listFaculty.name}" />
 				              </c:forEach>
 	                       </form:select>
@@ -197,7 +198,7 @@ $(function(){
 	             <div class="form-group col-md-3">
 	  				  <label >Department</label>
 	                     <form:select path="department.code"  class="form-control" id="deptCd">
-	                     <form:option value="" disabled="true" selected="true">Select department</form:option>
+	                     <form:option value="" disabled="true" selected="true">Select department (if relevant)</form:option>
 	                     <% for (int i=0;i<facultyList.size();i++){ 
 	                     	List<Department> deptList = facultyList.get(i).getDepartmentList();
 	                     	for (int j=0;j<deptList.size();j++){

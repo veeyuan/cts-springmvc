@@ -251,13 +251,13 @@ public class QuestionDao {
 	
 	public void insertOption(ArrayList<String> arr,String questionId) throws SQLException {		
 		for (int i=1;i<=arr.size();i++) {
-		   	 String sql = "INSERT INTO TBL_QUESTION_OPTION (question_id,option_no,option_dscp) VALUES (?,?,?)";
+		   	 String sql = "INSERT INTO tbl_question_option (question_id,option_no,option_dscp) VALUES (?,?,?)";
 		     jdbcTemplate.update(sql, questionId,i,arr.get(i-1));
 		}
 	}
 	
 	public int deleteOption(String questionId) {
-		String deleteSql = "DELETE 	FROM TBL_QUESTION_OPTION WHERE QUESTION_ID = ?";
+		String deleteSql = "DELETE 	FROM tbl_question_option WHERE QUESTION_ID = ?";
 	     int row = jdbcTemplate.update(deleteSql, questionId);
 	     return row;
 	}

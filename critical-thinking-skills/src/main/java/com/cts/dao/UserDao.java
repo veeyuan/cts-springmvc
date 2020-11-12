@@ -123,7 +123,7 @@ public class UserDao {
 	}
 	
 	public void updateTestSpec(User user) throws SQLException {		
-    	 String sql = "UPDATE TBL_USER_DET SET DISCIPLINE_CD = ?,CATEGORY_CD = ?,LANGUAGE_CD = ?,READY_TO_TEST = 'Y' WHERE USER_ID = ?";
+    	 String sql = "UPDATE tbl_user_det SET DISCIPLINE_CD = ?,CATEGORY_CD = ?,LANGUAGE_CD = ?,READY_TO_TEST = 'Y' WHERE USER_ID = ?";
  		jdbcTemplate.update(sql, user.getDisciplineCd(),user.getCategoryCd(),user.getLanguageCd(),user.getId());
 	}
 	
@@ -133,7 +133,7 @@ public class UserDao {
 	}
 	
 	public boolean hasStartedTest(String userid) {
-		String sqlStmt = "SELECT COUNT(ID) FROM TBL_SUBMISSION WHERE USER_ID ='"+userid+"' and SUBMITTED_DT IS NULL";
+		String sqlStmt = "SELECT COUNT(ID) FROM tbl_submission WHERE USER_ID ='"+userid+"' and SUBMITTED_DT IS NULL";
 		int submissionCount=(Integer) jdbcTemplate.queryForObject(
 				 sqlStmt, new Object[] {}, Integer.class);
 		if (submissionCount>0) {
@@ -143,8 +143,8 @@ public class UserDao {
 	}
 	
 	public String getLastTakeTestDate(String userid) {
-		String sqlStmt ="SELECT COUNT(SUBMITTED_DT) FROM TBL_SUBMISSION WHERE USER_ID = '"+userid+"' AND SUBMITTED_DT IS NOT NULL";
-		String sqlStmt2 ="SELECT MAX(SUBMITTED_DT) FROM TBL_SUBMISSION WHERE USER_ID = '"+userid+"' AND SUBMITTED_DT IS NOT NULL";
+		String sqlStmt ="SELECT COUNT(SUBMITTED_DT) FROM tbl_submission WHERE USER_ID = '"+userid+"' AND SUBMITTED_DT IS NOT NULL";
+		String sqlStmt2 ="SELECT MAX(SUBMITTED_DT) FROM tbl_submission WHERE USER_ID = '"+userid+"' AND SUBMITTED_DT IS NOT NULL";
 
 		int numOfRecord=(int) jdbcTemplate.queryForObject(
 				 sqlStmt, new Object[] {}, Integer.class);
@@ -159,12 +159,12 @@ public class UserDao {
 	}
 	
 	public boolean changePassword(String userid,String oldpswd, String newpswd) {
-		String sqlStmt = "SELECT COUNT(ID) FROM TBL_USER WHERE ID=? AND login_pswd=?";
+		String sqlStmt = "SELECT COUNT(ID) FROM tbl_user WHERE ID=? AND login_pswd=?";
 		int numOfRecord=(int) jdbcTemplate.queryForObject(
 				 sqlStmt, new Object[] {userid,oldpswd}, Integer.class);
 		if (numOfRecord==1) {
 			try {
-			String sql = "UPDATE TBL_USER SET login_pswd=? WHERE ID=?";
+			String sql = "UPDATE tbl_user SET login_pswd=? WHERE ID=?";
 			jdbcTemplate.update(sql,newpswd,userid);
 			}catch (Exception e) {
 				return false;

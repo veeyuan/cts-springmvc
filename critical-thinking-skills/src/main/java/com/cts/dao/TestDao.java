@@ -179,7 +179,7 @@ public class TestDao {
 		
 	}
 	public String getSubmissionId(String userid) {
-		String sqlStmt = "SELECT ID FROM TBL_SUBMISSION WHERE USER_ID ='"+userid+"' and SUBMITTED_DT IS NULL";
+		String sqlStmt = "SELECT ID FROM tbl_submission WHERE USER_ID ='"+userid+"' and SUBMITTED_DT IS NULL";
 		String submissionIid =(String) jdbcTemplate.queryForObject(
 				 sqlStmt, new Object[] {}, String.class);
 		

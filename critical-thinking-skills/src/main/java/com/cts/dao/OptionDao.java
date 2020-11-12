@@ -104,7 +104,7 @@ public class OptionDao {
 	}
 	
 	public void insertNewDepartment(String deptDscp, String facCd) {
-		 String sql = "INSERT INTO TBL_DEPARTMENT (department_dscp,faculty_cd) VALUES (?,?)";
+		 String sql = "INSERT INTO tbl_department (department_dscp,faculty_cd) VALUES (?,?)";
 	 		jdbcTemplate.update(sql,deptDscp,facCd );
 	}
 	

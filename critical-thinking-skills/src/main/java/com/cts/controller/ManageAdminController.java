@@ -57,7 +57,7 @@ public class ManageAdminController {
 			adminDao.insertNewAdmin(login);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return new ModelAndView("addOptionFail");
+			return new ModelAndView("addAdminFail");
 		}
 		 ModelAndView mav =  new ModelAndView("redirect:/manageAdmin.html");
 		return mav;

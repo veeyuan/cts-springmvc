@@ -87,7 +87,7 @@ public class SubmissionListDao {
 	    return submissionLst;
 	  }
 	
-	public List<Submission> getSubmissionList(Submission filterSubmission,int startRow, int endRow) {
+	public List<Submission> getSubmissionList(Submission filterSubmission,int startRow, int numberPerPg) {
 
 	    List<Submission> submissionLst = new ArrayList<Submission>() ;
 	    ResultSet resultSet = null;
@@ -104,8 +104,11 @@ public class SubmissionListDao {
 	        }else {
 		        cs.setDate(5, filterSubmission.getSubmitDt());
 	        }
+	        if (numberPerPg!=0 && startRow!=0) {
+	        	startRow--;
+	        }
 	        cs.setInt(6, startRow);
-	        cs.setInt(7, endRow);
+	        cs.setInt(7, numberPerPg);
 	        cs.setString(8, checkIsAll(filterSubmission.getFaculty().getCode()));
 	        cs.setString(9, checkIsAll(filterSubmission.getDepartment().getCode()));
 	        cs.execute();

@@ -91,10 +91,9 @@ public class ManageQuestionController {
         else{    
         	startRow=(targetPage-1)*numPerPg+1;    
         }    
-        int endRow=startRow+numPerPg-1;
 		ModelAndView model = new ModelAndView("manageQuestion"); 
 		List<Question> allQuestionList =   questionListDao.filterQuestionList(question,0,0);
-		List<Question> listQuestion =   questionListDao.filterQuestionList(question,startRow,endRow);
+		List<Question> listQuestion =   questionListDao.filterQuestionList(question,startRow,numPerPg);
 		int totalRecords = allQuestionList.size();
 		int recordsPerPg = 5;
 		int totalPages = totalRecords/recordsPerPg;
@@ -247,8 +246,9 @@ public class ManageQuestionController {
 			@ModelAttribute("question")Question question, 
 		      BindingResult result, ModelMap model) throws IOException {
 		try {
-			question.setId(questionId);
+			question.setId(questionId);;
 			int deleted = questionDao.deleteOption(question.getId());
+
 			if ("Yes".equalsIgnoreCase(strMCQ)) {
 				question.setMcq(true);
 			}else {

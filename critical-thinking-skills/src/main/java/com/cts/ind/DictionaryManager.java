@@ -21,7 +21,7 @@ public class DictionaryManager {
 
 	    	try{  
 	    		Class.forName("com.mysql.jdbc.Driver");  
-	    		Connection connection=DriverManager.getConnection( "jdbc:mysql://204.2.63.72:15232/cts_db?useTimezone=true&serverTimezone=UTC&useSSL=false","cts_admin","T72!wsb2");  
+	    		Connection connection=DriverManager.getConnection( "jdbc:mysql://103.233.3.93:3306/cts_db?useTimezone=true&serverTimezone=UTC&useSSL=false","cts_admin","T72!wsb2");  
 	    		//Connection connection = jdbcTemplate.getDataSource().getConnection();
 	    		String query="select language_cd from tbl_language where language_dscp=? and del=0";
 	    		PreparedStatement ps = connection.prepareStatement(query);
@@ -42,7 +42,7 @@ public class DictionaryManager {
 
     	try{  
     		Class.forName("com.mysql.jdbc.Driver");  
-    		Connection connection=DriverManager.getConnection( "jdbc:mysql://204.2.63.72:15232/cts_db?useTimezone=true&serverTimezone=UTC&useSSL=false","cts_admin","T72!wsb2");  
+    		Connection connection=DriverManager.getConnection( "jdbc:mysql://103.233.3.93:3306/cts_db?useTimezone=true&serverTimezone=UTC&useSSL=false","cts_admin","T72!wsb2");  
     		//Connection connection = jdbcTemplate.getDataSource().getConnection();
     		String query="select dscp from tbl_dictionary where word_cd=? and language_cd=? and del=0";
     		PreparedStatement ps = connection.prepareStatement(query);

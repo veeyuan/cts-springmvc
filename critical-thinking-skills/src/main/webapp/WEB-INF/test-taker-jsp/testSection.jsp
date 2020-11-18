@@ -129,9 +129,15 @@ setTimeout("preventBack()", 0);
               <div class="card-body">
               
               <p id="instruction">There are <%=Integer.toString(sectionlist.size()) %> sections consisting of several questions which can be multi-choiced question or short-structured question. 
-              <br>Some questions may have a time limit to answer. Please submit the answer before the time ends or your answer will be submitted automatically once the time is up.
+              <br>Please submit the answer before the time ends or your answer will be submitted automatically once the time is up.
               <br><span style="background-color: #FFFF00">ONCE the answering time is over, respondents cannot answer the question any more and also cannot return to any previous questions (that had not been answered, if any) even if there are remaining time.</span>
               <br>You are required to complete all the questions. 
+              <br><b>NOTE:</b><br>
+              <ol>
+				<li>You <b>MUST</b> answer <b>EACH</b> question within the time given.</li>
+				<li>Once you have <b>EITHER</b> answered a question OR exceeded the time given to answer the question, you are not allowed to answer it again.</li>
+				<li>You have only <b>ONE MINUTE</b> left to answer a question when the time display colour changes to <b>RED</b>.</li>
+			  </ol>																							
               <br>Once you are ready, you may click on the section to start answering. <p>
               
               </div>

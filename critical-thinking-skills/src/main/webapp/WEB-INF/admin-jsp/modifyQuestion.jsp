@@ -153,7 +153,7 @@ function submitChange(){
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
-                  Modify Question - ${question.id}
+                  Modify Question 
                 </h3>
                 </div>
                 <form:form id="questionForm" action ="modifyProcess.html"  method="post" modelAttribute="question" enctype="multipart/form-data">                			 

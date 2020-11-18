@@ -251,7 +251,7 @@ public class QuestionDao {
 	
 	public void insertOption(ArrayList<String> arr,String questionId) throws SQLException {		
 		for (int i=1;i<=arr.size();i++) {
-		   	 String sql = "INSERT INTO tbl_question_option (question_id,option_no,option_dscp) VALUES (?,?,?)";
+		   	 String sql = "INSERT INTO tbl_question_option (id,question_id,option_no,option_dscp) VALUES ((select uuid() from dual),?,?,?)";
 		     jdbcTemplate.update(sql, questionId,i,arr.get(i-1));
 		}
 	}

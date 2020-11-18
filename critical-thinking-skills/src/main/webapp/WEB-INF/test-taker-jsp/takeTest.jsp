@@ -161,7 +161,7 @@ if (!"noRecords".equalsIgnoreCase(lastTestDate)){
 	                   </div>
 	                   
 	               
-	                <div class="form-group col-md-2">
+	                <div class="form-group col-md-3">
 					      <label >Suitable Category</label>
 					      <input type="hidden" id="category" value="${user.categoryCd}"> 
 					      <form:select path="categoryCd" id="categoryCd" class="form-control" >

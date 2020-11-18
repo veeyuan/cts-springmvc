@@ -20,38 +20,9 @@ public class QuestionListDao {
 	} 
 	
 	
-	public List<Question> getQuestionList(int numPerPg) {
-	    //String sqlStmt = "select * from tbl_question where del<>1 ORDER BY question_dscp ASC";
-	    String sqlStmt = "select * from tbl_question where del<>1 AND rownum between 1 and "+numPerPg+" ORDER BY question_dscp ASC";
-
-	    List<Question> questionLst = getQuestion(sqlStmt);
-	    return questionLst;
-	  }
-	
-	public List<Question> getQuestion( String sqlStmt){
-		return jdbcTemplate.query(sqlStmt, new RowMapper<Question>() {
-			public Question mapRow(ResultSet rs, int row) throws SQLException{
-				Question question = new Question();
-				question.setId(rs.getString("id"));	
-				String dscp = rs.getString("question_dscp");
-				dscp = dscp.substring(0, Math.min(dscp.length(), 100));
-				question.setQuestionDscp(dscp);
-				question.setDisciplineCd(rs.getString("discipline_cd"));
-				question.setCategoryCd(rs.getString("category_cd"));
-				question.setLanguageCd(rs.getString("language_cd"));
-				String mcq = rs.getString("mcq"); 
-				if ("Y".equalsIgnoreCase(mcq)) {
-					question.setMcq(true);
-				}else {
-					question.setMcq(false);
-				}
-			    return question;
-			}
-		});
-	}
 		
 	
-	public List<Question> filterQuestionList(Question questionType,int startRow, int endRow) throws IOException  {		
+	public List<Question> filterQuestionList(Question questionType,int startRow, int numberPerPg) throws IOException  {		
 		List<Question> questionList = new ArrayList<Question>() ;
 		ResultSet resultSet = null;
 		Connection connection;
@@ -62,8 +33,11 @@ public class QuestionListDao {
 	        cs.setString(2, null);
 	        cs.setString(3, null);
 	        cs.setString(4, checkIsAll(questionType.getLanguageCd()));
+	        if (numberPerPg!=0 && startRow!=0) {
+	        	startRow--;
+	        }
 	        cs.setInt(5, startRow);
-	        cs.setInt(6, endRow);
+	        cs.setInt(6, numberPerPg);
 	        cs.setString(7, checkIsAll(questionType.getHotsComponentCd()));
 	        cs.setString(8, questionType.getStrIsSelectedToAsk());
 	       

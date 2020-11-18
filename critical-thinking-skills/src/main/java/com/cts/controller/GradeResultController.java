@@ -55,7 +55,7 @@ public class GradeResultController {
 		if (totalRecords%recordsPerPg>0) {
 			totalPages++;
 		}
-		List<Submission> submissionList =   submissionListDao.getSubmissionList(1,5);
+		List<Submission> submissionList =   submissionListDao.getSubmissionList(0,5);
 		model.getModelMap().addAttribute("totalPages",Integer.toString(totalPages));
 		model.getModelMap().addAttribute("currentPage",Integer.toString(1));
 		model.addObject("listSubmission",submissionList);
@@ -93,7 +93,6 @@ public class GradeResultController {
         else{    
         	startRow=(targetPage-1)*numPerPg+1;    
         }    
-        int endRow=startRow+numPerPg-1;
         ModelAndView model = new ModelAndView("gradeRstWaitingList"); 
 		List<Submission> allSubmissionList =   submissionListDao.getSubmissionList(filterSubmission,0,0);
 
@@ -103,7 +102,7 @@ public class GradeResultController {
 		if (totalRecords%recordsPerPg>0) {
 			totalPages++;
 		}
-		List<Submission> submissionList =   submissionListDao.getSubmissionList(filterSubmission,startRow,endRow);
+		List<Submission> submissionList =   submissionListDao.getSubmissionList(filterSubmission,startRow,numPerPg);
 		model.getModelMap().addAttribute("totalPages",Integer.toString(totalPages));
 		model.getModelMap().addAttribute("currentPage",strTargetPage);
 		model.getModelMap().addAttribute("filterSubmitDt",strDate);

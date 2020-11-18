@@ -78,7 +78,7 @@ public class AdminDao {
 	}
 	
 	public void insertNewAdmin(Login login) {
-		String sql="INSERT INTO tbl_user (user_name,login_pswd,role_cd) VALUES (?,?,?)";
+		String sql="INSERT INTO tbl_user (id,user_name,login_pswd,role_cd) VALUES ((select uuid() from dual),?,?,?)";
 		jdbcTemplate.update(sql,login.getUsername(),login.getPassword(),login.getRoleCd());
 	}
 

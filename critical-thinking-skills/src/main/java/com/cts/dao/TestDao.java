@@ -195,9 +195,9 @@ public class TestDao {
 	
 
 	public void startTest(User user) {
-		String sql = "INSERT INTO  tbl_submission (USER_ID,DISCIPLINE_CD,CATEGORY_CD,LANGUAGE_CD) VALUES (?,?,?,?)";
+		String sql = "INSERT INTO  tbl_submission (ID,USER_ID,DISCIPLINE_CD,CATEGORY_CD,LANGUAGE_CD) VALUES ((SELECT UUID() FROM DUAL),?,?,?,?)";
 		if (!user.isJoinSurvey()) {
-			sql = "INSERT INTO  tbl_submission (USER_ID,DISCIPLINE_CD,CATEGORY_CD,LANGUAGE_CD,join_survey) VALUES (?,?,?,?,'N')";
+			sql = "INSERT INTO  tbl_submission (ID,USER_ID,DISCIPLINE_CD,CATEGORY_CD,LANGUAGE_CD,join_survey) VALUES ((SELECT UUID() FROM DUAL),?,?,?,?,'N')";
 		}		
 		jdbcTemplate.update(sql,user.getId(),user.getDisciplineCd(),user.getCategoryCd(),user.getLanguageCd());
 	}

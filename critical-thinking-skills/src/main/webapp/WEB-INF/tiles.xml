@@ -84,6 +84,11 @@
         <put-attribute name="body" value="/WEB-INF/admin-jsp/manageAdmin.jsp" />  
     </definition> 
     
+    <definition name="addAdminFail" extends="base-admin.definition">  
+        <put-attribute name="title" value="addAdminFail" />  
+        <put-attribute name="body" value="/WEB-INF/admin-jsp/addAdminFail.jsp" />  
+    </definition>    
+    
     <definition name="changePassword" extends="base-admin.definition">  
         <put-attribute name="title" value="changePassword" />  
         <put-attribute name="body" value="/WEB-INF/admin-jsp/changePassword.jsp" />  

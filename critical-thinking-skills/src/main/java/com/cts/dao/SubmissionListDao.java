@@ -9,8 +9,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Calendar;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -367,7 +369,7 @@ public class SubmissionListDao {
 		map.put("y",submission.getScoresLst().get(0).getJudgementScore());
 		dataPoints.add(map);
 		map = new HashMap<Object,Object>(); 
-		map.put("label", "Problem Solving"); 
+		map.put("label", "Problem-solving"); 
 		map.put("y",submission.getScoresLst().get(0).getProbSolveScore());
 		dataPoints.add(map);
 		map = new HashMap<Object,Object>(); 
@@ -378,7 +380,7 @@ public class SubmissionListDao {
 		return list;		
 	}
 	
-	public List<Submission> getSubmittedSubmissionList(String userId){
+	public List<Submission> getSubmittedSubmissionList(String userId) throws ParseException{
 		ResultSet resultSet = null;
 		Connection connection;
 		List<Submission> submittedSubmissionList =new ArrayList<Submission>();
@@ -392,7 +394,12 @@ public class SubmissionListDao {
 		        while (resultSet.next()) {
 		        	Submission submission = new Submission();		    
 		        	submission.setSubmissionId(resultSet.getString("ID"));
-		        	submission.setSubmitDt(resultSet.getDate("SUBMITTED_DT"));
+		        	String returnDt = resultSet.getDate("SUBMITTED_DT").toString();
+		    	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		    	    Calendar c = Calendar.getInstance();
+		    	    c.setTime(sdf.parse(returnDt));
+		    	    c.add(Calendar.DATE, 1);  // number of days to add
+		        	submission.setSubmitDt(new Date(c.getTimeInMillis()));
 		        	if ("Y".equalsIgnoreCase(resultSet.getString("IS_GRADED"))) {
 		        		submission.setRstReady(true);
 		        	}else {

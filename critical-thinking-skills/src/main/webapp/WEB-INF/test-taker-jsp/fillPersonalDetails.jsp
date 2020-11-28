@@ -64,12 +64,18 @@ function submit(){
 
 $(function(){
 	$("#facCd").on("change", function(){
-        var $target = $("#deptCd").val(""),facCd = $(this).val();
-        
-        $target
-            .toggleClass("hidden", facCd === "")
-            .find("option:gt(0)").addClass("hidden")
-        	.siblings().filter("[data-type="+facCd+"]").removeClass("hidden"); 
+		  var $target = $("#deptCd").val(""),facCd = $(this).val();
+
+		if ($("#facCd").val()==""){
+	        $('#deptCd').prop('disabled', true);
+		}else{
+		       $('#deptCd').prop('disabled', false);
+		        $target
+		            .toggleClass("hidden", facCd === "")
+		            .find("option:gt(0)").addClass("hidden")
+		        	.siblings().filter("[data-type="+facCd+"]").removeClass("hidden"); 
+		}
+       
     });
 });
 
@@ -192,6 +198,7 @@ $(function(){
 	                         <c:forEach items="${listFaculty}" var="listFaculty">
 					      	  <form:option value ="${listFaculty.code}" label="${listFaculty.name}" />
 				              </c:forEach>
+				              <form:option value="">Other</form:option>
 	                       </form:select>
 	                   </div>	
 	                   
@@ -214,8 +221,16 @@ $(function(){
 	          </div>    
 	          <div class="form-row">
 	           <div class="form-group col-md-2">
-	  				  <label >Latest GPA </label>
+	  				  <label >Last Sem 1 GPA </label>
 	                     <form:select path="gpa.code"  class="form-control"  >
+	                       <c:forEach items="${listRstRange}" var="listRstRange">
+					      	  <form:option value ="${listRstRange.code}" label="${listRstRange.name}" />
+				              </c:forEach>
+	                       </form:select>
+	                   </div>	
+	           <div class="form-group col-md-2">
+	  				  <label >Last Sem 2 GPA </label>
+	                     <form:select path="gpa2.code"  class="form-control"  >
 	                       <c:forEach items="${listRstRange}" var="listRstRange">
 					      	  <form:option value ="${listRstRange.code}" label="${listRstRange.name}" />
 				              </c:forEach>

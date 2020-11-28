@@ -2,6 +2,7 @@ package com.cts.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +49,7 @@ public class TakeTestController {
 	HotsComponentDao hotsComponentDao;
 	
 	@RequestMapping("/takeTest")
-	public ModelAndView viewQuestionDet(HttpServletRequest request) throws IOException, SQLException{
+	public ModelAndView viewQuestionDet(HttpServletRequest request) throws IOException, SQLException, ParseException{
 			ModelAndView model = new ModelAndView("takeTest"); 	
 			String id = request.getSession().getAttribute("userid").toString();
     		User userDet = userDao.getUserDet(id);
@@ -65,6 +66,7 @@ public class TakeTestController {
     				return model;
     			}else {
     				model.addObject("lastTestDate",userDao.getLastTakeTestDate(id));
+
     				List<Discipline> listDiscipline =   disciplineDao.getDisciplineList();
             		model.addObject("listDiscipline",listDiscipline);
         			List<Category> listCategory =   categoryDao.getCategoryList();

@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>CTS Assessment</title>
+        <title>HOTS Assessment</title>
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.12.1/js/all.js" crossorigin="anonymous"></script>
@@ -108,7 +108,7 @@
             <div class="container">
                  <div class="masthead-subheading"><span style="background-color: #fed136 ">Assess your thinking critically!</span></div>
 <%--                  <div class="masthead-heading text-uppercase"><%=dictionaryManager.getTerm("index.main.cts.title",langCd) %></div>
- --%>                 <div class="masthead-heading text-uppercase"><span style="background-color: #fed136 ">High Order Thinking Skills </span></div>
+ --%>                 <div class="masthead-heading text-uppercase"><span style="background-color: #fed136 ">High Order Thinking Skills (HOTS) </span></div>
                 <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#portfolio"><%=dictionaryManager.getTerm("index.main.cts.tellmemore",langCd) %></a>
             </div>
         </header>
@@ -118,7 +118,7 @@
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase"><%=dictionaryManager.getTerm("index.constructs.title",langCd) %></h2>
-                    <h3 class="section-subheading text-muted"><%=dictionaryManager.getTerm("index.constructs.title.dscp",langCd) %></h3>
+                    <h3 class="section-subheading text-muted">Mapping of Main Components of HOTS with Critical Thinking Skills (CTS)</h3>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
@@ -195,8 +195,8 @@
         <section class="page-section" id="about">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase"><%=dictionaryManager.getTerm("index.importance.title",langCd) %></h2>
-                    <h3 class="section-subheading text-muted"><%=dictionaryManager.getTerm("index.importance.subtitle",langCd) %></h3>
+                    <h2 class="section-heading text-uppercase">IMPORTANCE OF HOTS</h2>
+                    <h3 class="section-subheading text-muted">HOTS is important to different life stages.</h3>
                 </div>
                 <ul class="timeline">
                 
@@ -207,7 +207,10 @@
                             <h6><%=dictionaryManager.getTerm("index.importance.constructivism.subtitle",langCd) %></h6>
                                  <h4 class="subheading"><%=dictionaryManager.getTerm("index.importance.constructivism",langCd) %></h4>
                             </div>
-                            <div class="timeline-body"><p class="text-muted"><%=dictionaryManager.getTerm("index.importance.constructivism.dscp",langCd) %>
+                            <div class="timeline-body">
+                            <p class="text-muted"><%=dictionaryManager.getTerm("index.importance.constructivism.dscp",langCd) %></p>
+                            <p class="text-muted" style="font-size: 10px;text-align: justify;">Reference: Flores, K. L., Matkin, G. S., Burbach, M. E., Quinn, C. E., & Harding, H. (2012). 
+                            <cite>Deficient critical thinking skills among college graduates: Implications for leadership.</cite> Educational Philosophy and Theory, 44(2), 212-230.
                             </p></div>
                         </div>
                     </li>
@@ -219,8 +222,11 @@
                                <h6><%=dictionaryManager.getTerm("index.importance.academic.subtitle",langCd) %></h6>
                                <h4 class="subheading"><%=dictionaryManager.getTerm("index.importance.academic",langCd) %></h4>
                             </div>
-                            <div class="timeline-body"><p class="text-muted"><%=dictionaryManager.getTerm("index.importance.academic.dscp",langCd) %>
-                            </p></div>
+                            <div class="timeline-body"><p class="text-muted">
+							HOTS gives one the right direction in thinking and helps in determining the relevance of something with others more accurately. It also helps identify own weaknesses and ways to improve themselves.
+
+                            </p>
+                            <p class="text-muted" style="font-size: 10px;text-align: justify;">Reference: Walid, A., Sajidan, S., Ramli, M., & Kusumah, R. G. T. (2019). <cite>Construction of the assessment concept to measure students' high order thinking skills.</cite> Journal for the Education of Gifted Young Scientists, 7(2), 237-251.</p></div>
                         </div>
                     </li>
                     
@@ -232,7 +238,10 @@
                                 <h4 class="subheading"><%=dictionaryManager.getTerm("index.importance.maturity",langCd) %></h4>
                             </div>
                             <div class="timeline-body"><p class="text-muted"><%=dictionaryManager.getTerm("index.importance.maturity.dscp",langCd) %>
-                            </p></div>
+                            </p>
+                            <p class="text-muted" style="font-size: 10px;text-align: justify;">Reference: Flores, K. L., Matkin, G. S., Burbach, M. E., Quinn, C. E., & Harding, H. (2012). 
+                            <cite>Deficient critical thinking skills among college graduates: Implications for leadership.</cite> Educational Philosophy and Theory, 44(2), 212-230.
+                            </p> </div>
                         </div>
                     </li>
                     <li class="timeline-inverted">
@@ -243,6 +252,8 @@
                                 <h4 class="subheading"><%=dictionaryManager.getTerm("index.importance.personalities",langCd) %></h4>
                             </div>
                             <div class="timeline-body"><p class="text-muted"><%=dictionaryManager.getTerm("index.importance.personalities.dscp",langCd) %>
+                            </p>
+                            <p class="text-muted" style="font-size: 10px;text-align: justify;">Reference: Puolimatka, T. (1997). <cite>The problem of democratic values education.</cite> Journal of Philosophy of Education, 31(3), 461-476.
                             </p></div>
                         </div>
                     </li>
@@ -266,7 +277,10 @@
                                 <div class="modal-body">
                                     <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.ana.title",langCd) %></h2>
                                     <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.ana.subtitle",langCd) %></p>
-                                    <p> <%=dictionaryManager.getTerm("index.constructs.ana.dscp",langCd) %></p>
+                                    <p style="text-align: justify;"> <%=dictionaryManager.getTerm("index.constructs.ana.dscp",langCd) %></p>
+                                    
+                                    <p style="font-size: 13px;text-align: justify;">Reference:  Brookhart, S. M. (2010). <cite>How to assess higher-order thinking skills in your classroom.</cite> ASCD.</p>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -286,7 +300,9 @@
                                 <div class="modal-body">
                                     <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.log.title",langCd)%></h2>
                                     <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.log.subtitle",langCd) %></p>
-                                    <p> <%=dictionaryManager.getTerm("index.constructs.log.dscp",langCd) %></p>
+                                    <p style="text-align: justify;"> <%=dictionaryManager.getTerm("index.constructs.log.dscp",langCd) %></p>
+                                    <p style="font-size: 13px;text-align: justify;">Reference:  Brookhart, S. M. (2010). <cite>How to assess higher-order thinking skills in your classroom.</cite> ASCD.</p>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -306,8 +322,9 @@
                                 <div class="modal-body">
                                     <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.judgement.title",langCd)%></h2>
                                     <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.judgement.subtitle",langCd) %></p>
-                                    <p> <%=dictionaryManager.getTerm("index.constructs.judgement.dscp",langCd) %></p>
-                                </div>
+                                    <p style="text-align: justify;"> <%=dictionaryManager.getTerm("index.constructs.judgement.dscp",langCd) %></p>
+                                    <p style="font-size: 13px;text-align: justify;">Reference:  Brookhart, S. M. (2010). <cite>How to assess higher-order thinking skills in your classroom.</cite> ASCD.</p>
+								</div>
                             </div>
                         </div>
                     </div>
@@ -326,8 +343,9 @@
                                 <div class="modal-body">
                                     <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.probsolve.title",langCd)%></h2>
                                     <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.probsolve.subtitle",langCd) %></p>
-                                    <p> <%=dictionaryManager.getTerm("index.constructs.probsolve.dscp",langCd) %></p>
-                                </div>
+                                    <p style="text-align: justify;"> <%=dictionaryManager.getTerm("index.constructs.probsolve.dscp",langCd) %></p>
+                                    <p style="font-size: 13px;text-align: justify;">Reference:  Brookhart, S. M. (2010). <cite>How to assess higher-order thinking skills in your classroom.</cite> ASCD.</p>
+								</div>
                             </div>
                         </div>
                     </div>
@@ -346,7 +364,8 @@
                                 <div class="modal-body" >
                                     <h2 class="text-uppercase"><%=dictionaryManager.getTerm("index.constructs.creative.title",langCd)%></h2>
                                     <p class="item-intro text-muted"><%=dictionaryManager.getTerm("index.constructs.creative.subtitle",langCd) %></p>
-                                    <p> <%=dictionaryManager.getTerm("index.constructs.creative.dscp",langCd) %></p>
+                                    <p   style="text-align: justify;"> <%=dictionaryManager.getTerm("index.constructs.creative.dscp",langCd) %></p>
+                                    <p style="font-size: 13px;text-align: justify;">Reference:  Brookhart, S. M. (2010). <cite>How to assess higher-order thinking skills in your classroom.</cite> ASCD.</p>
                                 </div>
                             </div>
                         </div>

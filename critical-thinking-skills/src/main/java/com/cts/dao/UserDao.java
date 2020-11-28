@@ -6,6 +6,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -142,7 +145,7 @@ public class UserDao {
 		return false;
 	}
 	
-	public String getLastTakeTestDate(String userid) {
+	public String getLastTakeTestDate(String userid) throws ParseException {
 		String sqlStmt ="SELECT COUNT(SUBMITTED_DT) FROM tbl_submission WHERE USER_ID = '"+userid+"' AND SUBMITTED_DT IS NOT NULL";
 		String sqlStmt2 ="SELECT MAX(SUBMITTED_DT) FROM tbl_submission WHERE USER_ID = '"+userid+"' AND SUBMITTED_DT IS NOT NULL";
 
@@ -154,8 +157,17 @@ public class UserDao {
 		}
 		Date lastTakeTestDt=(Date) jdbcTemplate.queryForObject(
 				 sqlStmt2, new Object[] {}, Date.class);
-		
-		return lastTakeTestDt.toString();
+	   
+	    String returnDt = lastTakeTestDt.toString();
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    SimpleDateFormat returnsdf = new SimpleDateFormat("dd-MM-yyyy");
+
+	    Calendar c = Calendar.getInstance();
+	    c.setTime(sdf.parse(returnDt));
+	    c.add(Calendar.DATE, 1);  // number of days to add
+	    returnDt = returnsdf.format(c.getTime());  
+
+		return returnDt;
 	}
 	
 	public boolean changePassword(String userid,String oldpswd, String newpswd) {

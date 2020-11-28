@@ -247,7 +247,7 @@ addLoadEvent(setCd);
 				scores.put("Analysis & Evaluation",submission.getScoresLst().get(0).getAnalysisScore());
 				scores.put("Logical Thinking",submission.getScoresLst().get(0).getLogicScore());
 				scores.put("Judgement",submission.getScoresLst().get(0).getJudgementScore());
-				scores.put("Problem Solving",submission.getScoresLst().get(0).getProbSolveScore());
+				scores.put("Problem-solving",submission.getScoresLst().get(0).getProbSolveScore());
 				scores.put("Creative Thinking",submission.getScoresLst().get(0).getCreativeScore());
 				ArrayList<String> highest = new ArrayList<>();			
 				int maxValueInMap=(Collections.max(scores.values()));  // This will return max value in the Hashmap
@@ -269,6 +269,8 @@ addLoadEvent(setCd);
 	                <div class="form-group col-md-10">
 	  				  <label >Comments</label><br>
 	  				  <p id="instruction">
+	  				   <% String improve = "You are encouraged to put more efforts to improve the thinking skills especially "+lowest.get(0); %>
+	  				  
 	  				  <%if (highest.size()==5){ %>
 	  				  		Your thinking skills are developed averagely. Boost them to gain higher achievements.
 	  				  <%}else{ %>
@@ -280,14 +282,17 @@ addLoadEvent(setCd);
               		    , <%=highest.get(i)%>
               		 <%}}%>
               		 is/are your strength(s). Utilise the thinking skills will make you go further.
-              		 <br>You are encouraged to put more efforts to improve the thinking skills especially <%=lowest.get(0)%>
               		 <%for (int i =1;i<lowest.size();i++){ 
-              		 	if (i==lowest.size()-1){%>
-              		  and <%=lowest.get(i)%>
-              		 <%}else{ %>
-              			, <%=lowest.get(i)%>
-              		 <%}}%>.
+              		 	if (i==lowest.size()-1){              		 	
+              		 		improve+=" and "+lowest.get(i);
+						}else{ 
+							improve+=", "+lowest.get(i);
+						}
+              		 }
+              		 	improve+=".";%>
               		 <%} %>
+              		 <br><%=improve%>
+              		 
               		 </p>
               		 </div>
               		 </div>

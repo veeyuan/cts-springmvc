@@ -173,8 +173,8 @@ addLoadEvent(setInit);
 				    <div class="card-body">
 				    <div style="height: 300px; width: 48%;float:right;">
 				    <p id="instruction">There are ${totalSubmissionNum} submissions where:<br>
-				    ${gradedSubmissionNum} submission(s) has been graded by the admin<br>
-				    ${closeSubmissionNum} test-taker(s) has completed the test, but the results has not been graded by admins yet<br>				    
+				    ${gradedSubmissionNum} submission(s) has been graded by the admin.<br>
+				    ${closeSubmissionNum} test-taker(s) has completed the test, but the results have not been graded by the admin yet.<br>				    
 				    ${openSubmissionNum} test-taker(s) has started the test, but have not completed all the sections yet.
 				    </p>
 				    </div>
@@ -194,9 +194,18 @@ addLoadEvent(setInit);
 	                </div>
 	                <div class="card-body">
 				    <div style="height: 300px; width: 48%;float:right;">
-				    <p id="instruction">There are ${totalCompletedSubmissionNum} submissions completed by test-takers where:<br>
+				    <p id="instruction">There are ${totalCompletedSubmissionNum} submissions completed by the test-takers where:<br>
 				     <c:forEach items="${listFacSubmission}" var="fac" varStatus="status">	
-				     ${fac.amount} submission(s) from ${fac.facultyDscp}<br>
+				     <c:choose>
+					    <c:when test="${fac.facultyDscp=='Others'}">
+							 ${fac.amount} submission(s) are from other.<br>
+					    </c:when>    
+					    <c:otherwise>
+					       ${fac.amount} submission(s) from the ${fac.facultyDscp}.<br>
+
+					    </c:otherwise>
+					</c:choose>		
+				     
 				     </c:forEach>
 				    </p>
 				    </div>

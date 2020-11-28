@@ -138,6 +138,7 @@ function checkUserNm(){
 		}else{
 			mssg_unique.style.display = "none";
 			document.getElementById("usernm").className = "form-control is-valid";
+			checkPswd();
 			return true;
 
 		}
@@ -170,7 +171,8 @@ function checkPswd(){
 		mssg_invalid.style.display  = "none";
 	}else{
 		mssg_required.style.display  = "none";
-		if(val.match(/^[0-9a-z]+$/)){
+		var usernameval = document.getElementById("usernm").value;
+		if(val!==usernameval){
 			document.getElementById("pswd").className = "form-control is-valid";
 			mssg_invalid.style.display  = "none";
 			checkConfPswd();
@@ -310,7 +312,7 @@ function register(){
                                         <div class="form-group">
                                             <input type="password" name="registerPswd" maxlength="45" class="form-control" placeholder="<%=dictionaryManager.getTerm("index.authentication.pswd",langCd) %>  *" value="" id="pswd" onchange="checkPswd()"/>
                                             <div style="display:none;text-align: left;}" id="pswd-error-req-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.req.pswd",langCd) %></div>
-                                            <div style="display:none;text-align: left;}" id="pswd-error-inv-msg" class="invalid-feedback"><%=dictionaryManager.getTerm("index.errormsg.inv.specialChar",langCd) %></div>
+                                            <div style="display:none;text-align: left;}" id="pswd-error-inv-msg" class="invalid-feedback">Password should not be the same as username</div>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="confPswd" class="form-control" placeholder="<%=dictionaryManager.getTerm("index.authentication.confirmpswd",langCd) %>  *" value="" id="confpswd" onchange="checkConfPswd()"/>

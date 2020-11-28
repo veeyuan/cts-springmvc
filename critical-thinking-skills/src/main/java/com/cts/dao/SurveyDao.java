@@ -79,7 +79,7 @@ public class SurveyDao {
 	
 	public void submitDemoInfo(User user,String formid) throws SQLException {
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-        CallableStatement cs = connection.prepareCall("{call SP_SUBMIT_DEMO_INFO(?,?,?,?,?,?,?,?,?,?,?,?,?)}");       
+        CallableStatement cs = connection.prepareCall("{call SP_SUBMIT_DEMO_INFO(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");       
         cs.setString(1,user.getId() );
         cs.setString(2, user.getOldMatricNum());
         cs.setString(3, user.getNewMatricNum());
@@ -91,7 +91,11 @@ public class SurveyDao {
     	if (user.getFaculty()==null) {
     		cs.setString(9, null);
     	}else {
-        	cs.setInt(9, Integer.parseInt(user.getFaculty().getCode()));
+    		if (user.getFaculty().getCode()=="") {
+        		cs.setString(9, null);
+    		}else {
+            	cs.setInt(9, Integer.parseInt(user.getFaculty().getCode()));
+    		}
     	}
     	if (user.getDepartment()==null) {
     		cs.setString(10, null);
@@ -99,8 +103,9 @@ public class SurveyDao {
         	cs.setInt(10,Integer.parseInt(user.getDepartment().getCode()));
     	}
     	cs.setInt(11, Integer.parseInt(user.getGpa().getCode()));
-    	cs.setInt(12,Integer.parseInt(user.getCgpa().getCode()));
-    	cs.setString(13, formid);
+    	cs.setInt(12, Integer.parseInt(user.getGpa2().getCode()));
+    	cs.setInt(13,Integer.parseInt(user.getCgpa().getCode()));
+    	cs.setString(14, formid);
     	cs.execute();
     	cs.close();
 	}

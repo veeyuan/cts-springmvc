@@ -336,7 +336,7 @@ function submitChange(){
 				    <div class="col-sm-3 my-1">
 				      <div class="input-group">
 				        <div class="input-group-prepend">
-				          <div class="input-group-text">Problem Solving</div>
+				          <div class="input-group-text">Problem-solving</div>
 				        </div>
 				        <form:input path="probSolveScore" class="form-control" id="" placeholder="0" name="" />
 				      </div>

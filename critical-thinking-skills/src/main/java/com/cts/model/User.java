@@ -23,6 +23,7 @@ public class User extends Login{
 	private Faculty faculty;
 	private Department department;
 	private ResultRange gpa;
+	private ResultRange gpa2;
 	private ResultRange cgpa;
 	private String ethnicCd;
 	private boolean joinSurvey;
@@ -289,6 +290,14 @@ public class User extends Login{
 	 */
 	public void setJoinSurvey(boolean joinSurvey) {
 		this.joinSurvey = joinSurvey;
+	}
+
+	public ResultRange getGpa2() {
+		return gpa2;
+	}
+
+	public void setGpa2(ResultRange gpa2) {
+		this.gpa2 = gpa2;
 	}
 
 	

@@ -106,45 +106,48 @@ public class ReportDao {
         headerCell.setCellValue("Department");
         
         headerCell = headerRow.createCell(9);
-        headerCell.setCellValue("GPA");
+        headerCell.setCellValue("SEM 1 GPA");
         
         headerCell = headerRow.createCell(10);
-        headerCell.setCellValue("CGPA");
+        headerCell.setCellValue("SEM 2 GPA");
         
         headerCell = headerRow.createCell(11);
-        headerCell.setCellValue("WIX1002");
+        headerCell.setCellValue("CGPA");
         
         headerCell = headerRow.createCell(12);
-        headerCell.setCellValue("WIA1002");
+        headerCell.setCellValue("WIX1002");
         
         headerCell = headerRow.createCell(13);
-        headerCell.setCellValue("Analysis & Evaluation (%)");
+        headerCell.setCellValue("WIA1002");
         
         headerCell = headerRow.createCell(14);
-        headerCell.setCellValue("Logic & Reasoning (%)");
+        headerCell.setCellValue("Analysis & Evaluation (%)");
         
         headerCell = headerRow.createCell(15);
-        headerCell.setCellValue("Judgement (%)");
+        headerCell.setCellValue("Logic & Reasoning (%)");
         
         headerCell = headerRow.createCell(16);
-        headerCell.setCellValue("Problem Solving (%)");
+        headerCell.setCellValue("Judgement (%)");
         
         headerCell = headerRow.createCell(17);
-        headerCell.setCellValue("Creative Thinking (%)");
+        headerCell.setCellValue("Problem-solving (%)");
         
         headerCell = headerRow.createCell(18);
-        headerCell.setCellValue("Critical Thinking Scores");
+        headerCell.setCellValue("Creative Thinking (%)");
         
         headerCell = headerRow.createCell(19);
-        headerCell.setCellValue("Creativity Scores");
+        headerCell.setCellValue("Critical Thinking Scores");
         
         headerCell = headerRow.createCell(20);
-        headerCell.setCellValue("Metacognition Scores");
+        headerCell.setCellValue("Creativity Scores");
         
         headerCell = headerRow.createCell(21);
-        headerCell.setCellValue("Total Scores");
+        headerCell.setCellValue("Metacognition Scores");
         
         headerCell = headerRow.createCell(22);
+        headerCell.setCellValue("Total Scores");
+        
+        headerCell = headerRow.createCell(23);
         headerCell.setCellValue("Total Scores Percentage (%)");
     }
  
@@ -185,7 +188,10 @@ public class ReportDao {
             cell.setCellValue(result.getString("department_dscp"));
             
             cell = row.createCell(columnCount++);
-            cell.setCellValue(result.getString("gpa"));
+            cell.setCellValue(result.getString("gpa_sem1"));
+            
+            cell = row.createCell(columnCount++);
+            cell.setCellValue(result.getString("gpa_sem2"));
  
             cell = row.createCell(columnCount++);
             cell.setCellValue(result.getString("cgpa"));

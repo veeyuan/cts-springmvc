@@ -254,7 +254,7 @@ int totalQuestionNum = submission.getQuestionLst().size();
 				  
 				  <label >Scores</label>
 					<div class="form-row align-items-center">
-				    <div class="col-sm-2 my-1">
+				    <div class="col-sm-3 my-1">
 				      <div class="input-group">
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Analysis &  Evaluation</div>
@@ -262,7 +262,7 @@ int totalQuestionNum = submission.getQuestionLst().size();
 				        <form:input path="questionLst[${status.index}].analysisScore" class="form-control" id="" placeholder="0" name="" readonly="true"/>
 				      </div>
 				    </div>
-				    <div class="col-sm-2 my-1">
+				    <div class="col-sm-3 my-1">
 				      <div class="input-group">
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Logic & Reasoning</div>
@@ -270,7 +270,7 @@ int totalQuestionNum = submission.getQuestionLst().size();
 				        <form:input path="questionLst[${status.index}].logicScore" class="form-control" id="" placeholder="0" name="" readonly="true"/>
 				      </div>
 				      </div>
-				      <div class="col-sm-2 my-1">
+				      <div class="col-sm-3 my-1">
 				      <div class="input-group">
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Judgement</div>
@@ -278,15 +278,18 @@ int totalQuestionNum = submission.getQuestionLst().size();
 				        <form:input path="questionLst[${status.index}].judgementScore" class="form-control" id="" placeholder="0" name="" readonly="true"/>
 				      </div>
 				    </div>
-				    <div class="col-sm-2 my-1">
+				    </div>
+				    <div class="form-row align-items-center">
+				    
+				    <div class="col-sm-3 my-1">
 				      <div class="input-group">
 				        <div class="input-group-prepend">
-				          <div class="input-group-text">Problem Solving</div>
+				          <div class="input-group-text">Problem-solving</div>
 				        </div>
 				        <form:input path="questionLst[${status.index}].probSolveScore" class="form-control" id="" placeholder="0" name="" readonly="true"/>
 				      </div>
 				    </div>
-				    <div class="col-sm-2 my-1">
+				    <div class="col-sm-3 my-1">
 				      <div class="input-group">
 				        <div class="input-group-prepend">
 				          <div class="input-group-text">Creative Thinking</div>
@@ -373,7 +376,7 @@ int totalQuestionNum = submission.getQuestionLst().size();
 					   <div class="col-sm-3 my-1">
 					 <div class="input-group mb-3">
 					  <div class="input-group-prepend">
-					    <label class="input-group-text" for="inputGroupSelect04">Problem Solving</label>
+					    <label class="input-group-text" for="inputGroupSelect04">Problem-solving</label>
 					  </div>
 					 <form:select path="scoresLst[${status.index}].probSolveScore"  class="custom-select" id="inputGroupSelect04" >	
 					 	<%	for (int i=0;i<=question.getProbSolveScore();i++){%>

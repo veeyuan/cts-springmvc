@@ -99,9 +99,9 @@ String lastTestDate = request.getAttribute("lastTestDate").toString();
 boolean hasTakenTestRecently = false;
 if (!"noRecords".equalsIgnoreCase(lastTestDate)){
 	String[] values = lastTestDate.split("-");
-	int year = Integer.parseInt(values[0]);
+	int year = Integer.parseInt(values[2]);
 	int month = Integer.parseInt(values[1]);
-	int day = Integer.parseInt(values[2]);
+	int day = Integer.parseInt(values[0]);
 	Calendar sixMonthsAgo = Calendar.getInstance();             
 	sixMonthsAgo.add(Calendar.MONTH, -6);                       
 	Calendar newDate = new GregorianCalendar(year, month, day);
@@ -182,9 +182,9 @@ if (!"noRecords".equalsIgnoreCase(lastTestDate)){
 					  
 					 </div>
                </form:form>   
-              <p id="instruction">Please make sure the above details is accurate, for questions will be generated according to the criteria. 
-              If you want to make change, please change the test specification in Manage Profile.        
-              <br>Once you are ready, you may click on the button to start the test. <p>
+              <p id="instruction">Please make sure the above details are correct as questions will be generated according to the criteria. 
+              If you want to make a change, please change the test specification in the Manage Profile.        
+              <br>Please click the <span style="color:blue;">Start Test</span> button to answer the test. <p>
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
@@ -195,7 +195,7 @@ if (!"noRecords".equalsIgnoreCase(lastTestDate)){
             <%}else{ %>
             <div class="card-body">
             <p id="instruction">You have just completed your test on <%=lastTestDate %>.    
-              <br>You are allowed to answer one time only. You may view the results once it has been graded. Thank you for your participation.  <p>
+              <br>You are allowed to answer ONCE only. You may view the results once it has been graded. Thank you for your participation.  <p>
             </div>
             
             <%} %>

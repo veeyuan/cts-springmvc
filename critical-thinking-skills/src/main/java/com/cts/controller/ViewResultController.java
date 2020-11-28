@@ -35,7 +35,7 @@ public class ViewResultController {
 	LanguageDao languageDao;
 	
 	@RequestMapping("/viewResultList") 
-	public ModelAndView redirectToViewResultList(HttpServletRequest request)  
+	public ModelAndView redirectToViewResultList(HttpServletRequest request) throws ParseException  
     {  
 		ModelAndView model = new ModelAndView("viewResultList"); 
 		String userid = request.getSession().getAttribute("userid").toString();	

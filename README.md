@@ -5,5 +5,4 @@ A Thinking Skills Assessment System<br>
 <li>Java Spring MVC</li>
 <li>MySQL</li>
 </ul>
-<br>
-![fyp2-classdiagram](https://user-images.githubusercontent.com/48304826/101001290-e436d800-3599-11eb-8f3a-eb53a901fffb.jpg)
+![FYP2](https://user-images.githubusercontent.com/48304826/101001985-ccac1f00-359a-11eb-979b-18be50c89cfa.png)

@@ -6,4 +6,4 @@ A Thinking Skills Assessment System<br>
 <li>MySQL</li>
 </ul>
 <br>
-![Image of UseCaseDiagram](https://drive.google.com/file/d/1Q0zbrTGYKX6NvJHRX_-FYlVLx1AW9jw6/view?usp=sharing)
+![fyp2-classdiagram](https://user-images.githubusercontent.com/48304826/101001290-e436d800-3599-11eb-8f3a-eb53a901fffb.jpg)
